@@ -28,9 +28,9 @@ const INBOX =
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
 
 const REQUEST_LABEL: Record<ContactRequestType, string> = {
-  meeting: "Žiadosť o stretnutie / Gemba Walk (Level 4)",
+  meeting: "Žiadosť o osobnú schôdzku",
   quote: "Žiadosť o cenovú ponuku (CP)",
-  both: "Žiadosť o stretnutie + cenovú ponuku (CP)",
+  both: "Žiadosť o schôdzku + cenovú ponuku (CP)",
 };
 
 function buildMessageBody(payload: ContactRequestPayload): string {

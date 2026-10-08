@@ -495,18 +495,8 @@ export default function AuditSection() {
             (phase === "setup" && level === 1)) &&
             !resumeOffer && (
               <div className="grid gap-6 lg:grid-cols-2">
-                <div>
-                  <h3 className="mb-3 font-display text-lg font-semibold text-ink-50">
-                    Level 2 — Detailný audit
-                  </h3>
-                  <Level2Gate onUnlocked={() => startLevel(2)} />
-                </div>
-                <div>
-                  <h3 className="mb-3 font-display text-lg font-semibold text-ink-50">
-                    Level 3 — Expert &amp; DTO
-                  </h3>
-                  <Level3Gate onUnlocked={() => startLevel(3)} />
-                </div>
+                <Level2Gate onUnlocked={() => startLevel(2)} />
+                <Level3Gate onUnlocked={() => startLevel(3)} />
               </div>
             )}
         </div>
