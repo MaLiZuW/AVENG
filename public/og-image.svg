@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#070b12"/>
+      <stop offset="55%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#152033"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2f6fed"/>
+      <stop offset="100%" stop-color="#5b93ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="980" cy="120" r="220" fill="#2f6fed" opacity="0.12"/>
+  <circle cx="140" cy="520" r="180" fill="#e8a54b" opacity="0.08"/>
+  <text x="80" y="200" font-family="Georgia, serif" font-size="42" fill="#5b93ff" font-weight="700">AddValueEngineering</text>
+  <text x="80" y="300" font-family="Georgia, serif" font-size="52" fill="#e8edf5" font-weight="700">ZmeHte technický chaos</text>
+  <text x="80" y="370" font-family="Georgia, serif" font-size="52" fill="#e8edf5" font-weight="700">na ziskový systém</text>
+  <rect x="80" y="420" width="280" height="4" fill="url(#accent)" rx="2"/>
+  <text x="80" y="480" font-family="Segoe UI, sans-serif" font-size="24" fill="#94a3b8">Procesný audit &amp; seniorné technické vedenie MSP</text>
+  <text x="80" y="560" font-family="Segoe UI, sans-serif" font-size="20" fill="#64748b">www.addvalueengineering.sk</text>
+</svg>

@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AddValueEngineering (AVENG)
 
-## Getting Started
+Next.js **static export** for WebSupport `/web`: multi-route B2B site + 3-level process audit, Supabase leads, GDPR 28-day purge.
 
-First, run the development server:
+## Stack
+
+- Next.js 14 (`output: "export"`) + Tailwind CSS
+- `@supabase/supabase-js`, `lucide-react`, `zod`
+- Unlock L2/L3 via Supabase Edge Function (`verify-promo`) — codes never in the client bundle
+
+## Quick start
 
 ```bash
+cp .env.example .env.local
+# fill NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_ANON_KEY
+# optional: NEXT_PUBLIC_UNLOCK_API_URL, NEXT_PUBLIC_BOOKING_URL
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Supabase
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Run `supabase/schema.sql`.
+2. Run `supabase/purge-28day.sql` (requires `pg_cron`).
+3. Deploy `supabase/functions/verify-promo` and set secrets `AUDIT_PROMO_CODES`, `UNLOCK_TOKEN_SECRET`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Without env vars the lead form falls back to `localStorage` (demo). Without unlock URL, L2/L3 codes cannot be validated in the browser.
 
-## Learn More
+## Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Upload `out/` to hosting `/web` (include `.htaccess`).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Docs
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `docs/REMEDIATION_PLAN.md` — plán nápravy
+- `docs/REMEDIATION_REPORT.md` — finálny report
+- `docs/OWNER_DECISIONS.md` — rozhodnutia pre vlastníka
+- `docs/audit-question-review.md` — revízia otázok (návrh)
