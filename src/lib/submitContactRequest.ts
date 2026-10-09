@@ -3,7 +3,11 @@
  * Static-export friendly (no Next API route).
  */
 
-export type ContactRequestType = "meeting" | "quote" | "both";
+export type ContactRequestType =
+  | "meeting"
+  | "access_code"
+  | "quote"
+  | "both";
 
 export interface ContactRequestPayload {
   requestType: ContactRequestType;
@@ -29,6 +33,7 @@ const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
 
 const REQUEST_LABEL: Record<ContactRequestType, string> = {
   meeting: "Žiadosť o osobnú schôdzku",
+  access_code: "Žiadosť o prístupový kód",
   quote: "Žiadosť o cenovú ponuku (CP)",
   both: "Žiadosť o schôdzku + cenovú ponuku (CP)",
 };

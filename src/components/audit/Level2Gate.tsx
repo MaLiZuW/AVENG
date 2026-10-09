@@ -1,8 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { Calendar, Check, Crown, Lock, Shield } from "lucide-react";
-import { company } from "@/config/company";
+import { Calendar, Crown, Lock, Shield } from "lucide-react";
 import { LEVEL2_PRICE_EUR } from "@/lib/audit/questions";
 import { requestUnlock } from "@/lib/unlock/session";
 import MeetingRequestModal from "./MeetingRequestModal";
@@ -10,18 +9,6 @@ import MeetingRequestModal from "./MeetingRequestModal";
 interface UnlockGateProps {
   onUnlocked: () => void;
 }
-
-const BENEFITS_L2 = [
-  "60 otázok — rozklad na OEE, COPQ a tok materiálu",
-  "Jasnejšie priority pre konateľa a majstrov",
-  "Podklad na rozhodnutie o investíciách bez domnienok",
-];
-
-const BENEFITS_L3 = [
-  "180 otázok — 6M príčinová analýza",
-  "What-If simulátor investícií a ROI (DTO)",
-  "Podklady pre strategické rozhodnutie COO / majiteľa",
-];
 
 function UnlockCodeForm({
   level,
@@ -82,6 +69,7 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [meetingOpen, setMeetingOpen] = useState(false);
+  const [accessOpen, setAccessOpen] = useState(false);
 
   async function tryUnlock(e: FormEvent) {
     e.preventDefault();
@@ -99,7 +87,8 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
   return (
     <>
       <article
-        className="relative overflow-hidden rounded-xl border-2 border-[#c0c7d4]/70 bg-gradient-to-br from-[#1a2030] via-ink-900 to-ink-950 p-5 shadow-[0_0_0_1px_rgba(192,199,212,0.25),0_12px_40px_rgba(0,0,0,0.35)] sm:p-6"
+        id="level-2"
+        className="relative scroll-mt-28 overflow-hidden rounded-xl border-2 border-[#c0c7d4]/70 bg-gradient-to-br from-[#1a2030] via-ink-900 to-ink-950 p-5 shadow-[0_0_0_1px_rgba(192,199,212,0.25),0_12px_40px_rgba(0,0,0,0.35)] sm:p-6"
       >
         <div
           className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[#c0c7d4]/10 blur-2xl"
@@ -121,18 +110,6 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
           </div>
           <Lock className="h-7 w-7 shrink-0 text-[#c0c7d4]" aria-hidden />
         </div>
-
-        <ul className="relative mt-5 space-y-2.5">
-          {BENEFITS_L2.map((b) => (
-            <li key={b} className="flex gap-2.5 text-sm text-ink-100">
-              <Check
-                className="mt-0.5 h-4 w-4 shrink-0 text-[#c0c7d4]"
-                aria-hidden
-              />
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
 
         <div className="relative mt-5 flex flex-wrap items-end justify-between gap-2 border-t border-[#c0c7d4]/25 pt-4">
           <div>
@@ -167,20 +144,32 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
             <Calendar className="h-4 w-4" aria-hidden />
             Dohodnúť osobnú schôdzku
           </button>
-          <a
-            href={`mailto:${company.email}?subject=${encodeURIComponent("Level 2 audit — žiadosť o prístup")}`}
+          <button
+            type="button"
+            onClick={() => setAccessOpen(true)}
             className="text-center text-xs text-ink-300 underline-offset-2 hover:text-[#e8edf5] hover:underline sm:text-left"
           >
-            Požiadať o prístup e-mailom
-          </a>
+            Požiadať o prístupový kód
+          </button>
         </div>
       </article>
 
       <MeetingRequestModal
         open={meetingOpen}
         onClose={() => setMeetingOpen(false)}
+        requestType="meeting"
         sourceLabel="Self-audit · Level 2 — žiadosť o osobnú schôdzku"
         title="Level 2 — osobná schôdzka"
+      />
+      <MeetingRequestModal
+        open={accessOpen}
+        onClose={() => setAccessOpen(false)}
+        requestType="access_code"
+        sourceLabel="Self-audit · Level 2 — žiadosť o prístupový kód"
+        title="Level 2 — prístupový kód"
+        intro="Vyplňte formulár — žiadosť o prístupový kód sa odošle priamo na AVENG (bez otvárania e-mailového klienta)."
+        messagePlaceholder="Napr. fakturačné údaje, IČO, preferovaný spôsob úhrady…"
+        successNote="Ozveme sa vám ohľadom prístupového kódu a úhrady."
       />
     </>
   );
@@ -191,6 +180,7 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [meetingOpen, setMeetingOpen] = useState(false);
+  const [accessOpen, setAccessOpen] = useState(false);
 
   async function tryUnlock(e: FormEvent) {
     e.preventDefault();
@@ -208,7 +198,8 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
   return (
     <>
       <article
-        className="relative overflow-hidden rounded-xl border-2 border-[#d4af37]/75 bg-gradient-to-br from-[#2a2210] via-ink-900 to-ink-950 p-5 shadow-[0_0_0_1px_rgba(212,175,55,0.3),0_12px_40px_rgba(0,0,0,0.4)] sm:p-6"
+        id="level-3"
+        className="relative scroll-mt-28 overflow-hidden rounded-xl border-2 border-[#d4af37]/75 bg-gradient-to-br from-[#2a2210] via-ink-900 to-ink-950 p-5 shadow-[0_0_0_1px_rgba(212,175,55,0.3),0_12px_40px_rgba(0,0,0,0.4)] sm:p-6"
       >
         <div
           className="pointer-events-none absolute -right-8 -top-8 h-36 w-36 rounded-full bg-[#d4af37]/15 blur-2xl"
@@ -230,18 +221,6 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
           </div>
           <Lock className="h-7 w-7 shrink-0 text-[#d4af37]" aria-hidden />
         </div>
-
-        <ul className="relative mt-5 space-y-2.5">
-          {BENEFITS_L3.map((b) => (
-            <li key={b} className="flex gap-2.5 text-sm text-ink-100">
-              <Check
-                className="mt-0.5 h-4 w-4 shrink-0 text-[#d4af37]"
-                aria-hidden
-              />
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
 
         <div className="relative mt-5 flex flex-wrap items-end justify-between gap-2 border-t border-[#d4af37]/30 pt-4">
           <div>
@@ -276,20 +255,32 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
             <Calendar className="h-4 w-4" aria-hidden />
             Dohodnúť osobnú schôdzku
           </button>
-          <a
-            href={`mailto:${company.email}?subject=${encodeURIComponent("Premium Audit Level 3")}`}
+          <button
+            type="button"
+            onClick={() => setAccessOpen(true)}
             className="text-center text-xs text-ink-300 underline-offset-2 hover:text-[#f0d78c] hover:underline sm:text-left"
           >
-            Požiadať o Premium e-mailom
-          </a>
+            Požiadať o prístupový kód
+          </button>
         </div>
       </article>
 
       <MeetingRequestModal
         open={meetingOpen}
         onClose={() => setMeetingOpen(false)}
+        requestType="meeting"
         sourceLabel="Self-audit · Level 3 — žiadosť o osobnú schôdzku"
         title="Level 3 — osobná schôdzka"
+      />
+      <MeetingRequestModal
+        open={accessOpen}
+        onClose={() => setAccessOpen(false)}
+        requestType="access_code"
+        sourceLabel="Self-audit · Level 3 — žiadosť o prístupový kód"
+        title="Level 3 — prístupový kód"
+        intro="Vyplňte formulár — žiadosť o Premium prístupový kód sa odošle priamo na AVENG (bez otvárania e-mailového klienta)."
+        messagePlaceholder="Napr. rozsah závodu, preferovaný termín kick-offu, fakturačné údaje…"
+        successNote="Ozveme sa vám ohľadom Premium prístupu a ďalších krokov."
       />
     </>
   );

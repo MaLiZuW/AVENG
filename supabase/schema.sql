@@ -74,4 +74,9 @@ CREATE POLICY "anon_insert_audit_results"
   TO anon
   WITH CHECK (lead_id IS NOT NULL);
 
+-- Privileges for PostgREST (anon key from the browser)
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT INSERT ON TABLE public.audit_leads TO anon, authenticated;
+GRANT INSERT ON TABLE public.audit_results TO anon, authenticated;
+
 -- Service role / dashboard retains full access via bypassing RLS.

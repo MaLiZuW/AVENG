@@ -70,6 +70,22 @@ export default function AuditSection() {
     setHydrated(true);
   }, []);
 
+  /** Deep-link from homepage tiles: /self-audit/#level-2 | #level-3 | #level-1 */
+  useEffect(() => {
+    if (!hydrated || resumeOffer) return;
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    if (!hash) return;
+    const id = hash.slice(1);
+    if (id !== "level-1" && id !== "level-2" && id !== "level-3") return;
+    const t = window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 80);
+    return () => window.clearTimeout(t);
+  }, [hydrated, resumeOffer, phase]);
+
   /** Load L2/L3 banks only after unlock (level ≥ 2). */
   useEffect(() => {
     if (level < 2) return;
@@ -243,18 +259,34 @@ export default function AuditSection() {
 
         <div className="mt-10 grid gap-3 sm:grid-cols-3">
           {[
-            { lvl: "Level 1", tag: "Zdarma", desc: "Skríning · 20 otázok" },
-            { lvl: "Level 2", tag: "290 €", desc: "Detail · 60 otázok" },
-            { lvl: "Level 3", tag: "Premium", desc: "6M + DTO · 180 otázok" },
+            {
+              lvl: "Level 1",
+              tag: "Zdarma",
+              desc: "Skríning · 20 otázok",
+              href: "#level-1",
+            },
+            {
+              lvl: "Level 2",
+              tag: "290 €",
+              desc: "Detail · 60 otázok",
+              href: "#level-2",
+            },
+            {
+              lvl: "Level 3",
+              tag: "Premium",
+              desc: "6M + DTO · 180 otázok",
+              href: "#level-3",
+            },
           ].map((l) => (
-            <div
+            <a
               key={l.lvl}
-              className="rounded-md border border-white/10 bg-steel-dark/50 px-4 py-3"
+              href={l.href}
+              className="rounded-md border border-white/10 bg-steel-dark/50 px-4 py-3 transition hover:border-signal/40 hover:bg-steel-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
             >
               <p className="text-xs text-signal-bright">{l.tag}</p>
               <p className="font-display font-semibold text-ink-50">{l.lvl}</p>
               <p className="text-xs text-ink-300">{l.desc}</p>
-            </div>
+            </a>
           ))}
         </div>
 
@@ -274,7 +306,7 @@ export default function AuditSection() {
           )}
 
           {phase === "intro" && !resumeOffer && (
-            <div className="space-y-6 animate-fade-up">
+            <div id="level-1" className="scroll-mt-28 space-y-6 animate-fade-up">
               <GdprBanner />
               <p
                 className="flex gap-2 rounded-md border border-white/10 bg-ink-900/40 px-3 py-2.5 text-sm text-ink-200"

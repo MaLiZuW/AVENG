@@ -8,6 +8,11 @@ import {
   retentionPeriodClaimSk,
 } from "@/config/retention";
 import type { AuditAnswers, AuditResult, PreAuditInput } from "@/lib/audit/types";
+import {
+  isAuditReportApiConfigured,
+  leadPayloadToReportMail,
+  sendAuditReportEmail,
+} from "@/lib/sendAuditReport";
 import { submitAuditLead } from "@/lib/supabase";
 
 interface Props {
@@ -26,6 +31,7 @@ export default function LeadForm({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const [mailNote, setMailNote] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
   const [followupConsent, setFollowupConsent] = useState(false);
 
@@ -50,7 +56,7 @@ export default function LeadForm({
     }
 
     setPending(true);
-    const res = await submitAuditLead({
+    const leadPayload = {
       full_name,
       work_email,
       company_name,
@@ -68,14 +74,28 @@ export default function LeadForm({
       recommendations: result.recommendations,
       answers,
       audit_level: result.auditLevel,
-    });
-    setPending(false);
-
+    };
+    const res = await submitAuditLead(leadPayload);
     if (!res.ok) {
+      setPending(false);
       setError(res.error ?? "Odoslanie zlyhalo. Skúste znova.");
       return;
     }
 
+    if (isAuditReportApiConfigured()) {
+      const mail = await sendAuditReportEmail(
+        leadPayloadToReportMail(leadPayload, result, res.id),
+      );
+      setMailNote(
+        mail.ok
+          ? "Vaše údaje boli uložené."
+          : "Vaše údaje boli uložené. E-mail sa nepodarilo odoslať — ozveme sa vám manuálne.",
+      );
+    } else {
+      setMailNote("Vaše údaje boli uložené.");
+    }
+
+    setPending(false);
     setDone(true);
     onSuccess?.();
   }
@@ -84,10 +104,10 @@ export default function LeadForm({
     return (
       <div className="steel-panel p-5 text-center" role="status">
         <p className="font-display text-lg font-semibold text-signal-bright">
-          Ďakujeme — správa je pripravená
+          Ďakujeme — správa vám bola odoslaná
         </p>
         <p className="mt-2 text-sm text-ink-200">
-          Vaše údaje boli uložené. Ozveme sa vám s 3 prioritnými odporúčaniami.
+          {mailNote ?? "Vaše údaje boli uložené."}
         </p>
       </div>
     );

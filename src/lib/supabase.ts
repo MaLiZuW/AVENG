@@ -39,36 +39,36 @@ export async function submitAuditLead(payload: LeadPayload): Promise<{
     return { ok: false, error: "Supabase nie je nakonfigurovaný." };
   }
 
-  const { data: lead, error: leadError } = await sb
-    .from("audit_leads")
-    .insert({
-      full_name: payload.full_name,
-      work_email: payload.work_email,
-      company_name: payload.company_name,
-      phone: payload.phone,
-      gdpr_consent: payload.gdpr_consent,
-      audit_level: payload.audit_level,
-      overall_score: payload.overall_score,
-      financial_gap_eur: payload.financial_gap_eur,
-      gap_sme_eur: payload.gap_sme_eur,
-      gap_wc_eur: payload.gap_wc_eur,
-      sector_id: payload.sector_id,
-      annual_revenue_eur: payload.annual_revenue_eur,
-      cogs_percent: payload.cogs_percent,
-      critical_process_id: payload.critical_process_id,
-    })
-    .select("id")
-    .single();
+  /** Client-generated id — avoids INSERT…RETURNING which needs a SELECT RLS policy. */
+  const leadId = crypto.randomUUID();
 
-  if (leadError || !lead) {
+  const { error: leadError } = await sb.from("audit_leads").insert({
+    id: leadId,
+    full_name: payload.full_name,
+    work_email: payload.work_email,
+    company_name: payload.company_name,
+    phone: payload.phone,
+    gdpr_consent: payload.gdpr_consent,
+    audit_level: payload.audit_level,
+    overall_score: payload.overall_score,
+    financial_gap_eur: payload.financial_gap_eur,
+    gap_sme_eur: payload.gap_sme_eur,
+    gap_wc_eur: payload.gap_wc_eur,
+    sector_id: payload.sector_id,
+    annual_revenue_eur: payload.annual_revenue_eur,
+    cogs_percent: payload.cogs_percent,
+    critical_process_id: payload.critical_process_id,
+  });
+
+  if (leadError) {
     return {
       ok: false,
-      error: leadError?.message ?? "Nepodarilo sa uložiť lead.",
+      error: leadError.message ?? "Nepodarilo sa uložiť lead.",
     };
   }
 
   const { error: resultError } = await sb.from("audit_results").insert({
-    lead_id: lead.id,
+    lead_id: leadId,
     process_scores: payload.process_scores,
     recommendations: payload.recommendations,
     answers: payload.answers,
@@ -78,5 +78,5 @@ export async function submitAuditLead(payload: LeadPayload): Promise<{
     return { ok: false, error: resultError.message };
   }
 
-  return { ok: true, id: lead.id as string };
+  return { ok: true, id: leadId };
 }

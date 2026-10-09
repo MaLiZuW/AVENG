@@ -17,6 +17,11 @@ interface Props {
   /** Shown in modal title and meta.source */
   sourceLabel: string;
   title?: string;
+  /** Fixed request type — no type picker in UI */
+  requestType?: ContactRequestType;
+  intro?: string;
+  messagePlaceholder?: string;
+  successNote?: string;
 }
 
 export default function MeetingRequestModal({
@@ -24,14 +29,16 @@ export default function MeetingRequestModal({
   onClose,
   sourceLabel,
   title = "Dohodnúť osobnú schôdzku",
+  requestType = "meeting",
+  intro = "Vyplňte formulár — žiadosť sa odošle priamo na AVENG (bez otvárania e-mailového klienta).",
+  messagePlaceholder = "Napr. preferovaný termín, lokalita závodu…",
+  successNote = "Ozveme sa vám ohľadom termínu.",
 }: Props) {
   const [mounted, setMounted] = useState(false);
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
-  const [requestType, setRequestType] =
-    useState<ContactRequestType>("meeting");
   const titleId = useId();
 
   useEffect(() => {
@@ -134,8 +141,8 @@ export default function MeetingRequestModal({
             </p>
             <p className="text-sm text-ink-200">
               Ďakujeme. Požiadavka odišla na{" "}
-              <span className="text-ink-50">{CONTACT_INBOX}</span>. Ozveme sa
-              vám ohľadom termínu.
+              <span className="text-ink-50">{CONTACT_INBOX}</span>.{" "}
+              {successNote}
             </p>
             <button type="button" className="btn-secondary" onClick={onClose}>
               Zavrieť
@@ -143,44 +150,9 @@ export default function MeetingRequestModal({
           </div>
         ) : (
           <>
-            <p className="mt-2 text-sm text-ink-200">
-              Vyplňte formulár — žiadosť sa odošle priamo na AVENG (bez otvárania
-              e-mailového klienta).
-            </p>
+            <p className="mt-2 text-sm text-ink-200">{intro}</p>
 
             <form className="mt-4 space-y-3" onSubmit={onSubmit} noValidate>
-              <fieldset className="space-y-2">
-                <legend className="text-sm font-medium text-ink-100">
-                  Typ žiadosti
-                </legend>
-                {(
-                  [
-                    ["meeting", "Osobná schôdzka"],
-                    ["quote", "Cenová ponuka (CP)"],
-                    ["both", "Schôdzka + cenová ponuka"],
-                  ] as const
-                ).map(([value, label]) => (
-                  <label
-                    key={value}
-                    className={`flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition ${
-                      requestType === value
-                        ? "border-signal bg-signal/15 text-ink-50"
-                        : "border-white/10 text-ink-200 hover:border-white/25"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="requestType"
-                      value={value}
-                      checked={requestType === value}
-                      onChange={() => setRequestType(value)}
-                      className="accent-signal"
-                    />
-                    {label}
-                  </label>
-                ))}
-              </fieldset>
-
               <div className="grid gap-3 sm:grid-cols-2">
                 <label className="block text-sm">
                   <span className="mb-1 block text-ink-200">Meno</span>
@@ -229,7 +201,7 @@ export default function MeetingRequestModal({
                 <textarea
                   name="message"
                   rows={3}
-                  placeholder="Napr. preferovaný termín, lokalita závodu…"
+                  placeholder={messagePlaceholder}
                   className="w-full resize-y rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
                 />
               </label>

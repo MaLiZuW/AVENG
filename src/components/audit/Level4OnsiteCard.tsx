@@ -3,11 +3,7 @@
 import { FormEvent, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { formatEur } from "@/lib/audit/scoring";
-import {
-  CONTACT_INBOX,
-  submitContactRequest,
-  type ContactRequestType,
-} from "@/lib/submitContactRequest";
+import { CONTACT_INBOX, submitContactRequest } from "@/lib/submitContactRequest";
 
 interface Props {
   gapSmeEur: number;
@@ -26,8 +22,6 @@ export default function Level4OnsiteCard({
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
-  const [requestType, setRequestType] =
-    useState<ContactRequestType>("meeting");
   const titleId = useId();
   const pct = Math.round(ratio * 1000) / 10;
 
@@ -54,7 +48,6 @@ export default function Level4OnsiteCard({
     setError(null);
     setConsent(false);
     setPending(false);
-    setRequestType("meeting");
     setOpen(true);
   }
 
@@ -81,7 +74,7 @@ export default function Level4OnsiteCard({
 
     setPending(true);
     const res = await submitContactRequest({
-      requestType,
+      requestType: "meeting",
       fullName,
       company,
       phone,
@@ -197,38 +190,6 @@ export default function Level4OnsiteCard({
                   </p>
 
                   <form className="mt-4 space-y-3" onSubmit={onSubmit} noValidate>
-                    <fieldset className="space-y-2">
-                      <legend className="text-sm font-medium text-ink-100">
-                        Typ žiadosti
-                      </legend>
-                      {(
-                        [
-                          ["meeting", "Stretnutie / Gemba Walk"],
-                          ["quote", "Cenová ponuka (CP)"],
-                          ["both", "Stretnutie + cenová ponuka"],
-                        ] as const
-                      ).map(([value, label]) => (
-                        <label
-                          key={value}
-                          className={`flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition ${
-                            requestType === value
-                              ? "border-signal bg-signal/15 text-ink-50"
-                              : "border-white/10 text-ink-200 hover:border-white/25"
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="requestType"
-                            value={value}
-                            checked={requestType === value}
-                            onChange={() => setRequestType(value)}
-                            className="accent-signal"
-                          />
-                          {label}
-                        </label>
-                      ))}
-                    </fieldset>
-
                     <div className="grid gap-3 sm:grid-cols-2">
                       <label className="block text-sm sm:col-span-1">
                         <span className="mb-1 block text-ink-200">Meno</span>

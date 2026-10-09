@@ -36,13 +36,13 @@ export default function Header() {
           className="group flex shrink-0 items-center gap-2"
           aria-label="AddValueEngineering Domov"
         >
-          <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-md bg-signal p-px">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-signal">
             <img
               src="/aveng-mark-white.png"
               alt=""
               width={36}
-              height={20}
-              className="h-[98%] w-[98%] object-contain"
+              height={36}
+              className="h-[118%] w-[118%] max-w-none object-contain"
               decoding="async"
             />
           </span>
@@ -82,7 +82,10 @@ export default function Header() {
             <Shield className="h-3 w-3" aria-hidden />
             GDPR
           </span>
-          <Link href="/self-audit/" className="btn-primary !py-2 !text-xs">
+          <Link
+            href="/self-audit/"
+            className="btn-primary !h-9 !px-4 !py-0 !text-xs leading-none"
+          >
             Spustiť audit zdarma
           </Link>
         </div>

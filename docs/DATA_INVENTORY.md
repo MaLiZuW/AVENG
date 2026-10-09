@@ -53,6 +53,7 @@ Zdroj: `supabase/schema.sql`, klientský kód (`src/lib/supabase.ts`, `submitCon
 |---|---|---|
 | Web3Forms | Ak `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | Kontaktný formulár / Gemba žiadosť |
 | FormSubmit | Fallback na `NEXT_PUBLIC_CONTACT_INBOX` | Rovnaké |
+| Resend via Edge `send-audit-report` | Po uložení self-audit leadu | PDF → klient + owner e-mail |
 | `mailto:` | Level 2/3 „požiadať e-mailom“ | Len otvorenie klienta |
 
 ## 4. Čo inventár **neobsahuje**

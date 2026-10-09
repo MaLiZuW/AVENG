@@ -16,12 +16,13 @@ import MeetingRequestModal from "@/components/audit/MeetingRequestModal";
 const LEVELS = [
   {
     id: "l1",
+    href: "/self-audit/#level-1",
     badge: "Level 1 · Zdarma",
     Icon: Gauge,
     title: "Orientačný skríning",
     price: "0 €",
     priceNote: "20 otázok · 15–20 min",
-    border: "border-signal/50",
+    border: "border-signal/50 hover:border-signal",
     glow: "shadow-[0_0_0_1px_rgba(47,111,237,0.35),0_16px_48px_rgba(47,111,237,0.12)]",
     badgeClass:
       "border-signal/40 bg-signal/15 text-signal-bright",
@@ -35,12 +36,13 @@ const LEVELS = [
   },
   {
     id: "l2",
+    href: "/self-audit/#level-2",
     badge: "Level 2 · Silver",
     Icon: Shield,
     title: "Detailný audit",
     price: `${LEVEL2_PRICE_EUR} €`,
     priceNote: "60 otázok · rozhodovací podklad",
-    border: "border-[#c0c7d4]/70",
+    border: "border-[#c0c7d4]/70 hover:border-[#e8edf5]",
     glow: "shadow-[0_0_0_1px_rgba(192,199,212,0.35),0_16px_48px_rgba(0,0,0,0.35)]",
     badgeClass: "border-[#c0c7d4]/45 bg-[#c0c7d4]/10 text-[#e8edf5]",
     iconClass: "text-[#c0c7d4]",
@@ -53,12 +55,13 @@ const LEVELS = [
   },
   {
     id: "l3",
+    href: "/self-audit/#level-3",
     badge: "Level 3 · Gold",
     Icon: Crown,
     title: "Expert & DTO",
     price: "Po dohode",
     priceNote: "180 otázok · 6M + simulátor",
-    border: "border-[#d4af37]/75",
+    border: "border-[#d4af37]/75 hover:border-[#f0d78c]",
     glow: "shadow-[0_0_0_1px_rgba(212,175,55,0.4),0_16px_48px_rgba(0,0,0,0.4)]",
     badgeClass: "border-[#d4af37]/45 bg-[#d4af37]/10 text-[#f0d78c]",
     iconClass: "text-[#d4af37]",
@@ -111,38 +114,48 @@ export default function AuditTeaser() {
           {LEVELS.map((lvl, i) => (
             <li
               key={lvl.id}
-              className={`relative flex flex-col rounded-xl border-2 bg-ink-900/70 p-5 backdrop-blur-sm sm:p-6 ${lvl.border} ${lvl.glow} animate-fade-up`}
+              className="animate-fade-up"
               style={{ animationDelay: `${i * 90}ms` }}
             >
-              <div className="flex items-start justify-between gap-3">
-                <p
-                  className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${lvl.badgeClass}`}
-                >
-                  <lvl.Icon className="h-3.5 w-3.5" aria-hidden />
-                  {lvl.badge}
+              <Link
+                href={lvl.href}
+                className={`relative flex h-full flex-col rounded-xl border-2 bg-ink-900/70 p-5 backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-ink-900 sm:p-6 ${lvl.border} ${lvl.glow} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright`}
+                aria-label={`${lvl.badge}: ${lvl.title} — prejsť na audit`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <p
+                    className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${lvl.badgeClass}`}
+                  >
+                    <lvl.Icon className="h-3.5 w-3.5" aria-hidden />
+                    {lvl.badge}
+                  </p>
+                  <span className="font-display text-2xl font-semibold text-ink-300/40">
+                    0{i + 1}
+                  </span>
+                </div>
+                <h3 className="mt-4 font-display text-xl font-semibold text-ink-50">
+                  {lvl.title}
+                </h3>
+                <p className="mt-3 font-display text-3xl font-semibold text-ink-50">
+                  {lvl.price}
                 </p>
-                <span className="font-display text-2xl font-semibold text-ink-300/40">
-                  0{i + 1}
-                </span>
-              </div>
-              <h3 className="mt-4 font-display text-xl font-semibold text-ink-50">
-                {lvl.title}
-              </h3>
-              <p className="mt-3 font-display text-3xl font-semibold text-ink-50">
-                {lvl.price}
-              </p>
-              <p className="mt-1 text-xs text-ink-300">{lvl.priceNote}</p>
-              <ul className="mt-5 flex-1 space-y-2.5">
-                {lvl.points.map((p) => (
-                  <li key={p} className="flex gap-2 text-sm text-ink-100">
-                    <Check
-                      className={`mt-0.5 h-4 w-4 shrink-0 ${lvl.checkClass}`}
-                      aria-hidden
-                    />
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
+                <p className="mt-1 text-xs text-ink-300">{lvl.priceNote}</p>
+                <ul className="mt-5 flex-1 space-y-2.5">
+                  {lvl.points.map((p) => (
+                    <li key={p} className="flex gap-2 text-sm text-ink-100">
+                      <Check
+                        className={`mt-0.5 h-4 w-4 shrink-0 ${lvl.checkClass}`}
+                        aria-hidden
+                      />
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-signal-bright">
+                  Prejsť na audit
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </p>
+              </Link>
             </li>
           ))}
         </ol>
