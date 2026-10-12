@@ -14,11 +14,17 @@ export const BENCHMARK_SOURCE: BenchmarkSource = {
   kind: "expert-estimate",
 };
 
+export const EXPERT_ESTIMATE_SOURCE_SK =
+  "Referenčné hodnoty MSP sú interné referencie AVENG založené na expertnom odhade, nie oficiálna štatistika.";
+
+export const PUBLISHED_REFERENCE_SOURCE_SK =
+  "Referencie sú medzinárodné orientačné hodnoty z verejných zdrojov (napr. ASQ, IISE, Vorne/OEE.com). Pre Slovensko verejný procesný benchmark nie je k dispozícii. Hodnoty sa líšia podľa odvetvia a spôsobu merania.";
+
 export function benchmarkSourceNoteSk(): string {
   if (BENCHMARK_SOURCE.kind === "published") {
     return `Zdroj referencie: ${BENCHMARK_SOURCE.citation}.`;
   }
-  return "Referenčné hodnoty MSP sú interné referencie AVENG založené na expertnom odhade, nie oficiálna štatistika.";
+  return EXPERT_ESTIMATE_SOURCE_SK;
 }
 
 export const PUBLISHED_KPI_KEYS = [
@@ -264,4 +270,21 @@ export function getReferenceSourceStatus(): Record<
     otd_pct: "published-secondary",
     schedule_adherence_pct: "published-secondary",
   };
+}
+
+/** One sentence per source kind actually used. Both, when the result uses both. */
+export function referenceSourceNotesSk(
+  keys: readonly ReferenceStatusKey[],
+): string[] {
+  const status = getReferenceSourceStatus();
+  let expert = false;
+  let published = false;
+  for (const key of keys) {
+    if (status[key] === "expert-estimate") expert = true;
+    if (status[key] === "published-secondary") published = true;
+  }
+  const notes: string[] = [];
+  if (expert) notes.push(EXPERT_ESTIMATE_SOURCE_SK);
+  if (published) notes.push(PUBLISHED_REFERENCE_SOURCE_SK);
+  return notes;
 }

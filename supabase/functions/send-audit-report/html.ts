@@ -140,6 +140,7 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
       <td width="48%" style="background:#121a2b;border-radius:14px;padding:20px 18px;border:1px solid rgba(232,165,75,.35)">
         <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.12em">${escapeHtml(LABEL_GAP_HEADLINE_SK)}</div>
         <div style="font-size:18px;font-weight:800;color:#e8a54b;margin-top:8px;line-height:1.35">${escapeHtml(headline)}</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:8px;line-height:1.45">${escapeHtml(DISCLAIMER_SK)}</div>
         ${
           rel
             ? `<div style="font-size:12px;color:#e8edf5;margin-top:8px">${escapeHtml(rel.lineSk)}</div>
@@ -238,7 +239,6 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
   </td></tr>
 
   <tr><td style="padding:0 34px 30px;font-size:11px;color:#64748b;line-height:1.55;text-align:center">
-    ${escapeHtml(DISCLAIMER_SK)}<br/><br/>
     © ${new Date().getFullYear()} ${BRAND} · <a href="${SITE}" style="color:#5b93ff">${SITE.replace("https://", "")}</a>
   </td></tr>
 

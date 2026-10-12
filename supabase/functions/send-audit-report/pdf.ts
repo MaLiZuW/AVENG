@@ -351,6 +351,11 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     });
 
     y -= 120;
+    for (const line of wrap(DISCLAIMER_SK, font, 8, width - 80)) {
+      page.drawText(line, { x: 40, y, size: 8, font, color: C.muted });
+      y -= 11;
+    }
+    y -= 8;
     if (rel) {
       page.drawText(rel.lineSk, {
         x: 40,
@@ -366,11 +371,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       }
       y -= 6;
     }
-    for (const line of wrap(DISCLAIMER_SK, font, 8, width - 80).slice(0, 4)) {
-      page.drawText(line, { x: 40, y, size: 8, font, color: C.muted });
-      y -= 11;
-    }
-    y -= 16;
+    y -= 10;
     if (cp) {
       page.drawRectangle({
         x: 40,
@@ -814,12 +815,6 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       font,
       color: C.muted,
     });
-
-    y -= 120;
-    for (const line of wrap(DISCLAIMER_SK, font, 8, width - 80)) {
-      page.drawText(line, { x: 40, y, size: 8, font, color: C.muted });
-      y -= 11;
-    }
 
     footer(page, font, 4, TOTAL);
   }

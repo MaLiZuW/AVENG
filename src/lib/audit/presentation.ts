@@ -11,7 +11,13 @@ import {
   MAX_DISPLAYED_POTENTIAL_SHARE,
   SHOW_WORLD_CLASS_CEILING,
 } from "@/config/audit-display";
-import { benchmarkSourceNoteSk } from "@/config/benchmarks";
+import {
+  getKpiReference,
+  isBenchmarkAvailable,
+  referenceSourceNotesSk,
+  type KpiReference,
+  type PublishedKpiKey,
+} from "@/config/benchmarks";
 import {
   formatEurRange,
   LABEL_WC_CEILING_SK,
@@ -46,6 +52,8 @@ export {
   ZERO_GAP_SK,
   reliabilityWording,
 } from "../../../shared/audit-presentation";
+
+export { referenceSourceNotesSk };
 
 export type { ReliabilityLevel, ReportPresentationPayload };
 
@@ -265,8 +273,6 @@ export function wcCeilingDisplay(result: AuditResult): {
   };
 }
 
-export const BENCHMARK_SOURCE_NOTE_SK = benchmarkSourceNoteSk();
-
 export function scoreToBandLabel(score: VdaScore): string {
   const map: Record<VdaScore, string> = {
     0: "Absencia",
@@ -276,4 +282,104 @@ export function scoreToBandLabel(score: VdaScore): string {
     10: "World-class referencia",
   };
   return map[score];
+}
+
+export interface KpiComparisonSource {
+  name: string;
+  url: string;
+}
+
+export interface KpiComparisonRow {
+  key: PublishedKpiKey;
+  labelSk: string;
+  userValueSk: string;
+  typicalSk: string;
+  topSk: string;
+  sources: KpiComparisonSource[];
+}
+
+function skNumber(n: number): string {
+  const rounded = Math.round(n * 100) / 100;
+  const negative = rounded < 0;
+  const [intRaw, frac] = Math.abs(rounded).toFixed(2).split(".");
+  const grouped = intRaw!.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  const trimmed = frac!.replace(/0+$/, "");
+  const body = trimmed ? `${grouped},${trimmed}` : grouped;
+  return negative ? `−${body}` : body;
+}
+
+function pct(n: number): string {
+  return `${skNumber(n)} %`;
+}
+
+function pctRange(pair: readonly [number, number]): string {
+  return `${skNumber(pair[0])}–${skNumber(pair[1])} %`;
+}
+
+/**
+ * Column text from the reference JSON only.
+ * `schedule_adherence_pct` has a vendor threshold, not a measured typical value,
+ * so it does not become a "Typický podnik" cell.
+ */
+function benchmarkCells(
+  ref: KpiReference,
+): { typicalSk: string; topSk: string } | null {
+  switch (ref.key) {
+    case "oee_pct":
+      return {
+        typicalSk: `${pct(ref.ranges.typical)}; diskrétna výroba ${pctRange(ref.ranges.discreteAverageRange)}; horný kvartil ${pct(ref.ranges.topQuartile)}`,
+        topSk: `${pct(ref.ranges.worldClass)}; podľa odvetvia ${pctRange(ref.ranges.worldClassBySectorRange)}`,
+      };
+    case "copq_pct_of_sales":
+      return {
+        typicalSk: `${pct(ref.ranges.typical)} (rozsah ${pctRange(ref.ranges.range)})`,
+        topSk: `pod ${pct(ref.ranges.worldClassBelow)}`,
+      };
+    case "otd_pct":
+      return {
+        typicalSk: pctRange(ref.ranges.averageRange),
+        topSk: pctRange(ref.ranges.worldClassRange),
+      };
+    case "schedule_adherence_pct":
+      return null;
+    default: {
+      const _exhaustive: never = ref;
+      return _exhaustive;
+    }
+  }
+}
+
+function formatUserKpi(value: number, unit: string): string {
+  if (unit === "%" || unit === "% of sales") return pct(value);
+  return `${skNumber(value)} ${unit}`;
+}
+
+/** Rows only for exact numeric answers whose question is mapped to a published KPI. */
+export function buildKpiComparisonRows(
+  details: AnswerDetailsMap | undefined,
+): KpiComparisonRow[] {
+  if (!details) return [];
+  const rows: KpiComparisonRow[] = [];
+  for (const q of LEVEL1_QUESTIONS) {
+    if (q.inputType !== "NUMERIC_INPUT" || !q.kpiKey) continue;
+    if (!isBenchmarkAvailable(q.kpiKey)) continue;
+    const value = details[q.id]?.numericOverrideValue;
+    if (value === undefined || !Number.isFinite(value)) continue;
+    const ref = getKpiReference(q.kpiKey);
+    if (!ref) continue;
+    const cells = benchmarkCells(ref);
+    if (!cells) continue;
+    rows.push({
+      key: q.kpiKey,
+      labelSk: ref.labelSk,
+      userValueSk: formatUserKpi(value, ref.unit),
+      typicalSk: cells.typicalSk,
+      topSk: cells.topSk,
+      sources: ref.sources.map((source) => ({
+        name: source.name,
+        url: source.url,
+      })),
+    });
+  }
+  return rows;
 }

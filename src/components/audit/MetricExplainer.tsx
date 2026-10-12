@@ -48,7 +48,7 @@ export default function MetricExplainer({ processId }: Props) {
                   {q.targetExplanation}
                 </p>
                 <p className="mt-0.5">
-                  <span className="text-ember">Metodika: </span>
+                  <span className="text-ember">Použitá metodika: </span>
                   {q.methodology}
                 </p>
               </li>

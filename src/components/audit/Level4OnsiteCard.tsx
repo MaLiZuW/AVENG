@@ -12,12 +12,14 @@ import { formatEur } from "@/lib/audit/scoring";
 import { CONTACT_INBOX, submitContactRequest } from "@/lib/submitContactRequest";
 
 interface Props {
+  domain: string;
   gapLabelSk: string;
   totalCostBaseEur: number;
   ratio: number;
 }
 
 export default function Level4OnsiteCard({
+  domain,
   gapLabelSk,
   totalCostBaseEur,
   ratio,
@@ -110,13 +112,9 @@ export default function Level4OnsiteCard({
           {LABEL_GEMBA_KICKER_SK}
         </p>
         <h4 className="mt-2 font-display text-xl font-semibold text-ink-50">
-          Výsledok naznačuje významnú medzeru (&gt; 15 % modelovej nákladovej
-          bázy procesov)
+          Výsledok naznačuje významnú medzeru v {domain} – odporúčame overenie
+          priamo vo výrobe.
         </h4>
-        <p className="mt-3 text-sm leading-relaxed text-ink-200">
-          Odporúčame overenie priamo vo výrobe (Gemba Walk) a dohodu ďalšieho
-          postupu — nie automatickú záruku úspor.
-        </p>
         <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-3">
           <div>
             <dt className="text-ink-300">{LABEL_GAP_SHORT_SK}</dt>

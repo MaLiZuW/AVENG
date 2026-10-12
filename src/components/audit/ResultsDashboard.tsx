@@ -1,13 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import {
   domainLabel,
   SHOW_WORLD_CLASS_CEILING,
 } from "@/config/audit-display";
 import {
-  BENCHMARK_SOURCE_NOTE_SK,
+  buildKpiComparisonRows,
   buildLevel1Presentation,
   formatEurRange,
   LABEL_GAP_HEADLINE_SK,
@@ -15,6 +15,7 @@ import {
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
   LEVEL1_DISCLAIMER_SK,
+  referenceSourceNotesSk,
   toReportPresentation,
   wcCeilingDisplay,
 } from "@/lib/audit/presentation";
@@ -27,6 +28,7 @@ import type {
 } from "@/lib/audit/types";
 import DtoSimulator from "./DtoSimulator";
 import LeadForm from "./LeadForm";
+import KpiReferenceTable from "./KpiReferenceTable";
 import Level4OnsiteCard from "./Level4OnsiteCard";
 import MetricExplainer from "./MetricExplainer";
 import RadarChart from "./RadarChart";
@@ -71,6 +73,23 @@ export default function ResultsDashboard({
   const wc = useMemo(() => wcCeilingDisplay(result), [result]);
   const showWc = SHOW_WORLD_CLASS_CEILING && wc.visible;
   const [methodOpen, setMethodOpen] = useState(false);
+  const methodPanelId = useId();
+  const kpiRows = useMemo(
+    () => buildKpiComparisonRows(answerDetails),
+    [answerDetails],
+  );
+  const sourceNotes = useMemo(
+    () =>
+      referenceSourceNotesSk([
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        ...kpiRows.map((row) => row.key),
+      ]),
+    [kpiRows],
+  );
 
   const processList = useMemo(() => {
     const sorted = [...result.processScores];
@@ -93,6 +112,7 @@ export default function ResultsDashboard({
 
       {gemba.show && (
         <Level4OnsiteCard
+          domain={`${domainLabel(cp.processId)} · ${cp.label}`}
           gapLabelSk={smeRange.labelSk}
           totalCostBaseEur={gemba.totalCostBaseEur}
           ratio={gemba.ratio}
@@ -103,22 +123,85 @@ export default function ResultsDashboard({
         className={`grid gap-4 ${showWc ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}
       >
         <div className="steel-panel border-ember/30 p-5 sm:p-6">
-          <p className="text-xs uppercase tracking-wider text-ink-200">
-            {LABEL_GAP_HEADLINE_SK}
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-xs uppercase tracking-wider text-ink-200">
+                {LABEL_GAP_HEADLINE_SK}
+              </p>
+              <p className="mt-2 font-display text-2xl font-semibold text-ember sm:text-3xl">
+                {smeRange.labelSk}
+              </p>
+            </div>
+            <button
+              type="button"
+              className="inline-flex items-center gap-2 rounded-md border border-white/15 px-3 py-2 text-left text-sm font-medium text-ink-100 hover:bg-white/5"
+              aria-expanded={methodOpen}
+              aria-controls={methodPanelId}
+              onClick={() => setMethodOpen((v) => !v)}
+            >
+              Ako sme dospeli k tomuto číslu?
+              <ChevronDown
+                className={`h-4 w-4 shrink-0 text-signal-bright transition ${methodOpen ? "rotate-180" : ""}`}
+                aria-hidden
+              />
+            </button>
+          </div>
+          <p className="mt-3 text-xs leading-relaxed text-ink-300">
+            {LEVEL1_DISCLAIMER_SK}
           </p>
-          <p className="mt-2 font-display text-2xl font-semibold text-ember sm:text-3xl">
-            {smeRange.labelSk}
-          </p>
+          <div
+            id={methodPanelId}
+            className={`grid transition-[grid-template-rows] duration-300 ${
+              methodOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="mt-3 space-y-2 border-t border-white/10 pt-3 text-sm text-ink-200">
+                <p>
+                  {`${
+                    [
+                      Number.isFinite(preAudit.annualRevenueEur)
+                        ? `Tržby ${formatEur(preAudit.annualRevenueEur)}`
+                        : null,
+                      Number.isFinite(preAudit.cogsPercent)
+                        ? `COGS ${preAudit.cogsPercent} %`
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(", ")
+                  }${
+                    Number.isFinite(preAudit.annualRevenueEur) ||
+                    Number.isFinite(preAudit.cogsPercent)
+                      ? ". "
+                      : ""
+                  }Odvetvie ${result.sectorLabel}.`}
+                </p>
+                <p>
+                  {`Najväčšia medzera je v doméne ${domainLabel(cp.processId)} · ${cp.label}. Vaše skóre je ${cp.userPercent.toFixed(0)} % a referencia MSP je ${cp.smePercent.toFixed(0)} %.`}
+                </p>
+                <details className="text-xs text-ink-300">
+                  <summary className="cursor-pointer text-signal-bright">
+                    Technický detail
+                  </summary>
+                  <p className="mt-2">
+                    Skóre domény je 100 krát súčet (váha otázky krát skóre)
+                    deleno súčtom (váha otázky krát 10). Medzera v eurách je
+                    tržby krát podiel COGS krát váha nákladov domény krát max(0,
+                    (referencia mínus vaše skóre) deleno 100). Celok je súčet
+                    domén. Rozsah vzniká z pásiem odpovedí A–E. Pri presne
+                    zadanom čísle je dolná hranica rovnaká ako horná.
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
           {reliability.visible ? (
-            <p className="mt-2 text-xs text-ink-200">
+            <p className="mt-3 text-xs text-ink-200">
               <strong className="text-ink-50">{reliability.lineSk}</strong>
               {" — "}
               {reliability.hintSk}
             </p>
           ) : null}
-          <p className="mt-3 text-xs leading-relaxed text-ink-300">
-            {LEVEL1_DISCLAIMER_SK}
-          </p>
         </div>
         {showWc ? (
           <div className="steel-panel border-white/10 p-5 sm:p-6">
@@ -138,52 +221,17 @@ export default function ResultsDashboard({
         ) : null}
       </div>
 
-      <div className="rounded-md border border-white/10 bg-ink-900/40">
-        <button
-          type="button"
-          className="flex w-full items-center justify-between gap-2 px-4 py-3 text-left text-sm font-medium text-ink-100"
-          aria-expanded={methodOpen}
-          onClick={() => setMethodOpen((v) => !v)}
-        >
-          Ako sme dospeli k tomuto číslu?
-          <ChevronDown
-            className={`h-4 w-4 text-signal-bright transition ${methodOpen ? "rotate-180" : ""}`}
-            aria-hidden
-          />
-        </button>
-        {methodOpen && (
-          <div className="space-y-2 border-t border-white/10 px-4 py-3 text-sm text-ink-200">
-            <p>
-              Vstupy: tržby{" "}
-              <strong className="text-ink-50">
-                {formatEur(preAudit.annualRevenueEur)}
-              </strong>
-              , COGS{" "}
-              <strong className="text-ink-50">{preAudit.cogsPercent} %</strong>,
-              odvetvie {result.sectorLabel}.
+      {sourceNotes.length > 0 ? (
+        <div className="space-y-2">
+          {sourceNotes.map((note) => (
+            <p key={note} className="text-xs leading-relaxed text-ink-300">
+              {note}
             </p>
-            <p>
-              Dominujúca medzera:{" "}
-              <strong className="text-ink-50">
-                {domainLabel(cp.processId)} · {cp.shortLabel}
-              </strong>{" "}
-              (vaša úroveň {cp.userPercent.toFixed(0)} % vs referencia{" "}
-              {cp.smePercent.toFixed(0)} %).
-            </p>
-            <p className="text-xs text-ink-300">{BENCHMARK_SOURCE_NOTE_SK}</p>
-            <details className="text-xs text-ink-300">
-              <summary className="cursor-pointer text-signal-bright">
-                Technický detail
-              </summary>
-              <p className="mt-2">
-                Medzera procesu ≈ nákladová báza procesu × max(0, (referencia −
-                vaše skóre) / 100). Celok je súčet procesov. Zobrazený rozsah je
-                prezentačná vrstva nad výpočtom (pásma kariet A–E).
-              </p>
-            </details>
-          </div>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : null}
+
+      <KpiReferenceTable rows={kpiRows} />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="steel-panel overflow-x-auto p-5 sm:p-6">
@@ -286,7 +334,6 @@ export default function ResultsDashboard({
             </dd>
           </div>
         </dl>
-        <MetricExplainer processId={cp.processId} />
       </div>
 
       <div className="steel-panel p-5 sm:p-6">
@@ -307,7 +354,6 @@ export default function ResultsDashboard({
                   </span>
                 </p>
                 <p className="mt-1 text-sm text-ink-200">{r.description}</p>
-                <MetricExplainer processId={r.processId} />
               </div>
             </li>
           ))}

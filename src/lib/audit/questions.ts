@@ -1,3 +1,4 @@
+import type { PublishedKpiKey } from "@/config/benchmarks";
 import type {
   AuditQuestion,
   AuditQuestionData,
@@ -71,6 +72,7 @@ type QuestionDraft = {
   /** UI A–E labels (no numeric thresholds). */
   optionLabels: [string, string, string, string, string];
   numericUnit?: string;
+  kpiKey?: PublishedKpiKey;
   numericMapping?: NumericScoreMapping;
   maturityLabels?: [string, string, string, string, string];
   benchmarkSme: number | string;
@@ -94,6 +96,7 @@ function buildQuestion(d: QuestionDraft): AuditQuestion {
     severity: severityFromWeight(d.weight),
     options,
     numericUnit: d.numericUnit,
+    kpiKey: d.kpiKey,
     numericMapping: d.numericMapping,
     maturityOptions: d.maturityLabels
       ? maturityOpts(d.maturityLabels)
@@ -233,6 +236,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     inputType: "NUMERIC_INPUT",
     weight: 5,
     numericUnit: "%",
+    kpiKey: "oee_pct",
     numericMapping: {
       score0: "< 40%",
       score4: "40 – 54%",
@@ -372,6 +376,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     inputType: "NUMERIC_INPUT",
     weight: 5,
     numericUnit: "%",
+    kpiKey: "copq_pct_of_sales",
     numericMapping: {
       score0: "> 10%",
       score4: "8 – 10%",
@@ -454,6 +459,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     inputType: "NUMERIC_INPUT",
     weight: 5,
     numericUnit: "%",
+    kpiKey: "otd_pct",
     numericMapping: {
       score0: "< 70%",
       score4: "70 – 79%",

@@ -1,3 +1,5 @@
+import type { PublishedKpiKey } from "@/config/benchmarks";
+
 export type ProcessId = "P1" | "P2" | "P3" | "P4" | "P5";
 
 /** Internal VDA 6.3 score — never rendered in the quiz UI. */
@@ -78,6 +80,11 @@ export interface AuditQuestion {
   /** Kvalitatívne A–E pre aktuálne UI (bez viditeľných skóre). */
   options: QualitativeOption[];
   numericUnit?: string;
+  /**
+   * Set only when this exact-input question's unit and definition match a
+   * published KPI. Unmapped questions stay out of the reference table.
+   */
+  kpiKey?: PublishedKpiKey;
   numericMapping?: NumericScoreMapping;
   maturityOptions?: MaturityOptionData[];
   benchmarkSme: number | string;
