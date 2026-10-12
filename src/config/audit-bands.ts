@@ -1,5 +1,6 @@
 /**
  * Expert A–E card score bounds for display-layer uncertainty.
+ * Expert estimates pending owner confirmation.
  * Used only to recompute gap at lower/upper bounds — not scoring math.
  * TODO(owner): confirm these bands.
  */

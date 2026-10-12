@@ -4,6 +4,7 @@
  */
 
 import { company } from "@/config/company";
+import { formatEurRange } from "../../shared/audit-presentation";
 
 export type ContactRequestType =
   | "meeting"
@@ -21,6 +22,7 @@ export interface ContactRequestPayload {
   /** Audit context (optional) */
   meta?: {
     gapSmeEur?: number;
+    gapLabelSk?: string;
     totalCostBaseEur?: number;
     lossRatioPercent?: number;
     source?: string;
@@ -55,14 +57,16 @@ function buildMessageBody(payload: ContactRequestPayload): string {
       "",
       "— Kontext auditu —",
       payload.meta.source ? `Zdroj: ${payload.meta.source}` : "",
-      payload.meta.gapSmeEur != null
-        ? `Medzera voči referencii MSP: ${payload.meta.gapSmeEur} €/rok`
-        : "",
+      payload.meta.gapLabelSk
+        ? `Medzera voči referencii MSP: ${payload.meta.gapLabelSk}`
+        : payload.meta.gapSmeEur != null
+          ? `Medzera voči referencii MSP: ${formatEurRange(payload.meta.gapSmeEur, payload.meta.gapSmeEur)}`
+          : "",
       payload.meta.totalCostBaseEur != null
         ? `Nákladová báza: ${payload.meta.totalCostBaseEur} €`
         : "",
       payload.meta.lossRatioPercent != null
-        ? `Podiel straty: ${payload.meta.lossRatioPercent} %`
+        ? `% z modelovej nákladovej bázy procesov: ${payload.meta.lossRatioPercent} %`
         : "",
     );
   }

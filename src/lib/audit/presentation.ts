@@ -12,6 +12,15 @@ import {
   SHOW_WORLD_CLASS_CEILING,
 } from "@/config/audit-display";
 import { benchmarkSourceNoteSk } from "@/config/benchmarks";
+import {
+  formatEurRange,
+  LABEL_WC_CEILING_SK,
+  LEVEL1_DISCLAIMER_SK,
+  reliabilityLevelFromShare,
+  reliabilityWording,
+  type ReliabilityLevel,
+  type ReportPresentationPayload,
+} from "../../../shared/audit-presentation";
 import { LEVEL1_QUESTIONS } from "./questions";
 import { calculateAuditResult } from "./scoring";
 import type {
@@ -22,7 +31,23 @@ import type {
   VdaScore,
 } from "./types";
 
-export type ReliabilityLevel = "nizka" | "stredna" | "vyssia";
+export {
+  formatEurRange,
+  round2sig,
+  LABEL_COST_BASE_SHARE_SK,
+  LABEL_GAP_HEADLINE_SK,
+  LABEL_GAP_SHORT_SK,
+  LABEL_GEMBA_KICKER_SK,
+  LABEL_MSP_REF_SK,
+  LABEL_PROCESS_GAPS_SK,
+  LABEL_WC_CEILING_SK,
+  LEVEL1_DISCLAIMER_SK,
+  RELIABILITY_HINT_SK,
+  ZERO_GAP_SK,
+  reliabilityWording,
+} from "../../../shared/audit-presentation";
+
+export type { ReliabilityLevel, ReportPresentationPayload };
 
 export interface DisplayMoneyRange {
   low: number;
@@ -30,47 +55,19 @@ export interface DisplayMoneyRange {
   labelSk: string;
 }
 
-/** Round to 2 significant figures for display ranges */
-export function round2sig(n: number): number {
-  if (!Number.isFinite(n) || n === 0) return 0;
-  const sign = n < 0 ? -1 : 1;
-  const abs = Math.abs(n);
-  const exp = Math.floor(Math.log10(abs));
-  const scale = 10 ** (exp - 1);
-  return sign * Math.round(abs / scale) * scale;
-}
-
-function formatCompactEur(n: number): string {
-  const abs = Math.abs(n);
-  if (abs >= 1_000_000) {
-    const m = abs / 1_000_000;
-    const t = m >= 10 ? Math.round(m) : Math.round(m * 10) / 10;
-    return `${t.toLocaleString("sk-SK")} mil. €`;
-  }
-  if (abs >= 10_000) {
-    const k = Math.round(abs / 1000);
-    return `${k.toLocaleString("sk-SK")} tis. €`;
-  }
-  return new Intl.NumberFormat("sk-SK", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(n);
-}
-
-export function formatEurRange(low: number, high: number): string {
-  const a = round2sig(Math.min(low, high));
-  const b = round2sig(Math.max(low, high));
-  if (a <= 0 && b <= 0) {
-    return "bez výraznej medzery voči referencii";
-  }
-  if (a <= 0) {
-    return `do ${formatCompactEur(b)} / rok`;
-  }
-  if (a === b) {
-    return `približne ${formatCompactEur(a)} / rok`;
-  }
-  return `približne ${formatCompactEur(a)} – ${formatCompactEur(b)} / rok`;
+export interface Level1Presentation {
+  headline: DisplayMoneyRange;
+  processes: { processId: string; gap: DisplayMoneyRange }[];
+  critical: DisplayMoneyRange;
+  reliability: {
+    visible: boolean;
+    level: ReliabilityLevel;
+    lineSk: string;
+    hintSk: string;
+    /** Internal weight share. Never render as a probability. */
+    exactWeightShare: number;
+  };
+  disclaimerSk: string;
 }
 
 function weightForQuestion(questionId: string): number {
@@ -79,12 +76,20 @@ function weightForQuestion(questionId: string): number {
 }
 
 /**
- * Build low/high answer maps from card bands (or exact numeric).
- * Higher maturity score → lower financial gap (monotonic).
+ * Band endpoints stay continuous. The engine reads them as numbers;
+ * snapping to the VDA midpoint would collapse the range.
  */
-function boundAnswerMaps(
-  details: AnswerDetailsMap | undefined,
-): { lowAnswers: AuditAnswers; highAnswers: AuditAnswers } {
+function scoreAtBound(n: number): VdaScore {
+  return n as VdaScore;
+}
+
+/**
+ * Low map = lower maturity (higher gap). High map = higher maturity (lower gap).
+ */
+function boundAnswerMaps(details: AnswerDetailsMap | undefined): {
+  lowAnswers: AuditAnswers;
+  highAnswers: AuditAnswers;
+} {
   const lowAnswers: AuditAnswers = {};
   const highAnswers: AuditAnswers = {};
 
@@ -92,25 +97,52 @@ function boundAnswerMaps(
     const d = details?.[q.id];
     if (!d) continue;
     if (d.numericOverrideValue !== undefined) {
-      const s = d.finalEvaluatedScore;
-      lowAnswers[q.id] = s;
-      highAnswers[q.id] = s;
+      lowAnswers[q.id] = d.finalEvaluatedScore;
+      highAnswers[q.id] = d.finalEvaluatedScore;
     } else {
       const key = optionKeyFromScore(d.selectedCardScore);
       const band = CARD_SCORE_BOUNDS[key];
-      lowAnswers[q.id] = nearestVda(band.low);
-      highAnswers[q.id] = nearestVda(band.high);
+      lowAnswers[q.id] = scoreAtBound(band.low);
+      highAnswers[q.id] = scoreAtBound(band.high);
     }
   }
 
   return { lowAnswers, highAnswers };
 }
 
-function nearestVda(n: number): VdaScore {
-  const bands: VdaScore[] = [0, 4, 6, 8, 10];
-  return bands.reduce((best, b) =>
-    Math.abs(b - n) < Math.abs(best - n) ? b : best,
-  );
+function spanGap(a: number, b: number): DisplayMoneyRange {
+  const low = Math.max(0, Math.min(a, b));
+  const high = Math.max(0, a, b);
+  return { low, high, labelSk: formatEurRange(low, high) };
+}
+
+function pointGap(n: number): DisplayMoneyRange {
+  return spanGap(n, n);
+}
+
+export function estimateReliability(
+  result: AuditResult,
+  details?: AnswerDetailsMap,
+): Level1Presentation["reliability"] {
+  let wNum = 0;
+  let wAll = 0;
+  if (details && result.auditLevel === 1) {
+    for (const [qid, d] of Object.entries(details)) {
+      const w = weightForQuestion(qid);
+      wAll += w;
+      if (d.numericOverrideValue !== undefined) wNum += w;
+    }
+  }
+  const share = wAll > 0 ? wNum / wAll : 0;
+  const level = reliabilityLevelFromShare(share);
+  const wording = reliabilityWording(level);
+  return {
+    visible: wAll > 0,
+    level,
+    lineSk: wording.lineSk,
+    hintSk: wording.hintSk,
+    exactWeightShare: share,
+  };
 }
 
 /**
@@ -121,47 +153,84 @@ export function gapSmeDisplayRange(
   details: AnswerDetailsMap | undefined,
   preAudit?: PreAuditInput,
 ): DisplayMoneyRange {
-  const mid = result.gapSmeEur;
+  return buildLevel1Presentation(result, details, preAudit).headline;
+}
 
-  if (!preAudit || result.auditLevel !== 1 || !details) {
-    // Without bound inputs, do not invent ±% — show compact mid as single estimate
-    if (mid <= 0) {
-      return { low: 0, high: 0, labelSk: "bez výraznej medzery voči referencii" };
-    }
-    const r = round2sig(mid);
-    return {
-      low: r,
-      high: r,
-      labelSk: formatEurRange(r, r),
-    };
-  }
+export function buildLevel1Presentation(
+  result: AuditResult,
+  details: AnswerDetailsMap | undefined,
+  preAudit?: PreAuditInput,
+): Level1Presentation {
+  const reliability = estimateReliability(result, details);
+  const pointProcesses = result.processScores.map((p) => ({
+    processId: p.processId,
+    gap: pointGap(p.gapSmeEur),
+  }));
+  const base: Level1Presentation = {
+    headline: pointGap(result.gapSmeEur),
+    processes: pointProcesses,
+    critical: pointGap(result.criticalProcess.gapSmeEur),
+    reliability,
+    disclaimerSk: LEVEL1_DISCLAIMER_SK,
+  };
+
+  if (!preAudit || result.auditLevel !== 1 || !details) return base;
 
   const { lowAnswers, highAnswers } = boundAnswerMaps(details);
-  if (Object.keys(lowAnswers).length === 0) {
-    const r = round2sig(mid);
-    return { low: r, high: r, labelSk: formatEurRange(r, r) };
-  }
+  if (Object.keys(lowAnswers).length === 0) return base;
 
-  // Low card scores → higher gap; high card scores → lower gap
   const pessimistic = calculateAuditResult(lowAnswers, preAudit);
   const optimistic = calculateAuditResult(highAnswers, preAudit);
-  const low = Math.max(0, Math.min(optimistic.gapSmeEur, pessimistic.gapSmeEur));
-  const high = Math.max(optimistic.gapSmeEur, pessimistic.gapSmeEur);
+
+  const processes = result.processScores.map((p) => {
+    const hi =
+      pessimistic.processScores.find((s) => s.processId === p.processId)
+        ?.gapSmeEur ?? p.gapSmeEur;
+    const lo =
+      optimistic.processScores.find((s) => s.processId === p.processId)
+        ?.gapSmeEur ?? p.gapSmeEur;
+    return { processId: p.processId, gap: spanGap(lo, hi) };
+  });
+
+  const criticalId = result.criticalProcess.processId;
+  const critical =
+    processes.find((p) => p.processId === criticalId)?.gap ??
+    pointGap(result.criticalProcess.gapSmeEur);
 
   return {
-    low,
-    high,
-    labelSk: formatEurRange(low, high),
+    headline: spanGap(optimistic.gapSmeEur, pessimistic.gapSmeEur),
+    processes,
+    critical,
+    reliability,
+    disclaimerSk: LEVEL1_DISCLAIMER_SK,
   };
 }
 
-export function wcCeilingDisplay(
-  result: AuditResult,
-): {
+export function toReportPresentation(
+  view: Level1Presentation,
+): ReportPresentationPayload {
+  return {
+    gapSmeLowEur: view.headline.low,
+    gapSmeHighEur: view.headline.high,
+    ...(view.reliability.visible
+      ? { reliabilityLevel: view.reliability.level }
+      : {}),
+    processGaps: view.processes.map((p) => ({
+      processId: p.processId,
+      lowEur: p.gap.low,
+      highEur: p.gap.high,
+    })),
+    criticalLowEur: view.critical.low,
+    criticalHighEur: view.critical.high,
+  };
+}
+
+export function wcCeilingDisplay(result: AuditResult): {
   raw: number;
   displayed: number;
   capped: boolean;
   labelSk: string;
+  titleSk: string;
   visible: boolean;
 } {
   if (!SHOW_WORLD_CLASS_CEILING) {
@@ -170,6 +239,7 @@ export function wcCeilingDisplay(
       displayed: 0,
       capped: false,
       labelSk: "",
+      titleSk: LABEL_WC_CEILING_SK,
       visible: false,
     };
   }
@@ -190,50 +260,10 @@ export function wcCeilingDisplay(
     displayed,
     capped,
     visible: true,
+    titleSk: LABEL_WC_CEILING_SK,
     labelSk: formatEurRange(displayed, displayed),
   };
 }
-
-export function estimateReliability(
-  result: AuditResult,
-  details?: AnswerDetailsMap,
-): {
-  level: ReliabilityLevel;
-  numericShare: number;
-  labelSk: string;
-  hintSk: string;
-} {
-  let wNum = 0;
-  let wAll = 0;
-  if (details && result.auditLevel === 1) {
-    for (const [qid, d] of Object.entries(details)) {
-      const w = weightForQuestion(qid);
-      wAll += w;
-      if (d.numericOverrideValue !== undefined) wNum += w;
-    }
-  }
-  const share = wAll > 0 ? wNum / wAll : 0;
-  let level: ReliabilityLevel = "nizka";
-  if (share >= 0.55) level = "vyssia";
-  else if (share >= 0.25) level = "stredna";
-
-  const labelSk =
-    level === "vyssia"
-      ? "vyššia"
-      : level === "stredna"
-        ? "stredná"
-        : "nízka";
-
-  const hintSk =
-    level === "vyssia"
-      ? "Veľká časť odpovedí má namerané hodnoty."
-      : "Spoľahlivosť zvýšite zadaním presných čísel alebo prechodom na Level 2.";
-
-  return { level, numericShare: share, labelSk, hintSk };
-}
-
-export const LEVEL1_DISCLAIMER_SK =
-  "Výsledky Level 1 sú rýchla orientačná diagnostika založená na vašich odpovediach. Nepredstavujú záruku úspor. Pre presné priority a overenie dát odporúčame Level 2/3 alebo obchôdzku vo výrobe.";
 
 export const BENCHMARK_SOURCE_NOTE_SK = benchmarkSourceNoteSk();
 

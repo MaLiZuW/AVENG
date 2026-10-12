@@ -9,7 +9,7 @@
 import { buildHtml } from "./html.ts";
 import { buildPdf } from "./pdf.ts";
 import { company } from "../_shared/company.ts";
-import { eur, isEmail, type ReportBody } from "./_shared.ts";
+import { formatGapEur, isEmail, type ReportBody } from "./_shared.ts";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -105,7 +105,11 @@ Deno.serve(async (req) => {
     const pdfBytes = await buildPdf(body);
     const safeCompany = company.replace(/[^\w\-]+/g, "_").slice(0, 40);
     const filename = `AVENG_SelfAudit_L${body.result.auditLevel ?? 1}_${safeCompany}.pdf`;
-    const gap = eur(body.result.gapSmeEur ?? 0);
+    const gap = formatGapEur(
+      body.presentation?.gapSmeLowEur,
+      body.presentation?.gapSmeHighEur,
+      body.result.gapSmeEur ?? 0,
+    );
     const errors: string[] = [];
 
     try {

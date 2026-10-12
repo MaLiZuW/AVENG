@@ -7,6 +7,7 @@ import {
   followupConsentLabelSk,
   retentionPeriodClaimSk,
 } from "@/config/retention";
+import type { ReportPresentationPayload } from "@/lib/audit/presentation";
 import type { AuditAnswers, AuditResult, PreAuditInput } from "@/lib/audit/types";
 import {
   isAuditReportApiConfigured,
@@ -19,6 +20,7 @@ interface Props {
   result: AuditResult;
   answers: AuditAnswers;
   preAudit: PreAuditInput;
+  presentation?: ReportPresentationPayload;
   onSuccess?: () => void;
 }
 
@@ -26,6 +28,7 @@ export default function LeadForm({
   result,
   answers,
   preAudit,
+  presentation,
   onSuccess,
 }: Props) {
   const [pending, setPending] = useState(false);
@@ -92,7 +95,7 @@ export default function LeadForm({
 
     if (isAuditReportApiConfigured()) {
       const mail = await sendAuditReportEmail(
-        leadPayloadToReportMail(leadPayload, result, res.id),
+        leadPayloadToReportMail(leadPayload, result, res.id, presentation),
       );
       setMailNote(
         mail.ok

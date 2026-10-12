@@ -1,3 +1,4 @@
+import type { ReportPresentationPayload } from "../../shared/audit-presentation";
 import type { AuditResult, LeadPayload } from "./audit/types";
 
 const REPORT_API =
@@ -26,6 +27,7 @@ export type AuditReportMailPayload = {
     | "answeredCount"
     | "totalQuestions"
   >;
+  presentation?: ReportPresentationPayload;
 };
 
 export function isAuditReportApiConfigured(): boolean {
@@ -69,6 +71,7 @@ export function leadPayloadToReportMail(
   lead: LeadPayload,
   result: AuditResult,
   leadId?: string,
+  presentation?: ReportPresentationPayload,
 ): AuditReportMailPayload {
   return {
     lead_id: leadId,
@@ -76,6 +79,7 @@ export function leadPayloadToReportMail(
     work_email: lead.work_email,
     company_name: lead.company_name,
     phone: lead.phone,
+    presentation,
     result: {
       overallPercent: result.overallPercent,
       smeOverallPercent: result.smeOverallPercent,

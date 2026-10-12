@@ -12,10 +12,17 @@ import {
   CTA_MAIL,
   CTA_PHONE,
   DISCLAIMER_SK,
+  LABEL_GAP_HEADLINE_SK,
+  LABEL_GAP_SHORT_SK,
+  LABEL_MSP_REF_SK,
+  LABEL_PROCESS_GAPS_SK,
   SITE,
   domainLabel,
   eur,
+  formatGapEur,
+  formatProcessGap,
   pct,
+  reliabilityBlock,
   sortedByGap,
   upsellForLevel,
   type ReportBody,
@@ -168,6 +175,12 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
   const cp = r.criticalProcess;
   const company = body.company_name ?? "";
   const upsell = upsellForLevel(level, company);
+  const headline = formatGapEur(
+    body.presentation?.gapSmeLowEur,
+    body.presentation?.gapSmeHighEur,
+    r.gapSmeEur ?? 0,
+  );
+  const rel = reliabilityBlock(body.presentation?.reliabilityLevel);
   const date = new Date().toLocaleDateString("sk-SK");
   const TOTAL = 4;
 
@@ -264,7 +277,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     });
     y -= 28;
     const sub = wrap(
-      "Kompletný executive súhrn Self-Auditu — rovnaké metriky ako na webe: potenciál vs MSP, porovnanie domén, kritický proces a 3 prioritné kroky.",
+      "Kompletný executive súhrn Self-Auditu — rovnaké metriky ako na webe: indikatívny potenciál voči referencii MSP, porovnanie domén, kritický proces a 3 prioritné kroky.",
       font,
       10,
       width - 80,
@@ -294,26 +307,25 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       borderColor: C.signal,
       borderWidth: 1,
     });
-    page.drawText("INDIKATÍVNY POTENCIÁL VS MSP", {
-      x: 52,
-      y: y - 14,
-      size: 7,
-      font: fontBold,
-      color: C.muted,
+    const headLines = wrap(LABEL_GAP_HEADLINE_SK, fontBold, 7, boxW - 24).slice(0, 2);
+    headLines.forEach((line, i) => {
+      page.drawText(line, {
+        x: 52,
+        y: y - 14 - i * 10,
+        size: 7,
+        font: fontBold,
+        color: C.muted,
+      });
     });
-    page.drawText(eur(r.gapSmeEur ?? 0), {
-      x: 52,
-      y: y - 48,
-      size: 22,
-      font: fontBold,
-      color: C.ember,
-    });
-    page.drawText("/ rok", {
-      x: 52,
-      y: y - 70,
-      size: 10,
-      font,
-      color: C.muted,
+    const rangeLines = wrap(headline, fontBold, 11, boxW - 24).slice(0, 2);
+    rangeLines.forEach((line, i) => {
+      page.drawText(line, {
+        x: 52,
+        y: y - 42 - i * 14,
+        size: 11,
+        font: fontBold,
+        color: C.ember,
+      });
     });
 
     page.drawText("CELKOVÁ ÚROVEŇ PROCESU", {
@@ -330,7 +342,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       font: fontBold,
       color: C.signalBright,
     });
-    page.drawText(`MSP referencia ${pct(r.smeOverallPercent ?? 0, 1)}`, {
+    page.drawText(`${LABEL_MSP_REF_SK} ${pct(r.smeOverallPercent ?? 0, 1)}`, {
       x: 52 + boxW + 16,
       y: y - 70,
       size: 10,
@@ -339,6 +351,26 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     });
 
     y -= 120;
+    if (rel) {
+      page.drawText(rel.lineSk, {
+        x: 40,
+        y,
+        size: 10,
+        font: fontBold,
+        color: C.ink,
+      });
+      y -= 14;
+      for (const line of wrap(rel.hintSk, font, 9, width - 80)) {
+        page.drawText(line, { x: 40, y, size: 9, font, color: C.muted });
+        y -= 12;
+      }
+      y -= 6;
+    }
+    for (const line of wrap(DISCLAIMER_SK, font, 8, width - 80).slice(0, 4)) {
+      page.drawText(line, { x: 40, y, size: 8, font, color: C.muted });
+      y -= 11;
+    }
+    y -= 16;
     if (cp) {
       page.drawRectangle({
         x: 40,
@@ -373,10 +405,22 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
         page.drawText(line, { x: 58, y: ry, size: 10, font, color: C.muted });
         ry -= 13;
       }
-      page.drawText(
-        `${eur(cp.gapSmeEur)} / rok   ·   ${pct(cp.userPercent)} vs MSP ${pct(cp.smePercent ?? 0)}`,
-        { x: 58, y: y - 90, size: 11, font: fontBold, color: C.ember },
-      );
+      const critLabel = `${LABEL_GAP_SHORT_SK}: ${formatGapEur(body.presentation?.criticalLowEur, body.presentation?.criticalHighEur, cp.gapSmeEur)}`;
+      const critLines = wrap(
+        `${critLabel}   ·   ${pct(cp.userPercent)} vs ${LABEL_MSP_REF_SK} ${pct(cp.smePercent ?? 0)}`,
+        fontBold,
+        9,
+        width - 120,
+      ).slice(0, 2);
+      critLines.forEach((line, i) => {
+        page.drawText(line, {
+          x: 58,
+          y: y - 82 - i * 12,
+          size: 9,
+          font: fontBold,
+          color: C.ember,
+        });
+      });
       y -= 128;
     }
 
@@ -425,23 +469,24 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     });
     y -= 28;
 
-    const cols = [40, 200, 290, 380, 470];
+    const cols = [48, 188, 268, 360];
     page.drawRectangle({
       x: 40,
-      y: y - 4,
+      y: y - 8,
       width: width - 80,
-      height: 22,
+      height: 28,
       color: C.surface,
     });
-    page.drawText("Doména", { x: cols[0] + 8, y: y + 2, size: 8, font: fontBold, color: C.muted });
+    page.drawText("Doména", { x: cols[0], y: y + 2, size: 8, font: fontBold, color: C.muted });
     page.drawText("Vaša firma", { x: cols[1], y: y + 2, size: 8, font: fontBold, color: C.signalBright });
-    page.drawText("MSP", { x: cols[2], y: y + 2, size: 8, font: fontBold, color: C.ember });
-    page.drawText("Gap / rok", { x: cols[3], y: y + 2, size: 8, font: fontBold, color: C.muted });
-    y -= 26;
+    page.drawText(LABEL_MSP_REF_SK, { x: cols[2], y: y + 2, size: 7, font: fontBold, color: C.ember });
+    page.drawText(LABEL_GAP_SHORT_SK, { x: cols[3], y: y + 6, size: 7, font: fontBold, color: C.muted });
+    y -= 34;
 
     for (const p of scores) {
+      const gapLabel = formatProcessGap(body.presentation, p.processId, p.gapSmeEur);
       page.drawText(`${domainLabel(p.processId)} · ${p.shortLabel}`, {
-        x: cols[0] + 8,
+        x: cols[0],
         y,
         size: 9,
         font,
@@ -461,24 +506,27 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
         font: fontBold,
         color: C.ember,
       });
-      page.drawText(eur(p.gapSmeEur), {
-        x: cols[3],
-        y,
-        size: 9,
-        font: fontBold,
-        color: C.ink,
+      const gapLines = wrap(gapLabel, fontBold, 7, width - cols[3] - 36);
+      gapLines.forEach((line, i) => {
+        page.drawText(line, {
+          x: cols[3],
+          y: y - i * 9,
+          size: 7,
+          font: fontBold,
+          color: C.ink,
+        });
       });
-      y -= 18;
+      y -= Math.max(18, gapLines.length * 10 + 6);
       page.drawLine({
-        start: { x: 48, y: y + 10 },
-        end: { x: width - 48, y: y + 10 },
+        start: { x: 48, y: y + 8 },
+        end: { x: width - 48, y: y + 8 },
         thickness: 0.4,
         color: C.line,
       });
     }
     y -= 6;
     page.drawText("Celkom (vážené)", {
-      x: cols[0] + 8,
+      x: cols[0],
       y,
       size: 10,
       font: fontBold,
@@ -498,16 +546,20 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       font: fontBold,
       color: C.ember,
     });
-    page.drawText(eur(r.gapSmeEur ?? 0), {
-      x: cols[3],
-      y,
-      size: 10,
-      font: fontBold,
-      color: C.ember,
+    const totalLines = wrap(headline, fontBold, 7, width - cols[3] - 36);
+    totalLines.forEach((line, i) => {
+      page.drawText(line, {
+        x: cols[3],
+        y: y - i * 9,
+        size: 7,
+        font: fontBold,
+        color: C.ember,
+      });
     });
+    y -= Math.max(0, (totalLines.length - 1) * 9);
 
     y -= 40;
-    page.drawText("Indikatívny potenciál úspor podľa procesu", {
+    page.drawText(LABEL_PROCESS_GAPS_SK, {
       x: 40,
       y,
       size: 14,
@@ -515,7 +567,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       color: C.ink,
     });
     y -= 14;
-    page.drawText("Väčší stĺpec = väčšia príležitosť voči MSP", {
+    page.drawText("Väčší stĺpec = väčšia príležitosť voči referencii MSP", {
       x: 40,
       y,
       size: 9,
@@ -541,10 +593,12 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
         font: fontBold,
         color: C.ink,
       });
-      page.drawText(eur(p.gapSmeEur), {
-        x: width - 52 - fontBold.widthOfTextAtSize(eur(p.gapSmeEur), 10),
+      const barGap = formatProcessGap(body.presentation, p.processId, p.gapSmeEur);
+      const barGapW = fontBold.widthOfTextAtSize(barGap, 8);
+      page.drawText(barGap, {
+        x: Math.max(180, width - 52 - barGapW),
         y: y - 12,
-        size: 10,
+        size: 8,
         font: fontBold,
         color: C.ember,
       });
@@ -563,7 +617,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
         color: C.ember,
       });
       page.drawText(
-        `Úroveň ${pct(p.percent)} · MSP ${pct(p.smePercent ?? 0)}`,
+        `Úroveň ${pct(p.percent)} · ${LABEL_MSP_REF_SK} ${pct(p.smePercent ?? 0)}`,
         { x: 52, y: y - 44, size: 8, font, color: C.muted },
       );
       y -= 62;
@@ -587,7 +641,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       color: C.ink,
     });
     y -= 14;
-    page.drawText("Modrá = vaša firma · Oranžová = referencia MSP", {
+    page.drawText(`Modrá = vaša firma · Oranžová = ${LABEL_MSP_REF_SK}`, {
       x: 40,
       y,
       size: 9,

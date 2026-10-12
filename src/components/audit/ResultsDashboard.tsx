@@ -8,9 +8,14 @@ import {
 } from "@/config/audit-display";
 import {
   BENCHMARK_SOURCE_NOTE_SK,
-  gapSmeDisplayRange,
-  estimateReliability,
+  buildLevel1Presentation,
+  formatEurRange,
+  LABEL_GAP_HEADLINE_SK,
+  LABEL_GAP_SHORT_SK,
+  LABEL_MSP_REF_SK,
+  LABEL_PROCESS_GAPS_SK,
   LEVEL1_DISCLAIMER_SK,
+  toReportPresentation,
   wcCeilingDisplay,
 } from "@/lib/audit/presentation";
 import { formatEur } from "@/lib/audit/scoring";
@@ -57,16 +62,14 @@ export default function ResultsDashboard({
 }: Props) {
   const cp = result.criticalProcess;
   const gemba = useGembaTrigger(result);
-  const smeRange = useMemo(
-    () => gapSmeDisplayRange(result, answerDetails, preAudit),
+  const view = useMemo(
+    () => buildLevel1Presentation(result, answerDetails, preAudit),
     [result, answerDetails, preAudit],
   );
+  const smeRange = view.headline;
+  const reliability = view.reliability;
   const wc = useMemo(() => wcCeilingDisplay(result), [result]);
   const showWc = SHOW_WORLD_CLASS_CEILING && wc.visible;
-  const reliability = useMemo(
-    () => estimateReliability(result, answerDetails),
-    [result, answerDetails],
-  );
   const [methodOpen, setMethodOpen] = useState(false);
 
   const processList = useMemo(() => {
@@ -90,7 +93,7 @@ export default function ResultsDashboard({
 
       {gemba.show && (
         <Level4OnsiteCard
-          gapSmeEur={result.gapSmeEur}
+          gapLabelSk={smeRange.labelSk}
           totalCostBaseEur={gemba.totalCostBaseEur}
           ratio={gemba.ratio}
         />
@@ -101,17 +104,18 @@ export default function ResultsDashboard({
       >
         <div className="steel-panel border-ember/30 p-5 sm:p-6">
           <p className="text-xs uppercase tracking-wider text-ink-200">
-            Indikatívny potenciál úspor voči referencii MSP
+            {LABEL_GAP_HEADLINE_SK}
           </p>
           <p className="mt-2 font-display text-2xl font-semibold text-ember sm:text-3xl">
             {smeRange.labelSk}
           </p>
-          <p className="mt-2 text-xs text-ink-200">
-            Spoľahlivosť odhadu:{" "}
-            <strong className="text-ink-50">{reliability.labelSk}</strong>
-            {" — "}
-            {reliability.hintSk}
-          </p>
+          {reliability.visible ? (
+            <p className="mt-2 text-xs text-ink-200">
+              <strong className="text-ink-50">{reliability.lineSk}</strong>
+              {" — "}
+              {reliability.hintSk}
+            </p>
+          ) : null}
           <p className="mt-3 text-xs leading-relaxed text-ink-300">
             {LEVEL1_DISCLAIMER_SK}
           </p>
@@ -119,7 +123,7 @@ export default function ResultsDashboard({
         {showWc ? (
           <div className="steel-panel border-white/10 p-5 sm:p-6">
             <p className="text-xs uppercase tracking-wider text-ink-200">
-              Teoretický strop (nie cieľ)
+              {wc.titleSk}
             </p>
             <p className="mt-2 font-display text-2xl font-semibold text-ink-100 sm:text-3xl">
               {wc.labelSk}
@@ -196,7 +200,7 @@ export default function ResultsDashboard({
                   Vaša firma
                 </th>
                 <th className="pb-2 pr-2 font-medium text-ember">
-                  Referencia MSP
+                  {LABEL_MSP_REF_SK}
                 </th>
                 {showWc ? (
                   <th className="pb-2 font-medium text-green-400">
@@ -259,16 +263,14 @@ export default function ResultsDashboard({
           className={`mt-4 grid gap-3 text-sm ${showWc ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}
         >
           <div>
-            <dt className="text-ink-200">Medzera voči referencii MSP</dt>
-            <dd className="font-semibold text-ink-100">
-              {formatEur(cp.gapSmeEur)} / rok
-            </dd>
+            <dt className="text-ink-200">{LABEL_GAP_SHORT_SK}</dt>
+            <dd className="font-semibold text-ink-100">{view.critical.labelSk}</dd>
           </div>
           {showWc ? (
             <div>
-              <dt className="text-ink-200">Teoretický strop (nie cieľ)</dt>
+              <dt className="text-ink-200">{wc.titleSk}</dt>
               <dd className="font-semibold text-ember">
-                {formatEur(cp.gapWcEur)} / rok
+                {formatEurRange(cp.gapWcEur, cp.gapWcEur)}
               </dd>
             </div>
           ) : null}
@@ -314,7 +316,7 @@ export default function ResultsDashboard({
 
       <div className="steel-panel p-5 sm:p-6">
         <h4 className="font-display text-lg font-semibold text-ink-50">
-          Indikatívny potenciál úspor podľa procesu
+          {LABEL_PROCESS_GAPS_SK}
         </h4>
         <ul className="mt-4 space-y-3">
           {processList.map((p) => {
@@ -322,6 +324,9 @@ export default function ResultsDashboard({
             const barMax = showWc
               ? Math.max(result.gapWcEur, 1)
               : Math.max(result.gapSmeEur, 1);
+            const processGap = view.processes.find(
+              (row) => row.processId === p.processId,
+            );
             return (
               <li key={p.processId}>
                 <div className="mb-1 flex flex-wrap justify-between gap-2 text-sm">
@@ -329,8 +334,11 @@ export default function ResultsDashboard({
                     {domainLabel(p.processId)} · {p.shortLabel}
                   </span>
                   <span className="text-ink-200">
-                    {formatEur(p.gapSmeEur)}
-                    {showWc ? ` · WC ${formatEur(p.gapWcEur)}` : null}
+                    {processGap?.gap.labelSk ??
+                      formatEurRange(p.gapSmeEur, p.gapSmeEur)}
+                    {showWc
+                      ? ` · WC ${formatEurRange(p.gapWcEur, p.gapWcEur)}`
+                      : null}
                   </span>
                 </div>
                 <div
@@ -359,7 +367,12 @@ export default function ResultsDashboard({
         <DtoSimulator answers={answers} result={result} preAudit={preAudit} />
       )}
 
-      <LeadForm result={result} answers={answers} preAudit={preAudit} />
+      <LeadForm
+        result={result}
+        answers={answers}
+        preAudit={preAudit}
+        presentation={toReportPresentation(view)}
+      />
     </div>
   );
 }

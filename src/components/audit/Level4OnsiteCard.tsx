@@ -3,17 +3,22 @@
 import { FormEvent, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { company } from "@/config/company";
+import {
+  LABEL_COST_BASE_SHARE_SK,
+  LABEL_GAP_SHORT_SK,
+  LABEL_GEMBA_KICKER_SK,
+} from "@/lib/audit/presentation";
 import { formatEur } from "@/lib/audit/scoring";
 import { CONTACT_INBOX, submitContactRequest } from "@/lib/submitContactRequest";
 
 interface Props {
-  gapSmeEur: number;
+  gapLabelSk: string;
   totalCostBaseEur: number;
   ratio: number;
 }
 
 export default function Level4OnsiteCard({
-  gapSmeEur,
+  gapLabelSk,
   totalCostBaseEur,
   ratio,
 }: Props) {
@@ -82,8 +87,8 @@ export default function Level4OnsiteCard({
       email,
       message,
       meta: {
-        source: "Level 4 On-site card (L1 dashboard)",
-        gapSmeEur,
+        source: "Gemba Walk (L1 dashboard)",
+        gapLabelSk,
         totalCostBaseEur,
         lossRatioPercent: pct,
       },
@@ -102,7 +107,7 @@ export default function Level4OnsiteCard({
     <>
       <div className="steel-panel border-ember/50 bg-ember/5 p-5 sm:p-6 animate-fade-up">
         <p className="text-xs font-semibold uppercase tracking-wider text-ember">
-          Odporúčaný ďalší krok: obchôdzka vo výrobe (Gemba Walk)
+          {LABEL_GEMBA_KICKER_SK}
         </p>
         <h4 className="mt-2 font-display text-xl font-semibold text-ink-50">
           Výsledok naznačuje významnú medzeru (&gt; 15 % modelovej nákladovej
@@ -114,10 +119,8 @@ export default function Level4OnsiteCard({
         </p>
         <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-3">
           <div>
-            <dt className="text-ink-300">Medzera voči referencii MSP</dt>
-            <dd className="font-semibold text-ember">
-              {formatEur(gapSmeEur)} / rok
-            </dd>
+            <dt className="text-ink-300">{LABEL_GAP_SHORT_SK}</dt>
+            <dd className="font-semibold text-ember">{gapLabelSk}</dd>
           </div>
           <div>
             <dt className="text-ink-300">Nákladová báza procesov</dt>
@@ -126,7 +129,7 @@ export default function Level4OnsiteCard({
             </dd>
           </div>
           <div>
-            <dt className="text-ink-300">% z modelovej nákladovej bázy</dt>
+            <dt className="text-ink-300">{LABEL_COST_BASE_SHARE_SK}</dt>
             <dd className="font-semibold text-ink-100">{pct} %</dd>
           </div>
         </dl>

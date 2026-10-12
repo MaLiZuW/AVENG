@@ -1,4 +1,28 @@
 import { company } from "../_shared/company.ts";
+import {
+  formatEurRange,
+  LABEL_COST_BASE_SHARE_SK,
+  LABEL_GAP_HEADLINE_SK,
+  LABEL_GAP_SHORT_SK,
+  LABEL_MSP_REF_SK,
+  LABEL_PROCESS_GAPS_SK,
+  LABEL_WC_CEILING_SK,
+  LEVEL1_DISCLAIMER_SK,
+  reliabilityWording,
+  type ReliabilityLevel,
+  type ReportPresentationPayload,
+} from "../../../shared/audit-presentation.ts";
+
+export {
+  LABEL_COST_BASE_SHARE_SK,
+  LABEL_GAP_HEADLINE_SK,
+  LABEL_GAP_SHORT_SK,
+  LABEL_MSP_REF_SK,
+  LABEL_PROCESS_GAPS_SK,
+  LABEL_WC_CEILING_SK,
+  reliabilityWording,
+};
+export type { ReliabilityLevel, ReportPresentationPayload };
 
 export const SITE = company.siteUrl;
 export const BRAND = company.brandName;
@@ -61,6 +85,7 @@ export type ReportBody = {
   company_name?: string;
   phone?: string;
   result?: ReportResult;
+  presentation?: ReportPresentationPayload;
 };
 
 export const DOMAIN: Record<string, string> = {
@@ -163,5 +188,38 @@ export function upsellForLevel(level: number, company: string): Upsell {
   };
 }
 
-export const DISCLAIMER_SK =
-  "Indikatívny skríning Self-Auditu — nie je zárukou výsledku ani cenovou ponukou. Čísla vychádzajú z vašich odpovedí a referencie MSP.";
+export const DISCLAIMER_SK = LEVEL1_DISCLAIMER_SK;
+
+export function formatGapEur(
+  low: number | undefined,
+  high: number | undefined,
+  fallback: number,
+): string {
+  if (
+    typeof low === "number" &&
+    Number.isFinite(low) &&
+    typeof high === "number" &&
+    Number.isFinite(high)
+  ) {
+    return formatEurRange(low, high);
+  }
+  return formatEurRange(fallback, fallback);
+}
+
+export function formatProcessGap(
+  presentation: ReportPresentationPayload | undefined,
+  processId: string,
+  fallback: number,
+): string {
+  const row = presentation?.processGaps?.find((p) => p.processId === processId);
+  if (!row) return formatEurRange(fallback, fallback);
+  return formatEurRange(row.lowEur, row.highEur);
+}
+
+export function reliabilityBlock(
+  level: ReliabilityLevel | undefined,
+): { lineSk: string; hintSk: string } | null {
+  if (!level) return null;
+  const wording = reliabilityWording(level);
+  return { lineSk: wording.lineSk, hintSk: wording.hintSk };
+}
