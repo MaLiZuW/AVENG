@@ -42,12 +42,15 @@ export function retentionPeriodClaimSk(): string {
   return `${RETENTION_NEUTRAL_SK}.`;
 }
 
-/** Pre-audit start notice (no absolute promises). */
+/**
+ * Pre-audit start notice body (no absolute promises).
+ * UI appends the privacy-policy link: "Podrobnosti nájdete v Zásadách…".
+ */
 export function auditStartNoticeSk(): string {
   if (RETENTION_JOB_VERIFIED) {
-    return `Odpovede používame na vyhodnotenie auditu. Údaje uchovávame najviac ${RETENTION_DAYS} dní. Podrobnosti nájdete v Zásadách ochrany osobných údajov.`;
+    return `Odpovede používame na vyhodnotenie auditu. Údaje uchovávame najviac ${RETENTION_DAYS} dní.`;
   }
-  return `Odpovede používame na vyhodnotenie auditu. ${RETENTION_NEUTRAL_SK}. Podrobnosti nájdete v Zásadách ochrany osobných údajov.`;
+  return `Odpovede používame na vyhodnotenie auditu. ${RETENTION_NEUTRAL_SK}.`;
 }
 
 export function followupConsentLabelSk(): string {

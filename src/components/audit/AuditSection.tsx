@@ -315,12 +315,12 @@ export default function AuditSection() {
               >
                 <Info className="mt-0.5 h-4 w-4 shrink-0 text-signal-bright" aria-hidden />
                 <span>
-                  {auditStartNoticeSk()}{" "}
+                  {auditStartNoticeSk()} Podrobnosti nájdete v{" "}
                   <Link
                     href="/ochrana-osobnych-udajov/"
                     className="text-signal-bright underline-offset-2 hover:underline"
                   >
-                    Zásady ochrany osobných údajov
+                    Zásadách ochrany osobných údajov
                   </Link>
                   .
                 </span>
