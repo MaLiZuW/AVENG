@@ -1,3 +1,5 @@
+import { company } from "@/config/company";
+
 const BULLETS = [
   {
     title: "15+ rokov praxe",
@@ -42,7 +44,8 @@ export default function About() {
               pretože procesy bez prijatia na dielni neprežijú.
             </p>
             <p className="text-sm text-ink-300">
-              Vladimir · AddValueEngineering · Powered by AV – Agency, s. r. o.
+              {company.founderName} · {company.brandName} · Powered by{" "}
+              {company.legalName}
             </p>
           </div>
           <ul className="space-y-6">

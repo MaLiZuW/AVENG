@@ -739,7 +739,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       height: 100,
       color: C.card,
     });
-    page.drawText("Kontakt AddValueEngineering", {
+    page.drawText(`Kontakt ${BRAND}`, {
       x: 56,
       y: y - 24,
       size: 12,

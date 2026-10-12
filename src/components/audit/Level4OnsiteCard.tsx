@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
+import { company } from "@/config/company";
 import { formatEur } from "@/lib/audit/scoring";
 import { CONTACT_INBOX, submitContactRequest } from "@/lib/submitContactRequest";
 
@@ -272,10 +273,10 @@ export default function Level4OnsiteCard({
                         {pending ? "Odosielam…" : "Odoslať žiadosť"}
                       </button>
                       <a
-                        href="tel:+421948007304"
+                        href={`tel:${company.phoneTel}`}
                         className="btn-secondary !text-sm"
                       >
-                        Zavolať +421 948 007 304
+                        Zavolať {company.phoneDisplay}
                       </a>
                     </div>
                   </form>

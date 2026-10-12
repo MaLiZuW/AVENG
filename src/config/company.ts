@@ -1,9 +1,16 @@
 /**
  * Single source of truth for legal / contact identity (AVENG).
- * Do not duplicate these values in UI components.
+ * Next (`src/config/company.ts`) and Edge (`supabase/functions/_shared/company.ts`)
+ * copies must stay identical (`npm run check:shared`). Do not duplicate these values.
  */
 
-import { RETENTION_DAYS, RETENTION_JOB_VERIFIED } from "./retention";
+const DEFAULT_SITE_URL = "https://www.addvalueengineering.sk";
+
+function resolveSiteUrl(): string {
+  if (typeof process === "undefined") return DEFAULT_SITE_URL;
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  return fromEnv && fromEnv.length > 0 ? fromEnv : DEFAULT_SITE_URL;
+}
 
 export const company = {
   brandName: "AddValueEngineering",
@@ -22,10 +29,7 @@ export const company = {
   phoneTel: "+421948007304",
   email: "vladimir@addvalueengineering.sk",
   founderName: "Vladimir",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.addvalueengineering.sk",
-  /** Prefer `RETENTION_DAYS` / `RETENTION_JOB_VERIFIED` from retention.ts */
-  dataRetentionDays: RETENTION_DAYS,
-  dataRetentionPurgeDocumented: RETENTION_JOB_VERIFIED,
+  siteUrl: resolveSiteUrl(),
 } as const;
 
 export type CompanyConfig = typeof company;

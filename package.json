@@ -12,7 +12,8 @@
     "generate:l3": "node scripts/generate-l3.mjs",
     "smoke:audit": "node scripts/smoke-audit.mjs && node scripts/smoke-l2.mjs && node scripts/smoke-l3.mjs && node scripts/smoke-calc-engine.mjs",
     "smoke:calc": "node scripts/smoke-calc-engine.mjs",
-    "audit:sanity": "npx --yes tsx scripts/audit-sanity.ts"
+    "audit:sanity": "npx --yes tsx scripts/audit-sanity.ts",
+    "check:shared": "npx --yes tsx scripts/check-shared-sync.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

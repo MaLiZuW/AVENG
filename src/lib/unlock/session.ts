@@ -4,6 +4,8 @@
  * Fallback: if URL unset, unlock is disabled (contact sales).
  */
 
+import { company } from "@/config/company";
+
 export type UnlockLevel = 2 | 3;
 
 export interface UnlockSession {
@@ -54,7 +56,7 @@ export async function requestUnlock(
     return {
       ok: false,
       error:
-        "Online odomknutie nie je nakonfigurované. Kontaktujte nás na vladimir@addvalueengineering.sk.",
+        `Online odomknutie nie je nakonfigurované. Kontaktujte nás na ${company.email}.`,
     };
   }
 

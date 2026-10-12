@@ -1,7 +1,9 @@
-export const SITE = "https://www.addvalueengineering.sk";
-export const BRAND = "AddValueEngineering";
-export const CTA_MAIL = "vladimir@addvalueengineering.sk";
-export const CTA_PHONE = "+421 948 007 304";
+import { company } from "../_shared/company.ts";
+
+export const SITE = company.siteUrl;
+export const BRAND = company.brandName;
+export const CTA_MAIL = company.email;
+export const CTA_PHONE = company.phoneDisplay;
 export const L2_PRICE = 290;
 
 export type ProcessScore = {

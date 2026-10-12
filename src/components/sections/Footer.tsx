@@ -1,8 +1,16 @@
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { company } from "@/config/company";
+import { getPublicSocialLinks, type SocialKey } from "@/config/social";
+
+const SOCIAL_LABEL: Record<SocialKey, string> = {
+  linkedin: "LinkedIn",
+  facebook: "Facebook",
+};
 
 export default function Footer() {
   const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
+  const socialLinks = getPublicSocialLinks();
 
   return (
     <footer
@@ -41,6 +49,23 @@ export default function Footer() {
                 {company.email}
               </a>
             </p>
+            {socialLinks.length > 0 ? (
+              <ul className="flex flex-wrap gap-3 pt-1">
+                {socialLinks.map(({ key, url }) => (
+                  <li key={key}>
+                    <a
+                      href={url}
+                      className="inline-flex items-center gap-1.5 text-signal-bright hover:underline"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <ExternalLink className="h-4 w-4" aria-hidden />
+                      {SOCIAL_LABEL[key]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             <p className="pt-2">
               <Link
                 href="/kontakt/"

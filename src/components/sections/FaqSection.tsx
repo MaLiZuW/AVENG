@@ -3,6 +3,8 @@
  * TODO(owner): schváliť finálne znenie otázok a odpovedí.
  */
 
+import { company } from "@/config/company";
+
 const FAQ = [
   {
     q: "Čo je Fractional Technical Leadership?",
@@ -34,7 +36,7 @@ const FAQ = [
   },
   {
     q: "Ako sa objedná konzultácia alebo cenová ponuka?",
-    a: "Cez kontaktný formulár, e-mail vladimir@addvalueengineering.sk alebo tlačidlo rezervácie, ak je nastavené.",
+    a: `Cez kontaktný formulár, e-mail ${company.email} alebo tlačidlo rezervácie, ak je nastavené.`,
   },
 ] as const;
 

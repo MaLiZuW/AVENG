@@ -8,6 +8,7 @@
 
 import { buildHtml } from "./html.ts";
 import { buildPdf } from "./pdf.ts";
+import { company } from "../_shared/company.ts";
 import { eur, isEmail, type ReportBody } from "./_shared.ts";
 
 const cors = {
@@ -81,10 +82,8 @@ Deno.serve(async (req) => {
   const apiKey = Deno.env.get("RESEND_API_KEY") ?? "";
   const from =
     Deno.env.get("AUDIT_REPORT_FROM") ??
-    "AddValueEngineering <noreply@addvalueengineering.sk>";
-  const owner =
-    Deno.env.get("AUDIT_REPORT_OWNER_EMAIL") ??
-    "vladimir@addvalueengineering.sk";
+    `${company.brandName} <noreply@addvalueengineering.sk>`;
+  const owner = Deno.env.get("AUDIT_REPORT_OWNER_EMAIL") ?? company.email;
 
   if (!apiKey) {
     return json(500, { ok: false, error: "RESEND_API_KEY chýba." });

@@ -13,7 +13,7 @@ export default function Hero() {
       />
       <div className="container-aveng relative section-pad !pt-16 lg:!pt-24">
         <div className="max-w-3xl animate-fade-up">
-          <p className="eyebrow mb-6">Pre MSP · Seniorné technické vedenie</p>
+          <p className="eyebrow mb-6">SENIORNÉ TECHNICKÉ VEDENIE PRE MSP</p>
           <h1
             id="hero-heading"
             className="font-display text-4xl font-semibold leading-[1.12] tracking-tight text-ink-50 sm:text-5xl lg:text-6xl"

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
+import { RETENTION_DAYS } from "@/config/retention";
 
 export const metadata: Metadata = {
   title: "Ochrana osobných údajov | AVENG",
@@ -83,7 +84,7 @@ export default function PrivacyPage() {
                 {/* TODO(owner/legal): review with a lawyer; enable RETENTION_JOB_VERIFIED after migration deploy */}
                 Údaje uchovávame len po dobu nevyhnutnú na vyhodnotenie auditu a
                 spracovanie dopytu. Po schválení a nasadení mazacieho mechanizmu
-                bude doba uchovania maximálne {company.dataRetentionDays} dní
+                bude doba uchovania maximálne {RETENTION_DAYS} dní
                 (konfiguračná hodnota RETENTION_DAYS). Termín expirácie záloh
                 databázy: TODO(owner).
               </p>

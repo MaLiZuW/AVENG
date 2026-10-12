@@ -12,6 +12,7 @@
  */
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { company } from "../_shared/company.ts";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -68,10 +69,8 @@ Deno.serve(async (req) => {
   const resendKey = Deno.env.get("RESEND_API_KEY") ?? "";
   const from =
     Deno.env.get("AUDIT_REPORT_FROM") ??
-    "AddValueEngineering <noreply@addvalueengineering.sk>";
-  const ownerBcc =
-    Deno.env.get("AUDIT_REPORT_OWNER_EMAIL") ??
-    "vladimir@addvalueengineering.sk";
+    `${company.brandName} <noreply@addvalueengineering.sk>`;
+  const ownerBcc = Deno.env.get("AUDIT_REPORT_OWNER_EMAIL") ?? company.email;
 
   if (!supabaseUrl || !serviceKey || !anonKey) {
     return json(500, { ok: false, error: "Supabase env chýba." });
@@ -157,7 +156,7 @@ Deno.serve(async (req) => {
       return json(500, { ok: false, error: "Nepodarilo sa vygenerovať unikátny kód." });
     }
 
-    const site = "https://www.addvalueengineering.sk";
+    const site = company.siteUrl;
     const unlockUrl = `${site}/self-audit/`;
     let emailed = false;
 
@@ -167,7 +166,7 @@ Deno.serve(async (req) => {
         : "Dobrý deň,";
       const html = `<!DOCTYPE html><html><body style="font-family:Segoe UI,Arial,sans-serif;background:#070b12;color:#e8edf5;padding:24px">
         <div style="max-width:560px;margin:0 auto;background:#0f172a;border-radius:12px;padding:28px;border:1px solid rgba(148,163,184,.15)">
-          <div style="font-size:18px;font-weight:700;color:#5b93ff">AddValueEngineering</div>
+          <div style="font-size:18px;font-weight:700;color:#5b93ff">${company.brandName}</div>
           <p style="margin:20px 0 8px;font-size:15px">${hi}</p>
           <p style="color:#94a3b8;line-height:1.5;font-size:14px">
             Posielame prístupový kód pre <strong style="color:#e8edf5">Self-Audit Level ${level}</strong>${
@@ -201,7 +200,7 @@ Deno.serve(async (req) => {
           from,
           to: [recipientEmail],
           bcc: isEmail(ownerBcc) && ownerBcc !== recipientEmail ? [ownerBcc] : undefined,
-          subject: `Prístupový kód Level ${level} — AddValueEngineering`,
+          subject: `Prístupový kód Level ${level} — ${company.brandName}`,
           html,
         }),
       });

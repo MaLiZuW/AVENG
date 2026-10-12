@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { company } from "@/config/company";
 
 export default function GdprModal() {
   const [open, setOpen] = useState(false);
@@ -72,13 +73,12 @@ export default function GdprModal() {
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-ink-200">
               <p>
                 Prevádzkovateľ:{" "}
-                <strong className="text-ink-50">AV – Agency, s. r. o.</strong>{" "}
-                (Add Value Agency), IČO 47054328, DIČ 2023729796, Košeca 01864,
-                Slovenská republika. Kontakt:{" "}
-                <a href="mailto:vladimir@addvalueengineering.sk" className="text-signal-bright">
-                  vladimir@addvalueengineering.sk
+                <strong className="text-ink-50">{company.legalName}</strong>, IČO{" "}
+                {company.ico}, DIČ {company.dic}, {company.addressDisplay}. Kontakt:{" "}
+                <a href={`mailto:${company.email}`} className="text-signal-bright">
+                  {company.email}
                 </a>
-                , tel. +421 948 007 304.
+                , tel. {company.phoneDisplay}.
               </p>
               <p>
                 Spracúvanie osobných údajov prebieha v súlade s Nariadením EÚ

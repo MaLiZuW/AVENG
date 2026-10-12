@@ -3,6 +3,8 @@
  * Static-export friendly (no Next API route).
  */
 
+import { company } from "@/config/company";
+
 export type ContactRequestType =
   | "meeting"
   | "access_code"
@@ -25,9 +27,7 @@ export interface ContactRequestPayload {
   };
 }
 
-const INBOX =
-  process.env.NEXT_PUBLIC_CONTACT_INBOX ??
-  "vladimir@addvalueengineering.sk";
+const INBOX = process.env.NEXT_PUBLIC_CONTACT_INBOX ?? company.email;
 
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
 
@@ -157,7 +157,7 @@ function backupLocally(payload: ContactRequestPayload): void {
 }
 
 /**
- * Send request to AVENG inbox (always vladimir@addvalueengineering.sk by default).
+ * Send request to AVENG inbox (defaults to company.email).
  */
 export async function submitContactRequest(
   payload: ContactRequestPayload,
