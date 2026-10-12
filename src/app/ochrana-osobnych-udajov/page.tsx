@@ -90,15 +90,14 @@ export default function PrivacyPage() {
                 5. Doba uchovávania
               </h2>
               <p className="mt-2">
-                {retentionPeriodClaimSk()}.
+                {retentionPeriodClaimSk()}{" "}
                 {!RETENTION_JOB_VERIFIED ? (
                   <>
-                    {" "}
                     V konfigurácii je lehota {RETENTION_DAYS} dní pre údaje
                     auditu v databáze. Automatické vymazanie sa neuplatňuje,
-                    kým nie je mazací mechanizmus overený.
+                    kým nie je mazací mechanizmus overený.{" "}
                   </>
-                ) : null}{" "}
+                ) : null}
                 Správu z kontaktného formulára doručíme e-mailom a uchovávame
                 ju po dobu vybavenia dopytu.
               </p>

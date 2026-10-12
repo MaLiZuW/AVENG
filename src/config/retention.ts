@@ -17,7 +17,19 @@ export const RETENTION_JOB_VERIFIED = false;
  * TODO(owner/legal): confirm FOLLOWUP_RETENTION_DAYS before enabling.
  */
 export const FOLLOWUP_CONSENT_ENABLED = false;
-export const FOLLOWUP_RETENTION_DAYS = 180; // TODO(owner/legal)
+/**
+ * Placeholder only. The purge proposal does not delete consented leads
+ * until the owner/legal confirms a number.
+ * TODO(owner/legal)
+ */
+export const FOLLOWUP_RETENTION_DAYS = 180;
+
+/**
+ * Redeemed/expired unlock codes hold recipient data.
+ * No deletion until the owner sets a number.
+ * TODO(owner)
+ */
+export const UNLOCK_CODE_RETENTION_DAYS: number | null = null;
 
 /** Neutral retention sentence when purge is not verified (verbatim SK). */
 export const RETENTION_NEUTRAL_SK =
@@ -27,7 +39,7 @@ export function retentionPeriodClaimSk(): string {
   if (RETENTION_JOB_VERIFIED) {
     return `Údaje uchovávame najviac ${RETENTION_DAYS} dní.`;
   }
-  return RETENTION_NEUTRAL_SK;
+  return `${RETENTION_NEUTRAL_SK}.`;
 }
 
 /** Pre-audit start notice (no absolute promises). */

@@ -74,6 +74,14 @@ export default function LeadForm({
       recommendations: result.recommendations,
       answers,
       audit_level: result.auditLevel,
+      ...(FOLLOWUP_CONSENT_ENABLED
+        ? {
+            followup_consent: followupConsent,
+            followup_consent_at: followupConsent
+              ? new Date().toISOString()
+              : null,
+          }
+        : {}),
     };
     const res = await submitAuditLead(leadPayload);
     if (!res.ok) {
@@ -167,7 +175,7 @@ export default function LeadForm({
           required
         />
         <span>
-          Súhlasím so spracovaním osobných údajov. {retentionPeriodClaimSk()}.{" "}
+          Súhlasím so spracovaním osobných údajov. {retentionPeriodClaimSk()}{" "}
           <Link
             href="/ochrana-osobnych-udajov/"
             className="text-signal-bright underline-offset-2 hover:underline"

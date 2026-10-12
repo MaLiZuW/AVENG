@@ -220,6 +220,9 @@ export interface LeadPayload {
   company_name: string;
   phone: string;
   gdpr_consent: boolean;
+  /** Set only when FOLLOWUP_CONSENT_ENABLED; column is in the unapplied migration. */
+  followup_consent?: boolean;
+  followup_consent_at?: string | null;
   overall_score: number;
   financial_gap_eur: number;
   gap_sme_eur: number;

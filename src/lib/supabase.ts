@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { FOLLOWUP_CONSENT_ENABLED } from "@/config/retention";
 import type { LeadPayload } from "./audit/types";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
@@ -58,6 +59,15 @@ export async function submitAuditLead(payload: LeadPayload): Promise<{
     annual_revenue_eur: payload.annual_revenue_eur,
     cogs_percent: payload.cogs_percent,
     critical_process_id: payload.critical_process_id,
+    ...(FOLLOWUP_CONSENT_ENABLED
+      ? {
+          followup_consent: payload.followup_consent === true,
+          followup_consent_at:
+            payload.followup_consent === true
+              ? (payload.followup_consent_at ?? new Date().toISOString())
+              : null,
+        }
+      : {}),
   });
 
   if (leadError) {

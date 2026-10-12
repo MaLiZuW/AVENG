@@ -4,6 +4,7 @@
  */
 
 import { company } from "@/config/company";
+import { retentionPeriodClaimSk } from "@/config/retention";
 
 const FAQ = [
   {
@@ -24,7 +25,7 @@ const FAQ = [
   },
   {
     q: "Ako dlho uchovávate údaje z auditu?",
-    a: "Údaje uchovávame len po dobu nevyhnutnú na vyhodnotenie auditu a spracovanie dopytu. Detail nájdete v Zásadách ochrany osobných údajov.",
+    a: `${retentionPeriodClaimSk()} Detail nájdete v Zásadách ochrany osobných údajov.`,
   },
   {
     q: "Sú výsledky auditu zárukou úspor?",

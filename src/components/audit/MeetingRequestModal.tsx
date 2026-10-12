@@ -216,7 +216,7 @@ export default function MeetingRequestModal({
                 />
                 <span>
                   Súhlasím so spracovaním údajov za účelom vybavenia žiadosti.{" "}
-                  {retentionPeriodClaimSk()}.{" "}
+                  {retentionPeriodClaimSk()}{" "}
                   <Link
                     href="/ochrana-osobnych-udajov/"
                     className="text-signal-bright underline-offset-2 hover:underline"

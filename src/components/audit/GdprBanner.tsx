@@ -15,7 +15,7 @@ export default function GdprBanner() {
       <p className="mt-2 text-sm leading-relaxed text-ink-200">
         Vaše odpovede a výsledky auditu slúžia na vygenerovanie správy a
         stanovenie prioritných odporúčaní. Prenos údajov je šifrovaný (HTTPS).{" "}
-        {retentionPeriodClaimSk()}.
+        {retentionPeriodClaimSk()}
       </p>
     </aside>
   );
