@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "accessed": "2026-10-08",
+    "scope": "International indicative references from public SECONDARY sources (mostly vendor blogs and summaries). No Slovak process benchmark was found.",
+    "caveat": "Verify primary sources (ASQ, IISE, Vorne/OEE.com) before publishing. Values differ by sector, definition and measurement method. Never present as an average of Slovak MSP."
+  },
+  "kpis": {
+    "oee_pct": {
+      "label_sk": "OEE",
+      "unit": "%",
+      "direction": "higher-better",
+      "typical": 60,
+      "discreteAverageRange": [66, 67],
+      "topQuartile": 75,
+      "worldClass": 85,
+      "worldClassBySectorRange": [75, 87],
+      "confidence": "medium",
+      "definitionNote": "OEE = availability x performance x quality. The 85 % figure comes from TPM (Nakajima, 1984), roughly 90 x 95 x 99. Sector-dependent; only a small share of plants reach it.",
+      "sources": [
+        { "name": "Fabrico - OEE benchmarks", "url": "https://www.fabrico.io/blog/oee-benchmark/", "type": "vendor-blog" },
+        { "name": "TeepTrak - 2026 Manufacturing OEE Benchmark Report", "url": "https://teeptrak.com/en/manufacturing-oee-benchmark-report-2026/", "type": "vendor-report" },
+        { "name": "Evocon - World-class OEE benchmarks", "url": "https://evocon.com/articles/world-class-oee-industry-benchmarks-from-more-than-50-countries/", "type": "vendor-blog" },
+        { "name": "Reliamag - OEE benchmarks by industry", "url": "https://reliamag.com/guides/oee-benchmarks-by-industry-what-world-class-really-means/", "type": "secondary-guide" }
+      ]
+    },
+    "copq_pct_of_sales": {
+      "label_sk": "Náklady zlej kvality (% z tržieb)",
+      "unit": "% of sales",
+      "direction": "lower-better",
+      "typical": 15,
+      "range": [5, 35],
+      "asqQualityRelatedCostsRange": [15, 20],
+      "worldClassBelow": 5,
+      "confidence": "medium-low",
+      "definitionNote": "IISE: manufacturing average about 15 % of sales, range 5-35 % by product complexity. ASQ's 15-20 % refers to total quality-related costs, not failure costs only. Visible items (scrap, warranty) are often only 20-30 % of the true cost. The below-5 % world-class value comes from a compilation without a primary source (low confidence).",
+      "sources": [
+        { "name": "IISE - Measuring the cost of quality", "url": "https://iise.org/details.aspx?id=22118", "type": "professional-body" },
+        { "name": "Reliamag - Cost of poor quality (cites ASQ)", "url": "https://reliamag.com/articles/cost-of-poor-quality-scrap-rework-returns/", "type": "secondary-guide" },
+        { "name": "Manufacturing quality statistics compilation", "url": "https://manufacturingleadgeneration.com/manufacturing-quality-statistics/", "type": "compilation" }
+      ]
+    },
+    "otd_pct": {
+      "label_sk": "Včasnosť dodávok (OTD)",
+      "unit": "%",
+      "direction": "higher-better",
+      "averageRange": [90, 94],
+      "worldClassRange": [95, 99],
+      "automotiveOemScorecardRange": [98, 99],
+      "confidence": "medium",
+      "definitionNote": "OTD = orders delivered on time / orders shipped. Measuring against goods issue instead of goods receipt overstates performance. OEM scorecards use a composite delivery-performance metric, not plain OTD. Aberdeen (2007) defined best-in-class as about 95 % (old).",
+      "sources": [
+        { "name": "Tractian - On-time delivery", "url": "https://tractian.com/en/glossary/on-time-delivery", "type": "vendor-glossary" },
+        { "name": "Aberdeen benchmark (2007)", "url": "https://www.globenewswire.com/fr/news-release/2007/06/05/993393/0/en/Aberdeen-Benchmark-Correlates-Software-Adoption-for-Lean-Scheduling-Techniques-With-Improved-On-Time-Delivery.html", "type": "analyst-press-release"},
+        { "name": "Symestic - OTD, OTIF and benchmarks", "url": "https://www.symestic.com/en-us/what-is/on-time-delivery-otd", "type": "vendor-glossary" }
+      ]
+    },
+    "schedule_adherence_pct": {
+      "label_sk": "Dodržiavanie plánu výroby",
+      "unit": "%",
+      "direction": "higher-better",
+      "goodThresholdRange": [90, 100],
+      "kind": "vendor-threshold-not-measured-average",
+      "confidence": "low",
+      "definitionNote": "Thresholds published by software vendors, not measured averages. Definitions differ (schedule adherence vs attainment vs compliance). APQC holds benchmark data but it is not publicly accessible.",
+      "sources": [
+        { "name": "SCW.AI - Schedule adherence guide", "url": "https://scw.ai/blog/schedule-adherence/", "type": "vendor-blog" },
+        { "name": "MachineMetrics - Schedule attainment guide", "url": "https://docs.machinemetrics.com/docs/product-guides/schedule-attainment-guide", "type": "vendor-docs" }
+      ]
+    },
+    "hr_skills": {
+      "label_sk": "Ľudské zdroje a kompetencie",
+      "available": false,
+      "note": "No reliable public benchmark found. Do not display a reference value."
+    }
+  }
+}
