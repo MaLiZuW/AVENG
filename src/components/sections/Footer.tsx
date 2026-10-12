@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import GdprLink from "@/components/GdprModal";
 import { company } from "@/config/company";
 import { getPublicSocialLinks, type SocialKey } from "@/config/social";
 
@@ -114,12 +115,7 @@ export default function Footer() {
             <p className="pt-2 text-ink-200">
               Prenos údajov je šifrovaný (HTTPS)
             </p>
-            <Link
-              href="/ochrana-osobnych-udajov/"
-              className="inline-block text-ink-200 underline-offset-2 hover:text-signal-bright hover:underline"
-            >
-              Zásady spracovania osobných údajov (GDPR)
-            </Link>
+            <GdprLink />
           </div>
         </div>
         <p className="mt-12 border-t border-white/10 pt-6 text-xs text-ink-300">

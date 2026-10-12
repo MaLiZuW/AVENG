@@ -3,7 +3,11 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
-import { RETENTION_DAYS } from "@/config/retention";
+import {
+  RETENTION_DAYS,
+  RETENTION_JOB_VERIFIED,
+  retentionPeriodClaimSk,
+} from "@/config/retention";
 
 export const metadata: Metadata = {
   title: "Ochrana osobných údajov | AVENG",
@@ -12,6 +16,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/ochrana-osobnych-udajov/" },
 };
 
+/**
+ * Processors listed below are only those this repository actually uses:
+ * WebSupport (static hosting), Supabase (DB + Edge Functions),
+ * Resend (send-audit-report, issue-unlock-code, functions/contact),
+ * Web3Forms / FormSubmit (src/lib/submitContactRequest.ts).
+ * TODO(owner/legal): review with a lawyer
+ * TODO(owner): database backup expiry is not in config
+ */
 export default function PrivacyPage() {
   return (
     <>
@@ -19,10 +31,11 @@ export default function PrivacyPage() {
       <main className="section-pad">
         <div className="container-aveng max-w-3xl">
           <p className="eyebrow mb-4">GDPR</p>
-          <h1 className="heading-display">Ochrana osobných údajov</h1>
-          {/* TODO(owner/legal): skontrolovať s právnikom pred produkčným nasadením */}
+          <h1 className="heading-display">
+            Zásady spracovania osobných údajov
+          </h1>
           <p className="mt-4 text-sm text-ink-300">
-            Návrh textu na schválenie vlastníkom / právnym poradcom.
+            Návrh textu na schválenie vlastníkom a právnym poradcom.
           </p>
 
           <div className="prose-muted mt-8 space-y-6 text-base text-ink-200">
@@ -31,15 +44,8 @@ export default function PrivacyPage() {
                 1. Prevádzkovateľ
               </h2>
               <p className="mt-2">
-                {company.legalName}, IČO {company.ico}, DIČ {company.dic}, sídlo{" "}
-                {company.addressDisplay}. Kontakt:{" "}
-                <a
-                  href={`mailto:${company.email}`}
-                  className="text-signal-bright hover:underline"
-                >
-                  {company.email}
-                </a>
-                , tel. {company.phoneDisplay}.
+                {company.legalName}, IČO {company.ico}, DIČ {company.dic},{" "}
+                {company.addressDisplay}.
               </p>
             </section>
 
@@ -48,9 +54,9 @@ export default function PrivacyPage() {
                 2. Účel spracovania
               </h2>
               <p className="mt-2">
-                Spracovanie dopytu a obchodného kontaktu, zaslanie výsledkov /
-                správy z online procesného auditu a súvisiaca komunikácia k
-                službám {company.brandName}.
+                Vybavenie dopytu z kontaktného formulára a zaslanie správy z
+                online procesného auditu, vrátane komunikácie potrebnej na
+                tieto dve činnosti.
               </p>
             </section>
 
@@ -59,9 +65,10 @@ export default function PrivacyPage() {
                 3. Právny základ
               </h2>
               <p className="mt-2">
-                Súhlas dotknutej osoby (čl. 6 ods. 1 písm. a GDPR) udelený pred
-                odoslaním formulára, prípadne oprávnený záujem pri priamom
-                obchodnom dopyte (čl. 6 ods. 1 písm. f), podľa okolností.
+                Súhlas dotknutej osoby podľa čl. 6 ods. 1 písm. a) nariadenia
+                (EÚ) 2016/679. Súhlas udeľujete zaškrtnutím políčka pred
+                odoslaním formulára. Súhlas môžete odvolať e-mailom na adresu
+                prevádzkovateľa.
               </p>
             </section>
 
@@ -70,9 +77,11 @@ export default function PrivacyPage() {
                 4. Kategórie údajov
               </h2>
               <p className="mt-2">
-                Identifikačné a kontaktné údaje (meno, e-mail, telefón, firma),
-                údaje o audite (odvetvie, tržby, COGS, odpovede a vypočítané
-                výsledky) a obsah správy z kontaktného formulára.
+                Kontaktný formulár: meno, e-mail, názov firmy, text správy a
+                údaj o udelenom súhlase. Procesný audit: meno, pracovný
+                e-mail, názov firmy, telefón (ak ho uvediete), odvetvie,
+                tržby, podiel COGS, odpovede na otázky a z nich vypočítané
+                výsledky.
               </p>
             </section>
 
@@ -81,35 +90,51 @@ export default function PrivacyPage() {
                 5. Doba uchovávania
               </h2>
               <p className="mt-2">
-                {/* TODO(owner/legal): review with a lawyer; enable RETENTION_JOB_VERIFIED after migration deploy */}
-                Údaje uchovávame len po dobu nevyhnutnú na vyhodnotenie auditu a
-                spracovanie dopytu. Po schválení a nasadení mazacieho mechanizmu
-                bude doba uchovania maximálne {RETENTION_DAYS} dní
-                (konfiguračná hodnota RETENTION_DAYS). Termín expirácie záloh
-                databázy: TODO(owner).
+                {retentionPeriodClaimSk()}.
+                {!RETENTION_JOB_VERIFIED ? (
+                  <>
+                    {" "}
+                    V konfigurácii je lehota {RETENTION_DAYS} dní pre údaje
+                    auditu v databáze. Automatické vymazanie sa neuplatňuje,
+                    kým nie je mazací mechanizmus overený.
+                  </>
+                ) : null}{" "}
+                Správu z kontaktného formulára doručíme e-mailom a uchovávame
+                ju po dobu vybavenia dopytu.
               </p>
             </section>
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                6. Príjemcovia / sprostredkovatelia
+                6. Príjemcovia a sprostredkovatelia
               </h2>
               <p className="mt-2">
-                Podľa aktuálnej konfigurácie aplikácie môžu byť zapojení:
+                Osobné údaje spracúvajú len služby, ktoré táto aplikácia
+                skutočne používa:
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-5">
+                <li>WebSupport — hosting statickej webovej prezentácie.</li>
                 <li>
-                  Poskytovateľ databázy / backendu (ak je nastavený Supabase)
+                  Supabase — databáza auditných údajov a Edge Functions
+                  (overenie prístupu, odoslanie správy z auditu, prijatie
+                  kontaktného formulára).
                 </li>
                 <li>
-                  Poskytovateľ doručenia formulárov (Web3Forms alebo FormSubmit —
-                  podľa konfigurácie)
+                  Resend — doručenie e-mailov (správa z auditu, odomykacie
+                  kódy a správa z kontaktného formulára).
                 </li>
-                <li>Hosting webovej prezentácie (WebSupport / zvolený hoster)</li>
+                <li>
+                  Web3Forms — doručenie formulárov v audite, ak je v
+                  konfigurácii nastavený prístupový kľúč.
+                </li>
+                <li>
+                  FormSubmit — záložné doručenie tých istých formulárov, ak
+                  Web3Forms nie je nastavený alebo doručenie zlyhá.
+                </li>
               </ul>
-              <p className="mt-2 text-sm text-ink-300">
-                Zoznam obsahuje len služby, ktoré kód reálne podporuje. Žiadni
-                ďalší sprostredkovatelia nie sú vymyslení.
+              <p className="mt-2">
+                Prenos medzi prehliadačom a týmito službami prebieha cez
+                šifrované spojenie (HTTPS).
               </p>
             </section>
 
@@ -118,19 +143,27 @@ export default function PrivacyPage() {
                 7. Práva dotknutej osoby
               </h2>
               <p className="mt-2">
-                Máte právo na prístup, opravu, výmaz, obmedzenie spracovania,
-                prenosnosť, námietku a odvolanie súhlasu. Podnety zasielajte na{" "}
-                {company.email}. Máte právo podať sťažnosť na Úrad na ochranu
-                osobných údajov SR.
+                Máte právo na prístup k údajom, na opravu, na výmaz, na
+                obmedzenie spracúvania, na prenosnosť, právo namietať a právo
+                odvolať súhlas. Máte tiež právo podať sťažnosť na Úrad na
+                ochranu osobných údajov Slovenskej republiky.
               </p>
             </section>
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                8. Prenos údajov
+                8. Kontakt
               </h2>
               <p className="mt-2">
-                Komunikácia prebieha cez šifrované spojenie (HTTPS).
+                Žiadosti o uplatnenie práv aj ostatné otázky zasielajte na{" "}
+                <a
+                  href={`mailto:${company.email}`}
+                  className="text-signal-bright hover:underline"
+                >
+                  {company.email}
+                </a>{" "}
+                alebo telefonicky na {company.phoneDisplay}. Poštová adresa:{" "}
+                {company.addressDisplay}.
               </p>
             </section>
           </div>

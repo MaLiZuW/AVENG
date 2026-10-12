@@ -1,19 +1,27 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import Link from "next/link";
 import { z } from "zod";
+import GdprLink from "@/components/GdprModal";
 import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
-import { submitContactRequest } from "@/lib/submitContactRequest";
+import { submitSiteContact } from "@/lib/submitSiteContact";
 
 const schema = z.object({
-  fullName: z.string().min(2, "Zadajte meno"),
-  email: z.string().email("Zadajte platný e-mail"),
-  companyName: z.string().min(2, "Zadajte firmu"),
-  message: z.string().min(10, "Správa je príliš krátka"),
-  website: z.string().max(0).optional(), // honeypot
+  fullName: z.string().min(2, "Zadajte meno").max(120, "Meno je príliš dlhé"),
+  email: z
+    .string()
+    .email("Zadajte platný e-mail")
+    .max(254, "E-mail je príliš dlhý"),
+  companyName: z
+    .string()
+    .min(2, "Zadajte firmu")
+    .max(200, "Názov firmy je príliš dlhý"),
+  message: z
+    .string()
+    .min(10, "Správa je príliš krátka")
+    .max(4000, "Správa je príliš dlhá"),
   consent: z.literal(true, {
     message: "Je potrebný súhlas so spracovaním údajov",
   }),
@@ -29,32 +37,31 @@ export default function KontaktPage() {
     e.preventDefault();
     setError(null);
     const fd = new FormData(e.currentTarget);
+    const website = String(fd.get("website") ?? "");
     const parsed = schema.safeParse({
       fullName: String(fd.get("fullName") ?? "").trim(),
       email: String(fd.get("email") ?? "").trim(),
       companyName: String(fd.get("companyName") ?? "").trim(),
       message: String(fd.get("message") ?? "").trim(),
-      website: String(fd.get("website") ?? ""),
       consent: fd.get("consent") === "on",
     });
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Skontrolujte formulár");
       return;
     }
-    if (parsed.data.website) {
+    if (website.trim()) {
       setDone(true);
       return;
     }
 
     setPending(true);
-    const res = await submitContactRequest({
-      requestType: "meeting",
-      fullName: parsed.data.fullName,
-      company: parsed.data.companyName,
-      phone: "",
+    const res = await submitSiteContact({
+      name: parsed.data.fullName,
       email: parsed.data.email,
+      company: parsed.data.companyName,
       message: parsed.data.message,
-      meta: { source: "Kontaktná stránka /kontakt" },
+      consent: true,
+      website: "",
     });
     setPending(false);
     if (!res.ok) {
@@ -121,6 +128,7 @@ export default function KontaktPage() {
                 <input
                   name="fullName"
                   required
+                  maxLength={120}
                   className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
                 />
               </label>
@@ -130,6 +138,7 @@ export default function KontaktPage() {
                   name="email"
                   type="email"
                   required
+                  maxLength={254}
                   className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
                 />
               </label>
@@ -138,6 +147,7 @@ export default function KontaktPage() {
                 <input
                   name="companyName"
                   required
+                  maxLength={200}
                   className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
                 />
               </label>
@@ -147,6 +157,7 @@ export default function KontaktPage() {
                   name="message"
                   rows={5}
                   required
+                  maxLength={4000}
                   className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
                 />
               </label>
@@ -158,13 +169,8 @@ export default function KontaktPage() {
                   required
                 />
                 <span>
-                  Súhlasím so spracovaním údajov podľa{" "}
-                  <Link
-                    href="/ochrana-osobnych-udajov/"
-                    className="text-signal-bright underline-offset-2 hover:underline"
-                  >
-                    Zásad ochrany osobných údajov
-                  </Link>
+                  Súhlasím so spracovaním osobných údajov.{" "}
+                  <GdprLink className="text-signal-bright underline-offset-2 hover:underline" />
                   .
                 </span>
               </label>
