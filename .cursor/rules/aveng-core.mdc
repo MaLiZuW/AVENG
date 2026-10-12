@@ -1,0 +1,51 @@
+---
+description: AVENG website remediation - core rules (always apply)
+alwaysApply: true
+---
+# AVENG core rules
+
+Project: AddValueEngineering (AVENG) website. Next.js App Router, TypeScript, Tailwind. Slovak B2B site with a 3-level process audit for manufacturing MSP (Slovak abbreviation for SMEs).
+
+## Deployment model (important)
+- The site is a STATIC EXPORT (`next build` -> `out/`) uploaded via FTP to WebSupport. There is NO Next.js server runtime: no Route Handlers, Server Actions, middleware, ISR or `next/image` optimizer. Do not add any of them.
+- All server-side logic (unlock/promo validation, forms, rate limiting, report generation, e-mail) lives in Supabase Edge Functions (Deno) and the Supabase database.
+- Anything that ends up in the JS bundle or in `out/` is PUBLIC. Secrets and locked content must never be there.
+- Metadata files (`sitemap`, `robots`) must be static-export compatible (`export const dynamic = 'force-static'`). Prefer static files in `public/` where simpler.
+- There is existing work on branch `remediation` (unlock codes table/migration, report e-mail, HTML/PDF report). Extend and review it; never overwrite it blindly.
+
+## Scope discipline
+- Work ONLY on the step file you were given. Never start the next step. Stop after the step report.
+- If a required file, table, function or config cannot be found, STOP and report it. Never guess names or paths.
+- Minimal diffs. No refactors, renames or formatting sweeps outside the step.
+- Read `docs/REPO_MAP.md` first (created in step 00) instead of re-exploring the repo.
+
+## Language
+- Code, identifiers, comments, commit messages: English.
+- Website copy: Slovak, full diacritics, formal "vykanie". Strings introduced with `SK:` are VERBATIM: copy exactly, never translate or paraphrase.
+- Owner-facing documents in `docs/` and the step report in chat: Slovak.
+
+## Integrity
+- Never invent data: references, statistics, benchmark values, sources, certifications, client names, results. Missing data -> config value marked `TODO(owner)` and listed in the step report.
+- Never modify the calculation math (`C_Pi`, `k_Pi`, `w_q`, `S_SME`, `S_WC`, `M_WC`, weights, benchmarks used by the scorer). New behaviour lives in a presentation layer on top of the existing result.
+- Never describe reference values as "average of Slovak MSP". Published benchmarks are international and indicative; internal values are an expert estimate. Wording must follow the `source` field in `src/config/benchmarks.ts`.
+
+## Security and database
+- No secrets in the repo or client bundle. The Supabase service-role key never reaches the client. Secrets live in Supabase secrets; list names only in `.env.example` / `docs/SECRETS_NEEDED.md`.
+- Anything about unlocking/payment is validated in a Supabase Edge Function. CORS on Edge Functions allows only the production origin(s) from config.
+- NEVER run migrations, DDL or SQL against a real database, and NEVER run commands that change the remote Supabase project (`supabase db push`, `supabase functions deploy`, `supabase secrets set`, etc.). Only write migration files and function code; the owner deploys. No `DROP`/`DELETE` without explicit approval.
+
+## Copy rules
+- Use "MSP", never "SME", in visible text. Person name: "Vladimir" (no "Ing."). Only e-mail: vladimir@addvalueengineering.sk (`aveng.sk` must not appear).
+- No absolute promises ("completely safe", "100 % protected", "guaranteed savings").
+- No emoji in UI. Use `lucide-react` icons.
+
+## Dependencies
+- None new, except `lucide-react`, `zod`, and `tsx` (dev only, for scripts) if missing. Justify any addition in the report.
+
+## Quality gate (end of every step)
+1. `npm run lint`, `npx tsc --noEmit`, `npm run build` must pass.
+2. One Conventional Commit per step (`fix:`, `feat:`, `chore:`, `refactor:`, `docs:`).
+3. Check that `git diff --stat` touches only files related to the step.
+
+## Step report (chat, Slovak, max 10 lines)
+Changed files; what was done; checks (lint/tsc/build); open `TODO(owner)` items; anything that blocked you. Then STOP.
