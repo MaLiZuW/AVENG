@@ -5,7 +5,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q1a", "L1-P3-Q1", "P3",
     "Sú pre kritické rozmery a znaky kvality počítané indexy spôsobilosti (Cp, Cpk)?",
     "Kvantitatívne overenie stability a spôsobilosti výrobného procesu.",
-    "SPC (Statistical Process Control) / ISO 22514",
+    "SPC – indexy spôsobilosti",
     "Audit SPC regulačných diagramov a protokolov Cpk z meraní.",
     [
       "Spôsobilosť Cpk sa nemeria — proces je nestabilný.",
@@ -17,7 +17,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q1b", "L1-P3-Q1", "P3",
     "Sú Poka-Yoke zariadenia (chybozvzdorné senzory) testované na začiatku zmeny étalonmi?",
     "Verifikácia funkčnosti automatických zábran proti vyrobeniu chyby.",
-    "Poka-Yoke Master Sample Verification / VDA 6.3 P6",
+    "Poka-Yoke – skúška étalonom",
     "Audit zápisníkov testovania Poka-Yoke pomocou červených (chybných) étalonov.",
     [
       "Poka-Yoke senzory sa netestujú master vzorkami.",
@@ -29,7 +29,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q1c", "L1-P3-Q1", "P3",
     "Je zabezpečená plná spätná aj dopredná sledovateľnosť (Traceability) šarží a kusov?",
     "Schopnosť rýchlo izolovať chybnú šaržu pri zákazníckej reklamácii.",
-    "Barcode Traceability / IATF 16949",
+    "Sledovateľnosť šarží a kusov",
     "Vykonanie rýchleho testu dohľadateľnosti od finálneho kusu po surovinu.",
     [
       "Sledovateľnosť materiálu a šarží neexistuje.",
@@ -53,7 +53,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q2b", "L1-P3-Q2", "P3",
     "Sú hodiny prepracovania (Rework) a náklady na opakovanú kontrolu schvaľované?",
     "Kontrola skrytých nákladov na dodatočné opravy vadných dielov.",
-    "Rework Authorization / VDA 6.3 P6",
+    "Schvaľovanie prepracovania",
     "Kontrola sprievodiek opravených dielov a podpisu manažéra kvality.",
     [
       "Prepracovanie prebieha živelne na dielni bez schválenia.",
@@ -65,7 +65,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q2c", "L1-P3-Q2", "P3",
     "Sú nezhodné diely fyzicky aj systémovo uzamknuté v červených klietkach/boxoch?",
     "Zamedzenie náhodnému zamiešaniu vadného kusu späť do čistej výroby.",
-    "Non-Conforming Product Quarantine / ISO 9001",
+    "Karanténa nezhodných dielov",
     "Gemba kontrola uzamknutých červených klietok a prístupových práv.",
     [
       "Vadné diely ležia voľne pri stroji bez jednoznačného označenia.",
@@ -77,7 +77,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q3a", "L1-P3-Q3", "P3",
     "Vychádza Kontrolný plán priamo z analýzy rizík FMEA (Process FMEA)?",
     "Systémové prepojenie očakávaných rizík s kontrolnými činnosťami.",
-    "PFMEA to Control Plan Alignment / IATF 16949",
+    "Prepojenie FMEA a kontrolného plánu",
     "Porovnanie kritických RPN/AP čísel v PFMEA s Kontrolným plánom.",
     [
       "Kontrolný plán neexistuje alebo neodpovedá FMEA.",
@@ -89,7 +89,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q3b", "L1-P3-Q3", "P3",
     "Podliehajú meradlá a inspekčné prípravky štandardnej kalibrácii a štúdii MSA (Gauge R&R)?",
     "Overenie dôveryhodnosti a presnosti samotného meracieho systému.",
-    "MSA (Measurement System Analysis) / ISO 10012",
+    "Kalibrácia a MSA",
     "Audit kalibračných štítkov, evidenčných kariet a protokolov GR&R.",
     [
       "Meradlá sa nekalibrujú, presnosť merania nie je overená.",
@@ -113,7 +113,7 @@ export const LEVEL2_P3: Level2Question[] = [
   l2q("L2-P3-Q4a", "L1-P3-Q4", "P3",
     "Dodržiava sa štandard rýchlosti reakcie na reklamáciu (8D metodika)?",
     "Rýchlosť a profesionalita riešenia zákazníckych problémov.",
-    "8D Problem Solving Methodology / VDA 6.3 P7",
+    "8D – rýchlosť reakcie na reklamáciu",
     "Audit plnenia termínov 3D a 8D v registri reklamácií.",
     [
       "Reklamácie sa riešia neštruktúrovane, bez metodiky 8D.",

@@ -5,7 +5,7 @@ export const LEVEL2_P4: Level2Question[] = [
   l2q("L2-P4-Q1a", "L1-P4-Q1", "P4",
     "Je expedícia riadená podľa presného časového okna zákazníka (Time-Slot Management)?",
     "Zamedzenie meškania z dôvodu prestojov v expedičnom sklade.",
-    "Logistics Time-Slot Management / VDA 6.3 P5",
+    "Lean – časové okná expedície",
     "Porovnanie plánovaných časových okien nakládky s reálnym časom odchodu.",
     [
       "Expedícia nemá časové okná, nakladá sa podľa príchodu kamiónu.",
@@ -113,7 +113,7 @@ export const LEVEL2_P4: Level2Question[] = [
   l2q("L2-P4-Q4a", "L1-P4-Q4", "P4",
     "Sú dodávatelia mesačne hodnotení cez transparentný KPI scorecard (OTD, PPM, cena)?",
     "Objektívne riadenie výkonnosti dodávateľského reťazca.",
-    "Supplier Scorecard / VDA 6.3 P5",
+    "Hodnotenie dodávateľov",
     "Audit hodnotiacich správ dodávateľov posielaných na mesačnej/kvartálnej báze.",
     [
       "Dodávatelia sa nehodnotia, problémy sa riešia len pri výpadku.",
@@ -125,7 +125,7 @@ export const LEVEL2_P4: Level2Question[] = [
   l2q("L2-P4-Q4b", "L1-P4-Q4", "P4",
     "Je vstupná kontrola materiálu riadená na základe rizikového profilu dodávateľa (Skip-Lot)?",
     "Zníženie nákladov na kontrolu u overených a kvalitných dodávateľov.",
-    "Skip-Lot Inspection / ISO 2859",
+    "Vstupná kontrola podľa rizika dodávateľa",
     "Kontrola plánu vstupnej kontroly a pravidiel prechodu na Skip-Lot.",
     [
       "Vstupná kontrola sa robí 100 % alebo vôbec bez pravidiel.",
@@ -137,7 +137,7 @@ export const LEVEL2_P4: Level2Question[] = [
   l2q("L2-P4-Q4c", "L1-P4-Q4", "P4",
     "Vykonávajú sa u kľúčových dodávateľov procesné audity podľa VDA 6.3 P5?",
     "Preventívne overenie procesnej spôsobilosti u zdroja materiálu.",
-    "Supplier Process Audit / VDA 6.3 P5",
+    "Procesný audit dodávateľov",
     "Plán dodávateľských auditov a správy z vykonaných auditov na mieste.",
     [
       "Dodávateľské audity sa nevykonávajú.",

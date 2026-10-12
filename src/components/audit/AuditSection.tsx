@@ -255,6 +255,7 @@ export default function AuditSection() {
         <p className="prose-muted mt-4 max-w-2xl">
           L1 (20) → L2 (60) → L3 (180 / 6M + DTO) — objektívne hodnotenie bez
           viditeľných bodov, odvetvový benchmark a indikatívny potenciál úspor.
+          Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).
         </p>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-3">

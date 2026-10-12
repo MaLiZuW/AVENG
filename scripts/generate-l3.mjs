@@ -112,7 +112,7 @@ const SEEDS = {
       "Je výpočet taktu zákazníka (Takt Time) aktualizovaný pri každej zmene odberateľského poriadku?",
     targetExplanation:
       "Overuje pružnosť prispôsobenia výrobných rýchlostí reálnemu dopytu na trhu.",
-    methodology: "Lean Takt Time / VDA 6.3 P4",
+    methodology: "Lean – takt zákazníka",
     verificationMethod:
       "Porovnanie posledných 3 zmrazených plánov výroby s odberateľskými odvolávkami v ERP.",
     options: [
@@ -150,7 +150,7 @@ const SEEDS = {
       "Meria sa odchýlka reakčnej doby výroby na zmenu taktu zákazníka?",
     targetExplanation:
       "Sleduje agilitu reakcie výrobného systému na trhové zmeny.",
-    methodology: "ISO/IEC 33020 PA 4.1 / Operational Agility",
+    methodology: "Meranie reakčnej doby na zmenu taktu",
     verificationMethod:
       "Audit KPI správ: sledovanie počtu dní od zmeny EDI po fyzickú úpravu taktu na dielni.",
     options: [
@@ -207,7 +207,7 @@ const SEEDS = {
       "Existuje definovaný postup escalation pri nesplnení hodinového cieľa o viac ako 15 %?",
     targetExplanation:
       "Garantuje okamžitý zásah podpory (údržba, kvalita, logistika) už počas prebiehajúcej hodiny.",
-    methodology: "Andon Escalation / VDA 6.3 P4",
+    methodology: "Lean – eskalácia odchýlky",
     verificationMethod:
       "Pohovor s majstrom a kontrola logu reálnych eskalácií za posledný týždeň.",
     options: [

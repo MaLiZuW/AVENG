@@ -11,7 +11,7 @@ import FaqSection from "@/components/sections/FaqSection";
 export const metadata: Metadata = {
   title: "AVENG | Procesný audit a technické vedenie pre MSP",
   description:
-    "Procesný self-audit a Fractional Technical Leadership pre výrobné MSP na Slovensku a Morave.",
+    "Procesný self-audit a Fractional Technical Leadership pre výrobné MSP na Slovensku a Morave. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).",
   alternates: { canonical: "/" },
 };
 

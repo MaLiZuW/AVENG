@@ -17,7 +17,7 @@ export const LEVEL2_P5: Level2Question[] = [
   l2q("L2-P5-Q1b", "L1-P5-Q1", "P5",
     "Vychádza ročný plán vzdelávania priamo z identifikovaných kompetenčných medzier v matici?",
     "Cielená investícia do vzdelávania tam, kde chýba zastupiteľnosť.",
-    "Training Needs Analysis (TNA) / ISO 9001 Clause 7.2",
+    "Plán vzdelávania z medzier v matici",
     "Porovnanie medzier v Skill Matici s plánom školení na daný rok.",
     [
       "Školenia sa plánujú formálne alebo len povinné zo zákona.",
@@ -41,7 +41,7 @@ export const LEVEL2_P5: Level2Question[] = [
   l2q("L2-P5-Q2a", "L1-P5-Q2", "P5",
     "Sú neplánované absencie (PN, OČR) týždenne vyhodnocované podľa stredísk a príčin?",
     "Identifikácia rizikových pracovísk s vysokou chorobnosťou alebo fluktuáciou.",
-    "Absenteeism Pareto / ISO 45001",
+    "Vyhodnotenie absencie",
     "Audit týždenných správ HR a analýzy Bradfordovho faktora.",
     [
       "Absencia sa vyhodnocuje len sumárne pre celú firmu raz za mesiac.",
@@ -53,7 +53,7 @@ export const LEVEL2_P5: Level2Question[] = [
   l2q("L2-P5-Q2b", "L1-P5-Q2", "P5",
     "Vykonávajú sa na pracoviskách ergonomické audity pre zníženie fyzickej záťaže a úrazovosti?",
     "Prevencia chorôb z povolania a zníženie fyzickej únavy operátorov.",
-    "Ergonomic Assessment (EAWS / REBA / NLE) / ISO 45001",
+    "Ergonomický audit pracovísk",
     "Audit ergonomických posudkov pracovísk a realizovaných úprav.",
     [
       "Ergonómia sa nerieši, pracoviská nie sú prispôsobené.",

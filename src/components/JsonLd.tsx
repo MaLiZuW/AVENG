@@ -13,7 +13,7 @@ const professionalService = {
   logo: `${SITE}/aveng-icon.svg`,
   image: `${SITE}/og-image.png`,
   description:
-    "Procesný audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Inšpirované princípmi procesného auditu (napr. Lean, TPM/OEE).",
+    "Procesný audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).",
   address: {
     "@type": "PostalAddress",
     addressLocality: company.addressLocality,

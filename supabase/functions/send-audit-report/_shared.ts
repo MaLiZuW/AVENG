@@ -88,6 +88,7 @@ export type ReportBody = {
   presentation?: ReportPresentationPayload;
 };
 
+/** Display-only mirror of DOMAIN_DISPLAY_LABEL in src/config/audit-display.ts. */
 export const DOMAIN: Record<string, string> = {
   P1: "D1",
   P2: "D2",

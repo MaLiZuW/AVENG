@@ -353,10 +353,10 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
       score4: "50 000 – 100 000",
       score6: "10 000 – 49 999",
       score8: "233 – 9 999",
-      score10: "< 233 (6σ)",
+      score10: "< 233",
     },
     benchmarkSme: "10 000–50 000",
-    benchmarkWc: "<233 (6σ)",
+    benchmarkWc: "<233",
     optionLabels: [
       "Chybovosť je vysoká; nezhody sú každodennou realitou.",
       "Chybovosť je výrazná; veľa reworku a sortovania.",
@@ -400,7 +400,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     questionText: "Existuje kontrolný plán pre kritické charakteristiky?",
     targetExplanation:
       "Kontrolný plán definuje merania, frekvenciu a reakcie.",
-    methodology: "ISO 9001 – riadenie nezhôd a nápravné opatrenia",
+    methodology: "Kontrolný plán – kritické charakteristiky",
     inputType: "MATURITY_SCALE",
     weight: 4,
     maturityLabels: [
@@ -566,7 +566,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     questionText: "Existuje matica kompetencií a plán školenia?",
     targetExplanation:
       "Kompetencie musia byť merateľné a prepojené na potreby procesov.",
-    methodology: "WCM – People Development; ISO 9001",
+    methodology: "WCM – matica kompetencií",
     inputType: "MATURITY_SCALE",
     weight: 4,
     maturityLabels: [
@@ -592,7 +592,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     questionText: "Aká je miera absencie zamestnancov?",
     targetExplanation:
       "Vysoká absencia znižuje dostupnosť a kvalitu.",
-    methodology: "WCM – People pillar; ISO 45001",
+    methodology: "Miera absencie",
     inputType: "NUMERIC_INPUT",
     weight: 3,
     numericUnit: "%",

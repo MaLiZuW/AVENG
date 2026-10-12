@@ -53,7 +53,7 @@ export const LEVEL2_P2: Level2Question[] = [
   l2q("L2-P2-Q2b", "L1-P2-Q2", "P2",
     "Sú kritické náhradné diely evidované v CMMS/ERP s nastaveným minimálnym skladom?",
     "Zamedzenie dlhým prestojom spôsobeným čakaním na doručenie náhradného dielu.",
-    "CMMS Spare Parts Management / VDA 6.3 P6",
+    "Riadenie náhradných dielov",
     "Fyzická kontrola skladu náhradných dielov a min/max limitov v systéme.",
     [
       "Náhradné diely sa kupujú až po vzniku poruchy.",
@@ -101,7 +101,7 @@ export const LEVEL2_P2: Level2Question[] = [
   l2q("L2-P2-Q3c", "L1-P2-Q3", "P2",
     "Smerujú opatrenia údržby k skracovaniu MTTR a predlžovaniu MTBF?",
     "Meranie reálnej technickej výkonnosti tímu údržby.",
-    "MTTR / MTBF Indicators / ISO 55000",
+    "MTTR a MTBF",
     "Audit vývoja metrík MTTR a MTBF.",
     [
       "Metriky MTTR a MTBF sa nesledujú.",

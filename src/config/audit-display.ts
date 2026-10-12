@@ -12,7 +12,11 @@ export const MAX_DISPLAYED_POTENTIAL_SHARE = 0.35;
  */
 export const SHOW_WORLD_CLASS_CEILING = false;
 
-/** Internal process IDs → public domain labels D1–D5 */
+/**
+ * Internal process IDs → public domain labels D1–D5.
+ * Display only. Revert labels here (and the Deno mirror in
+ * supabase/functions/send-audit-report/_shared.ts).
+ */
 export const DOMAIN_DISPLAY_LABEL: Record<
   "P1" | "P2" | "P3" | "P4" | "P5",
   string

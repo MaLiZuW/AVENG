@@ -25,7 +25,7 @@ export default function Hero() {
           <p className="prose-muted mt-6 max-w-2xl">
             Pomáhame malým a stredným podnikom rásť cez systémové procesy,
             digitálnu transformáciu a rozvoj technických lídrov. Inžinierska
-            presnosť spojená s psychológiou biznisu.
+            presnosť spojená s psychológiou biznisu. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a href="/self-audit/" className="btn-primary">

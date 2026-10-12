@@ -10,7 +10,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Je výpočet taktu zákazníka (Takt Time) aktualizovaný pri každej zmene odberateľského poriadku?",
     goal: "Overuje pružnosť prispôsobenia výrobných rýchlostí reálnemu dopytu na trhu.",
-    methodology: "Lean Takt Time / VDA 6.3 P4",
+    methodology: "Lean – takt zákazníka",
     verification: "Porovnanie posledných 3 zmrazených plánov výroby s odberateľskými odvolávkami v ERP.",
     options: [
       { key: "A", label: "Takt Time sa nevypočítava, vyrába sa na základe odhadu kapacity.", score: 0 },
@@ -50,7 +50,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Meria sa odchýlka reakčnej doby výroby na zmenu taktu zákazníka?",
     goal: "Sleduje agilitu reakcie výrobného systému na trhové zmeny.",
-    methodology: "ISO/IEC 33020 PA 4.1 / Operational Agility",
+    methodology: "Meranie reakčnej doby na zmenu taktu",
     verification: "Audit KPI správ: sledovanie počtu dní od zmeny EDI po fyzickú úpravu taktu na dielni.",
     options: [
       { key: "A", label: "Reakčná doba sa nemeria, zmeny sa prejavujú s chaotickým oneskorením.", score: 0 },
@@ -110,7 +110,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Existuje definovaný postup escalation pri nesplnení hodinového cieľa o viac ako 15 %?",
     goal: "Garantuje okamžitý zásah podpory (údržba, kvalita, logistika) už počas prebiehajúcej hodiny.",
-    methodology: "Andon Escalation / VDA 6.3 P4",
+    methodology: "Lean – eskalácia odchýlky",
     verification: "Pohovor s majstrom a kontrola logu reálnych eskalácií za posledný týždeň.",
     options: [
       { key: "A", label: "Postup neexistuje, sklzy sa nariaďujú doháňať nadčasmi.", score: 0 },
@@ -250,7 +250,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Je dopĺňanie materiálu na pracoviská riadené striktne signálom FIFO /…?",
     goal: "Zisťuje, či logistika tiahne materiál na základe spotreby, alebo tlačí nepotrebné zásoby. Fokus 6M: MATERIAL.",
-    methodology: "FIFO / Pull Replenishment / VDA 6.3 P4 / 6M MATERIAL",
+    methodology: "Lean – FIFO a Kanban / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Je dopĺňanie materiálu na pracoviská riadené striktne signálom FIFO /…“ systematicky riešená.", score: 0 },
@@ -270,7 +270,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Je dopĺňanie materiálu na pracoviská riadené striktne signálom FIFO /…?",
     goal: "Zisťuje, či logistika tiahne materiál na základe spotreby, alebo tlačí nepotrebné zásoby. Fokus 6M: ENVIRONMENT.",
-    methodology: "FIFO / Pull Replenishment / VDA 6.3 P4 / 6M ENVIRONMENT",
+    methodology: "Lean – FIFO a Kanban / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Je dopĺňanie materiálu na pracoviská riadené striktne signálom FIFO /…“ systematicky riešená.", score: 0 },
@@ -290,7 +290,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Je dopĺňanie materiálu na pracoviská riadené striktne signálom FIFO /…?",
     goal: "Zisťuje, či logistika tiahne materiál na základe spotreby, alebo tlačí nepotrebné zásoby. Fokus 6M: METHOD.",
-    methodology: "FIFO / Pull Replenishment / VDA 6.3 P4 / 6M METHOD",
+    methodology: "Lean – FIFO a Kanban / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Je dopĺňanie materiálu na pracoviská riadené striktne signálom FIFO /…“ systematicky riešená.", score: 0 },
@@ -550,7 +550,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Sú príčiny operatívnych skokov a preplánovania evidované a kategorizo…?",
     goal: "Odhalenie primárnych spúšťačov chaotického preplánovávania (chyby materiálu, poruchy, zákazník). Fokus 6M: MACHINE.",
-    methodology: "Firefighting Pareto Analysis / VDA 6.3 P4 / 6M MACHINE",
+    methodology: "Lean – príčiny preplánovania / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Sú príčiny operatívnych skokov a preplánovania evidované a kategorizo…“ systematicky riešená.", score: 0 },
@@ -570,7 +570,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Sú príčiny operatívnych skokov a preplánovania evidované a kategorizo…?",
     goal: "Odhalenie primárnych spúšťačov chaotického preplánovávania (chyby materiálu, poruchy, zákazník). Fokus 6M: MATERIAL.",
-    methodology: "Firefighting Pareto Analysis / VDA 6.3 P4 / 6M MATERIAL",
+    methodology: "Lean – príčiny preplánovania / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Sú príčiny operatívnych skokov a preplánovania evidované a kategorizo…“ systematicky riešená.", score: 0 },
@@ -590,7 +590,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Sú príčiny operatívnych skokov a preplánovania evidované a kategorizo…?",
     goal: "Odhalenie primárnych spúšťačov chaotického preplánovávania (chyby materiálu, poruchy, zákazník). Fokus 6M: ENVIRONMENT.",
-    methodology: "Firefighting Pareto Analysis / VDA 6.3 P4 / 6M ENVIRONMENT",
+    methodology: "Lean – príčiny preplánovania / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Sú príčiny operatívnych skokov a preplánovania evidované a kategorizo…“ systematicky riešená.", score: 0 },
@@ -970,7 +970,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Sú kritické náhradné diely evidované v CMMS/ERP s nastaveným minimáln…?",
     goal: "Zamedzenie dlhým prestojom spôsobeným čakaním na doručenie náhradného dielu. Fokus 6M: MATERIAL.",
-    methodology: "CMMS Spare Parts Management / VDA 6.3 P6 / 6M MATERIAL",
+    methodology: "Riadenie náhradných dielov / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Sú kritické náhradné diely evidované v CMMS/ERP s nastaveným minimáln…“ systematicky riešená.", score: 0 },
@@ -990,7 +990,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Sú kritické náhradné diely evidované v CMMS/ERP s nastaveným minimáln…?",
     goal: "Zamedzenie dlhým prestojom spôsobeným čakaním na doručenie náhradného dielu. Fokus 6M: ENVIRONMENT.",
-    methodology: "CMMS Spare Parts Management / VDA 6.3 P6 / 6M ENVIRONMENT",
+    methodology: "Riadenie náhradných dielov / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Sú kritické náhradné diely evidované v CMMS/ERP s nastaveným minimáln…“ systematicky riešená.", score: 0 },
@@ -1010,7 +1010,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Sú kritické náhradné diely evidované v CMMS/ERP s nastaveným minimáln…?",
     goal: "Zamedzenie dlhým prestojom spôsobeným čakaním na doručenie náhradného dielu. Fokus 6M: METHOD.",
-    methodology: "CMMS Spare Parts Management / VDA 6.3 P6 / 6M METHOD",
+    methodology: "Riadenie náhradných dielov / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Sú kritické náhradné diely evidované v CMMS/ERP s nastaveným minimáln…“ systematicky riešená.", score: 0 },
@@ -1210,7 +1210,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Smerujú opatrenia údržby k skracovaniu MTTR a predlžovaniu MTBF??",
     goal: "Meranie reálnej technickej výkonnosti tímu údržby. Fokus 6M: MEASUREMENT.",
-    methodology: "MTTR / MTBF Indicators / ISO 55000 / 6M MEASUREMENT",
+    methodology: "MTTR a MTBF / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Smerujú opatrenia údržby k skracovaniu MTTR a predlžovaniu MTBF?“ systematicky riešená.", score: 0 },
@@ -1230,7 +1230,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Smerujú opatrenia údržby k skracovaniu MTTR a predlžovaniu MTBF??",
     goal: "Meranie reálnej technickej výkonnosti tímu údržby. Fokus 6M: MACHINE.",
-    methodology: "MTTR / MTBF Indicators / ISO 55000 / 6M MACHINE",
+    methodology: "MTTR a MTBF / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Smerujú opatrenia údržby k skracovaniu MTTR a predlžovaniu MTBF?“ systematicky riešená.", score: 0 },
@@ -1250,7 +1250,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Smerujú opatrenia údržby k skracovaniu MTTR a predlžovaniu MTBF??",
     goal: "Meranie reálnej technickej výkonnosti tímu údržby. Fokus 6M: MATERIAL.",
-    methodology: "MTTR / MTBF Indicators / ISO 55000 / 6M MATERIAL",
+    methodology: "MTTR a MTBF / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Smerujú opatrenia údržby k skracovaniu MTTR a predlžovaniu MTBF?“ systematicky riešená.", score: 0 },
@@ -1450,7 +1450,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Sú pre kritické rozmery a znaky kvality počítané indexy spôsobilosti …?",
     goal: "Kvantitatívne overenie stability a spôsobilosti výrobného procesu. Fokus 6M: METHOD.",
-    methodology: "SPC (Statistical Process Control) / ISO 22514 / 6M METHOD",
+    methodology: "SPC – indexy spôsobilosti / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Sú pre kritické rozmery a znaky kvality počítané indexy spôsobilosti …“ systematicky riešená.", score: 0 },
@@ -1470,7 +1470,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Sú pre kritické rozmery a znaky kvality počítané indexy spôsobilosti …?",
     goal: "Kvantitatívne overenie stability a spôsobilosti výrobného procesu. Fokus 6M: MAN.",
-    methodology: "SPC (Statistical Process Control) / ISO 22514 / 6M MAN",
+    methodology: "SPC – indexy spôsobilosti / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Sú pre kritické rozmery a znaky kvality počítané indexy spôsobilosti …“ systematicky riešená.", score: 0 },
@@ -1490,7 +1490,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Sú pre kritické rozmery a znaky kvality počítané indexy spôsobilosti …?",
     goal: "Kvantitatívne overenie stability a spôsobilosti výrobného procesu. Fokus 6M: MEASUREMENT.",
-    methodology: "SPC (Statistical Process Control) / ISO 22514 / 6M MEASUREMENT",
+    methodology: "SPC – indexy spôsobilosti / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Sú pre kritické rozmery a znaky kvality počítané indexy spôsobilosti …“ systematicky riešená.", score: 0 },
@@ -1510,7 +1510,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Sú Poka-Yoke zariadenia (chybozvzdorné senzory) testované na začiatku…?",
     goal: "Verifikácia funkčnosti automatických zábran proti vyrobeniu chyby. Fokus 6M: MAN.",
-    methodology: "Poka-Yoke Master Sample Verification / VDA 6.3 P6 / 6M MAN",
+    methodology: "Poka-Yoke – skúška étalonom / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Sú Poka-Yoke zariadenia (chybozvzdorné senzory) testované na začiatku…“ systematicky riešená.", score: 0 },
@@ -1530,7 +1530,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Sú Poka-Yoke zariadenia (chybozvzdorné senzory) testované na začiatku…?",
     goal: "Verifikácia funkčnosti automatických zábran proti vyrobeniu chyby. Fokus 6M: MEASUREMENT.",
-    methodology: "Poka-Yoke Master Sample Verification / VDA 6.3 P6 / 6M MEASUREMENT",
+    methodology: "Poka-Yoke – skúška étalonom / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Sú Poka-Yoke zariadenia (chybozvzdorné senzory) testované na začiatku…“ systematicky riešená.", score: 0 },
@@ -1550,7 +1550,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Sú Poka-Yoke zariadenia (chybozvzdorné senzory) testované na začiatku…?",
     goal: "Verifikácia funkčnosti automatických zábran proti vyrobeniu chyby. Fokus 6M: MACHINE.",
-    methodology: "Poka-Yoke Master Sample Verification / VDA 6.3 P6 / 6M MACHINE",
+    methodology: "Poka-Yoke – skúška étalonom / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Sú Poka-Yoke zariadenia (chybozvzdorné senzory) testované na začiatku…“ systematicky riešená.", score: 0 },
@@ -1570,7 +1570,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Je zabezpečená plná spätná aj dopredná sledovateľnosť (Traceability) …?",
     goal: "Schopnosť rýchlo izolovať chybnú šaržu pri zákazníckej reklamácii. Fokus 6M: MEASUREMENT.",
-    methodology: "Barcode Traceability / IATF 16949 / 6M MEASUREMENT",
+    methodology: "Sledovateľnosť šarží a kusov / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Je zabezpečená plná spätná aj dopredná sledovateľnosť (Traceability) …“ systematicky riešená.", score: 0 },
@@ -1590,7 +1590,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Je zabezpečená plná spätná aj dopredná sledovateľnosť (Traceability) …?",
     goal: "Schopnosť rýchlo izolovať chybnú šaržu pri zákazníckej reklamácii. Fokus 6M: MACHINE.",
-    methodology: "Barcode Traceability / IATF 16949 / 6M MACHINE",
+    methodology: "Sledovateľnosť šarží a kusov / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Je zabezpečená plná spätná aj dopredná sledovateľnosť (Traceability) …“ systematicky riešená.", score: 0 },
@@ -1610,7 +1610,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Je zabezpečená plná spätná aj dopredná sledovateľnosť (Traceability) …?",
     goal: "Schopnosť rýchlo izolovať chybnú šaržu pri zákazníckej reklamácii. Fokus 6M: MATERIAL.",
-    methodology: "Barcode Traceability / IATF 16949 / 6M MATERIAL",
+    methodology: "Sledovateľnosť šarží a kusov / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Je zabezpečená plná spätná aj dopredná sledovateľnosť (Traceability) …“ systematicky riešená.", score: 0 },
@@ -1690,7 +1690,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Sú hodiny prepracovania (Rework) a náklady na opakovanú kontrolu schv…?",
     goal: "Kontrola skrytých nákladov na dodatočné opravy vadných dielov. Fokus 6M: MATERIAL.",
-    methodology: "Rework Authorization / VDA 6.3 P6 / 6M MATERIAL",
+    methodology: "Schvaľovanie prepracovania / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Sú hodiny prepracovania (Rework) a náklady na opakovanú kontrolu schv…“ systematicky riešená.", score: 0 },
@@ -1710,7 +1710,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Sú hodiny prepracovania (Rework) a náklady na opakovanú kontrolu schv…?",
     goal: "Kontrola skrytých nákladov na dodatočné opravy vadných dielov. Fokus 6M: ENVIRONMENT.",
-    methodology: "Rework Authorization / VDA 6.3 P6 / 6M ENVIRONMENT",
+    methodology: "Schvaľovanie prepracovania / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Sú hodiny prepracovania (Rework) a náklady na opakovanú kontrolu schv…“ systematicky riešená.", score: 0 },
@@ -1730,7 +1730,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Sú hodiny prepracovania (Rework) a náklady na opakovanú kontrolu schv…?",
     goal: "Kontrola skrytých nákladov na dodatočné opravy vadných dielov. Fokus 6M: METHOD.",
-    methodology: "Rework Authorization / VDA 6.3 P6 / 6M METHOD",
+    methodology: "Schvaľovanie prepracovania / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Sú hodiny prepracovania (Rework) a náklady na opakovanú kontrolu schv…“ systematicky riešená.", score: 0 },
@@ -1750,7 +1750,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Sú nezhodné diely fyzicky aj systémovo uzamknuté v červených klietkac…?",
     goal: "Zamedzenie náhodnému zamiešaniu vadného kusu späť do čistej výroby. Fokus 6M: ENVIRONMENT.",
-    methodology: "Non-Conforming Product Quarantine / ISO 9001 / 6M ENVIRONMENT",
+    methodology: "Karanténa nezhodných dielov / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Sú nezhodné diely fyzicky aj systémovo uzamknuté v červených klietkac…“ systematicky riešená.", score: 0 },
@@ -1770,7 +1770,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Sú nezhodné diely fyzicky aj systémovo uzamknuté v červených klietkac…?",
     goal: "Zamedzenie náhodnému zamiešaniu vadného kusu späť do čistej výroby. Fokus 6M: METHOD.",
-    methodology: "Non-Conforming Product Quarantine / ISO 9001 / 6M METHOD",
+    methodology: "Karanténa nezhodných dielov / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Sú nezhodné diely fyzicky aj systémovo uzamknuté v červených klietkac…“ systematicky riešená.", score: 0 },
@@ -1790,7 +1790,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Sú nezhodné diely fyzicky aj systémovo uzamknuté v červených klietkac…?",
     goal: "Zamedzenie náhodnému zamiešaniu vadného kusu späť do čistej výroby. Fokus 6M: MAN.",
-    methodology: "Non-Conforming Product Quarantine / ISO 9001 / 6M MAN",
+    methodology: "Karanténa nezhodných dielov / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Sú nezhodné diely fyzicky aj systémovo uzamknuté v červených klietkac…“ systematicky riešená.", score: 0 },
@@ -1810,7 +1810,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Vychádza Kontrolný plán priamo z analýzy rizík FMEA (Process FMEA)??",
     goal: "Systémové prepojenie očakávaných rizík s kontrolnými činnosťami. Fokus 6M: METHOD.",
-    methodology: "PFMEA to Control Plan Alignment / IATF 16949 / 6M METHOD",
+    methodology: "Prepojenie FMEA a kontrolného plánu / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Vychádza Kontrolný plán priamo z analýzy rizík FMEA (Process FMEA)?“ systematicky riešená.", score: 0 },
@@ -1830,7 +1830,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Vychádza Kontrolný plán priamo z analýzy rizík FMEA (Process FMEA)??",
     goal: "Systémové prepojenie očakávaných rizík s kontrolnými činnosťami. Fokus 6M: MAN.",
-    methodology: "PFMEA to Control Plan Alignment / IATF 16949 / 6M MAN",
+    methodology: "Prepojenie FMEA a kontrolného plánu / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Vychádza Kontrolný plán priamo z analýzy rizík FMEA (Process FMEA)?“ systematicky riešená.", score: 0 },
@@ -1850,7 +1850,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Vychádza Kontrolný plán priamo z analýzy rizík FMEA (Process FMEA)??",
     goal: "Systémové prepojenie očakávaných rizík s kontrolnými činnosťami. Fokus 6M: MEASUREMENT.",
-    methodology: "PFMEA to Control Plan Alignment / IATF 16949 / 6M MEASUREMENT",
+    methodology: "Prepojenie FMEA a kontrolného plánu / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Vychádza Kontrolný plán priamo z analýzy rizík FMEA (Process FMEA)?“ systematicky riešená.", score: 0 },
@@ -1870,7 +1870,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Podliehajú meradlá a inspekčné prípravky štandardnej kalibrácii a štú…?",
     goal: "Overenie dôveryhodnosti a presnosti samotného meracieho systému. Fokus 6M: MAN.",
-    methodology: "MSA (Measurement System Analysis) / ISO 10012 / 6M MAN",
+    methodology: "Kalibrácia a MSA / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Podliehajú meradlá a inspekčné prípravky štandardnej kalibrácii a štú…“ systematicky riešená.", score: 0 },
@@ -1890,7 +1890,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Podliehajú meradlá a inspekčné prípravky štandardnej kalibrácii a štú…?",
     goal: "Overenie dôveryhodnosti a presnosti samotného meracieho systému. Fokus 6M: MEASUREMENT.",
-    methodology: "MSA (Measurement System Analysis) / ISO 10012 / 6M MEASUREMENT",
+    methodology: "Kalibrácia a MSA / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Podliehajú meradlá a inspekčné prípravky štandardnej kalibrácii a štú…“ systematicky riešená.", score: 0 },
@@ -1910,7 +1910,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Podliehajú meradlá a inspekčné prípravky štandardnej kalibrácii a štú…?",
     goal: "Overenie dôveryhodnosti a presnosti samotného meracieho systému. Fokus 6M: MACHINE.",
-    methodology: "MSA (Measurement System Analysis) / ISO 10012 / 6M MACHINE",
+    methodology: "Kalibrácia a MSA / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Podliehajú meradlá a inspekčné prípravky štandardnej kalibrácii a štú…“ systematicky riešená.", score: 0 },
@@ -1990,7 +1990,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Dodržiava sa štandard rýchlosti reakcie na reklamáciu (8D metodika)??",
     goal: "Rýchlosť a profesionalita riešenia zákazníckych problémov. Fokus 6M: MACHINE.",
-    methodology: "8D Problem Solving Methodology / VDA 6.3 P7 / 6M MACHINE",
+    methodology: "8D – rýchlosť reakcie na reklamáciu / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Dodržiava sa štandard rýchlosti reakcie na reklamáciu (8D metodika)?“ systematicky riešená.", score: 0 },
@@ -2010,7 +2010,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Dodržiava sa štandard rýchlosti reakcie na reklamáciu (8D metodika)??",
     goal: "Rýchlosť a profesionalita riešenia zákazníckych problémov. Fokus 6M: MATERIAL.",
-    methodology: "8D Problem Solving Methodology / VDA 6.3 P7 / 6M MATERIAL",
+    methodology: "8D – rýchlosť reakcie na reklamáciu / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Dodržiava sa štandard rýchlosti reakcie na reklamáciu (8D metodika)?“ systematicky riešená.", score: 0 },
@@ -2030,7 +2030,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Dodržiava sa štandard rýchlosti reakcie na reklamáciu (8D metodika)??",
     goal: "Rýchlosť a profesionalita riešenia zákazníckych problémov. Fokus 6M: ENVIRONMENT.",
-    methodology: "8D Problem Solving Methodology / VDA 6.3 P7 / 6M ENVIRONMENT",
+    methodology: "8D – rýchlosť reakcie na reklamáciu / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Dodržiava sa štandard rýchlosti reakcie na reklamáciu (8D metodika)?“ systematicky riešená.", score: 0 },
@@ -2170,7 +2170,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Je expedícia riadená podľa presného časového okna zákazníka (Time-Slo…?",
     goal: "Zamedzenie meškania z dôvodu prestojov v expedičnom sklade. Fokus 6M: METHOD.",
-    methodology: "Logistics Time-Slot Management / VDA 6.3 P5 / 6M METHOD",
+    methodology: "Lean – časové okná expedície / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Je expedícia riadená podľa presného časového okna zákazníka (Time-Slo…“ systematicky riešená.", score: 0 },
@@ -2190,7 +2190,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Je expedícia riadená podľa presného časového okna zákazníka (Time-Slo…?",
     goal: "Zamedzenie meškania z dôvodu prestojov v expedičnom sklade. Fokus 6M: MAN.",
-    methodology: "Logistics Time-Slot Management / VDA 6.3 P5 / 6M MAN",
+    methodology: "Lean – časové okná expedície / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Je expedícia riadená podľa presného časového okna zákazníka (Time-Slo…“ systematicky riešená.", score: 0 },
@@ -2210,7 +2210,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Je expedícia riadená podľa presného časového okna zákazníka (Time-Slo…?",
     goal: "Zamedzenie meškania z dôvodu prestojov v expedičnom sklade. Fokus 6M: MEASUREMENT.",
-    methodology: "Logistics Time-Slot Management / VDA 6.3 P5 / 6M MEASUREMENT",
+    methodology: "Lean – časové okná expedície / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Je expedícia riadená podľa presného časového okna zákazníka (Time-Slo…“ systematicky riešená.", score: 0 },
@@ -2710,7 +2710,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Sú dodávatelia mesačne hodnotení cez transparentný KPI scorecard (OTD…?",
     goal: "Objektívne riadenie výkonnosti dodávateľského reťazca. Fokus 6M: MACHINE.",
-    methodology: "Supplier Scorecard / VDA 6.3 P5 / 6M MACHINE",
+    methodology: "Hodnotenie dodávateľov / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Sú dodávatelia mesačne hodnotení cez transparentný KPI scorecard (OTD…“ systematicky riešená.", score: 0 },
@@ -2730,7 +2730,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Sú dodávatelia mesačne hodnotení cez transparentný KPI scorecard (OTD…?",
     goal: "Objektívne riadenie výkonnosti dodávateľského reťazca. Fokus 6M: MATERIAL.",
-    methodology: "Supplier Scorecard / VDA 6.3 P5 / 6M MATERIAL",
+    methodology: "Hodnotenie dodávateľov / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Sú dodávatelia mesačne hodnotení cez transparentný KPI scorecard (OTD…“ systematicky riešená.", score: 0 },
@@ -2750,7 +2750,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Sú dodávatelia mesačne hodnotení cez transparentný KPI scorecard (OTD…?",
     goal: "Objektívne riadenie výkonnosti dodávateľského reťazca. Fokus 6M: ENVIRONMENT.",
-    methodology: "Supplier Scorecard / VDA 6.3 P5 / 6M ENVIRONMENT",
+    methodology: "Hodnotenie dodávateľov / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Sú dodávatelia mesačne hodnotení cez transparentný KPI scorecard (OTD…“ systematicky riešená.", score: 0 },
@@ -2770,7 +2770,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Je vstupná kontrola materiálu riadená na základe rizikového profilu d…?",
     goal: "Zníženie nákladov na kontrolu u overených a kvalitných dodávateľov. Fokus 6M: MATERIAL.",
-    methodology: "Skip-Lot Inspection / ISO 2859 / 6M MATERIAL",
+    methodology: "Vstupná kontrola podľa rizika dodávateľa / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Je vstupná kontrola materiálu riadená na základe rizikového profilu d…“ systematicky riešená.", score: 0 },
@@ -2790,7 +2790,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Je vstupná kontrola materiálu riadená na základe rizikového profilu d…?",
     goal: "Zníženie nákladov na kontrolu u overených a kvalitných dodávateľov. Fokus 6M: ENVIRONMENT.",
-    methodology: "Skip-Lot Inspection / ISO 2859 / 6M ENVIRONMENT",
+    methodology: "Vstupná kontrola podľa rizika dodávateľa / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Je vstupná kontrola materiálu riadená na základe rizikového profilu d…“ systematicky riešená.", score: 0 },
@@ -2810,7 +2810,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Je vstupná kontrola materiálu riadená na základe rizikového profilu d…?",
     goal: "Zníženie nákladov na kontrolu u overených a kvalitných dodávateľov. Fokus 6M: METHOD.",
-    methodology: "Skip-Lot Inspection / ISO 2859 / 6M METHOD",
+    methodology: "Vstupná kontrola podľa rizika dodávateľa / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Je vstupná kontrola materiálu riadená na základe rizikového profilu d…“ systematicky riešená.", score: 0 },
@@ -2830,7 +2830,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Vykonávajú sa u kľúčových dodávateľov procesné audity podľa VDA 6.3 P5??",
     goal: "Preventívne overenie procesnej spôsobilosti u zdroja materiálu. Fokus 6M: ENVIRONMENT.",
-    methodology: "Supplier Process Audit / VDA 6.3 P5 / 6M ENVIRONMENT",
+    methodology: "Procesný audit dodávateľov / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Vykonávajú sa u kľúčových dodávateľov procesné audity podľa VDA 6.3 P5?“ systematicky riešená.", score: 0 },
@@ -2850,7 +2850,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Vykonávajú sa u kľúčových dodávateľov procesné audity podľa VDA 6.3 P5??",
     goal: "Preventívne overenie procesnej spôsobilosti u zdroja materiálu. Fokus 6M: METHOD.",
-    methodology: "Supplier Process Audit / VDA 6.3 P5 / 6M METHOD",
+    methodology: "Procesný audit dodávateľov / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Vykonávajú sa u kľúčových dodávateľov procesné audity podľa VDA 6.3 P5?“ systematicky riešená.", score: 0 },
@@ -2870,7 +2870,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Vykonávajú sa u kľúčových dodávateľov procesné audity podľa VDA 6.3 P5??",
     goal: "Preventívne overenie procesnej spôsobilosti u zdroja materiálu. Fokus 6M: MAN.",
-    methodology: "Supplier Process Audit / VDA 6.3 P5 / 6M MAN",
+    methodology: "Procesný audit dodávateľov / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Vykonávajú sa u kľúčových dodávateľov procesné audity podľa VDA 6.3 P5?“ systematicky riešená.", score: 0 },
@@ -2950,7 +2950,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MAN",
     text: "Ako systematicky riadite ľudí a kompetencie v kontexte: Vychádza ročný plán vzdelávania priamo z identifikovaných kompetenčný…?",
     goal: "Cielená investícia do vzdelávania tam, kde chýba zastupiteľnosť. Fokus 6M: MAN.",
-    methodology: "Training Needs Analysis (TNA) / ISO 9001 Clause 7.2 / 6M MAN",
+    methodology: "Plán vzdelávania z medzier v matici / 6M MAN",
     verification: "Pohovor s obsluhou/majstrom a kontrola záznamov školení.",
     options: [
       { key: "A", label: "Oblasť ľudí a kompetencie nie je v kontexte „Vychádza ročný plán vzdelávania priamo z identifikovaných kompetenčný…“ systematicky riešená.", score: 0 },
@@ -2970,7 +2970,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MEASUREMENT",
     text: "Ako systematicky riadite meranie a KPI v kontexte: Vychádza ročný plán vzdelávania priamo z identifikovaných kompetenčný…?",
     goal: "Cielená investícia do vzdelávania tam, kde chýba zastupiteľnosť. Fokus 6M: MEASUREMENT.",
-    methodology: "Training Needs Analysis (TNA) / ISO 9001 Clause 7.2 / 6M MEASUREMENT",
+    methodology: "Plán vzdelávania z medzier v matici / 6M MEASUREMENT",
     verification: "Kontrola KPI dashboardu, logov meraní a výpočtov.",
     options: [
       { key: "A", label: "Oblasť meranie a KPI nie je v kontexte „Vychádza ročný plán vzdelávania priamo z identifikovaných kompetenčný…“ systematicky riešená.", score: 0 },
@@ -2990,7 +2990,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Vychádza ročný plán vzdelávania priamo z identifikovaných kompetenčný…?",
     goal: "Cielená investícia do vzdelávania tam, kde chýba zastupiteľnosť. Fokus 6M: MACHINE.",
-    methodology: "Training Needs Analysis (TNA) / ISO 9001 Clause 7.2 / 6M MACHINE",
+    methodology: "Plán vzdelávania z medzier v matici / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Vychádza ročný plán vzdelávania priamo z identifikovaných kompetenčný…“ systematicky riešená.", score: 0 },
@@ -3070,7 +3070,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MACHINE",
     text: "Ako systematicky riadite stroje a technológie v kontexte: Sú neplánované absencie (PN, OČR) týždenne vyhodnocované podľa stredí…?",
     goal: "Identifikácia rizikových pracovísk s vysokou chorobnosťou alebo fluktuáciou. Fokus 6M: MACHINE.",
-    methodology: "Absenteeism Pareto / ISO 45001 / 6M MACHINE",
+    methodology: "Vyhodnotenie absencie / 6M MACHINE",
     verification: "Gemba kontrola zariadenia, senzorov a stavu technológie.",
     options: [
       { key: "A", label: "Oblasť stroje a technológie nie je v kontexte „Sú neplánované absencie (PN, OČR) týždenne vyhodnocované podľa stredí…“ systematicky riešená.", score: 0 },
@@ -3090,7 +3090,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Sú neplánované absencie (PN, OČR) týždenne vyhodnocované podľa stredí…?",
     goal: "Identifikácia rizikových pracovísk s vysokou chorobnosťou alebo fluktuáciou. Fokus 6M: MATERIAL.",
-    methodology: "Absenteeism Pareto / ISO 45001 / 6M MATERIAL",
+    methodology: "Vyhodnotenie absencie / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Sú neplánované absencie (PN, OČR) týždenne vyhodnocované podľa stredí…“ systematicky riešená.", score: 0 },
@@ -3110,7 +3110,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Sú neplánované absencie (PN, OČR) týždenne vyhodnocované podľa stredí…?",
     goal: "Identifikácia rizikových pracovísk s vysokou chorobnosťou alebo fluktuáciou. Fokus 6M: ENVIRONMENT.",
-    methodology: "Absenteeism Pareto / ISO 45001 / 6M ENVIRONMENT",
+    methodology: "Vyhodnotenie absencie / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Sú neplánované absencie (PN, OČR) týždenne vyhodnocované podľa stredí…“ systematicky riešená.", score: 0 },
@@ -3130,7 +3130,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "MATERIAL",
     text: "Ako systematicky riadite materiál a vstupy v kontexte: Vykonávajú sa na pracoviskách ergonomické audity pre zníženie fyzicke…?",
     goal: "Prevencia chorôb z povolania a zníženie fyzickej únavy operátorov. Fokus 6M: MATERIAL.",
-    methodology: "Ergonomic Assessment (EAWS / REBA / NLE) / ISO 45001 / 6M MATERIAL",
+    methodology: "Ergonomický audit pracovísk / 6M MATERIAL",
     verification: "Kontrola toku materiálu, označenia a skladových pravidiel.",
     options: [
       { key: "A", label: "Oblasť materiál a vstupy nie je v kontexte „Vykonávajú sa na pracoviskách ergonomické audity pre zníženie fyzicke…“ systematicky riešená.", score: 0 },
@@ -3150,7 +3150,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "ENVIRONMENT",
     text: "Ako systematicky riadite prostredie a vizuálny manažment v kontexte: Vykonávajú sa na pracoviskách ergonomické audity pre zníženie fyzicke…?",
     goal: "Prevencia chorôb z povolania a zníženie fyzickej únavy operátorov. Fokus 6M: ENVIRONMENT.",
-    methodology: "Ergonomic Assessment (EAWS / REBA / NLE) / ISO 45001 / 6M ENVIRONMENT",
+    methodology: "Ergonomický audit pracovísk / 6M ENVIRONMENT",
     verification: "Vizuálna kontrola usporiadania pracoviska a Andon/tabúľ.",
     options: [
       { key: "A", label: "Oblasť prostredie a vizuálny manažment nie je v kontexte „Vykonávajú sa na pracoviskách ergonomické audity pre zníženie fyzicke…“ systematicky riešená.", score: 0 },
@@ -3170,7 +3170,7 @@ export const LEVEL3_QUESTIONS: Level3Question[] = [
     dimension6M: "METHOD",
     text: "Ako systematicky riadite metódy a štandardy v kontexte: Vykonávajú sa na pracoviskách ergonomické audity pre zníženie fyzicke…?",
     goal: "Prevencia chorôb z povolania a zníženie fyzickej únavy operátorov. Fokus 6M: METHOD.",
-    methodology: "Ergonomic Assessment (EAWS / REBA / NLE) / ISO 45001 / 6M METHOD",
+    methodology: "Ergonomický audit pracovísk / 6M METHOD",
     verification: "Audit písomného štandardu a dodržiavania postupu na dielni.",
     options: [
       { key: "A", label: "Oblasť metódy a štandardy nie je v kontexte „Vykonávajú sa na pracoviskách ergonomické audity pre zníženie fyzicke…“ systematicky riešená.", score: 0 },

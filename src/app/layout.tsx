@@ -21,7 +21,7 @@ const sans = Manrope({
 const SITE = company.siteUrl;
 const TITLE = "AVENG | Procesný audit a technické vedenie pre MSP";
 const DESCRIPTION =
-  "Procesný self-audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Inšpirované princípmi Lean, TPM/OEE.";
+  "Procesný self-audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),

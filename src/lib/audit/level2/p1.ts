@@ -6,7 +6,7 @@ export const LEVEL2_P1: Level2Question[] = [
     "L2-P1-Q1a", "L1-P1-Q1", "P1",
     "Sú denné zmenové ciele prepočítavané exaktne z taktu zákazníka (Takt Time)?",
     "Overuje, či plánovanie vychádza z reálneho tempa dopytu, alebo len z odhadov a kapacity.",
-    "Lean Takt Time Calculation / VDA 6.3 P4",
+    "Lean – takt zákazníka",
     "Kontrola vzorcov prepočtu zmenových cieľov voči objednávkam v ERP.",
     [
       "Ciele sa nestanovujú, vyrába sa bez prepojenia na takt zákazníka.",
@@ -62,7 +62,7 @@ export const LEVEL2_P1: Level2Question[] = [
     "L2-P1-Q2b", "L1-P1-Q2", "P1",
     "Je dopĺňanie materiálu na pracoviská riadené striktne signálom FIFO / Kanban?",
     "Zisťuje, či logistika tiahne materiál na základe spotreby, alebo tlačí nepotrebné zásoby.",
-    "FIFO / Pull Replenishment / VDA 6.3 P4",
+    "Lean – FIFO a Kanban",
     "Kontrola toku materiálových kariet, FIFO dráh a zápisov manipulantov.",
     [
       "Materiál sa tlačí vo veľkých dávkach podľa odhadu logistika (Push).",
@@ -132,7 +132,7 @@ export const LEVEL2_P1: Level2Question[] = [
     "L2-P1-Q4a", "L1-P1-Q4", "P1",
     "Sú príčiny operatívnych skokov a preplánovania evidované a kategorizované?",
     "Odhalenie primárnych spúšťačov chaotického preplánovávania (chyby materiálu, poruchy, zákazník).",
-    "Firefighting Pareto Analysis / VDA 6.3 P4",
+    "Lean – príčiny preplánovania",
     "Audit registra zmien výrobného plánu a kategorizácie dôvodov.",
     [
       "Zmeny plánu sa robia operatívne bez zápisu príčin.",

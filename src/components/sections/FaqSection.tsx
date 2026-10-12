@@ -17,7 +17,7 @@ const FAQ = [
   },
   {
     q: "Čo obsahuje Level 1 self-audit?",
-    a: "Orientačný skríning 20 otázok naprieč piatimi procesnými doménami. Výstupom je indikatívny potenciál úspor a tri prioritné odporúčania — nie záruka výsledku.",
+    a: "Orientačný skríning 20 otázok naprieč piatimi procesnými doménami. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE). Výstupom je indikatívny potenciál úspor a tri prioritné odporúčania — nie záruka výsledku.",
   },
   {
     q: "Čo pridáva Level 2 a Level 3?",
