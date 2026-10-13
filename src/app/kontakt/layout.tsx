@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { pageMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
+export const metadata: Metadata = buildMetadata({
+  path: "/kontakt/",
   title: "Kontakt",
   description:
     "Napíšte AddValueEngineering — kontaktný formulár, e-mail a konzultácia pre výrobné MSP.",
-  path: "/kontakt/",
 });
 
 export default function KontaktLayout({

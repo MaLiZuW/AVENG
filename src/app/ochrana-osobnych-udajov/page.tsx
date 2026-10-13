@@ -5,13 +5,13 @@ import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
 import { POLICY_UPDATED, processors } from "@/config/processors";
 import { retentionPeriodClaimSk } from "@/config/retention";
-import { pageMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
+export const metadata: Metadata = buildMetadata({
+  path: "/ochrana-osobnych-udajov/",
   title: "Ochrana osobných údajov",
   description:
     "Zásady spracovania osobných údajov AddValueEngineering — účel, právny základ, doba uchovania a práva dotknutej osoby.",
-  path: "/ochrana-osobnych-udajov/",
 });
 
 /**

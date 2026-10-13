@@ -7,14 +7,13 @@ import Hero from "@/components/sections/Hero";
 import Services from "@/components/sections/Services";
 import FaqSection from "@/components/sections/FaqSection";
 import { buildFaqPageLd } from "@/lib/jsonld";
-import { pageMetadata } from "@/lib/seo";
+import { HOME_TITLE, buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "AVENG | Procesný audit a technické vedenie pre MSP",
+export const metadata: Metadata = buildMetadata({
+  path: "/",
+  title: HOME_TITLE,
   description:
     "Procesný self-audit a Fractional Technical Leadership pre výrobné MSP na Slovensku a Morave. Inšpirované princípmi procesného auditu (VDA 6.3, Lean, TPM/OEE).",
-  path: "/",
-  absoluteTitle: true,
 });
 
 export default function HomePage() {

@@ -3,6 +3,7 @@ import { Fraunces, Manrope } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
 import { company } from "@/config/company";
 import { buildProfessionalServiceLd } from "@/lib/jsonld";
+import { buildMetadata } from "@/lib/seo";
 import "./globals.css";
 
 const display = Fraunces({
@@ -20,57 +21,18 @@ const sans = Manrope({
 });
 
 const SITE = company.siteUrl;
-const TITLE = "AVENG | Procesný audit a technické vedenie pre MSP";
-const DESCRIPTION =
-  "Procesný self-audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
-  title: {
-    default: TITLE,
-    template: "%s | AVENG",
-  },
-  description: DESCRIPTION,
-  keywords: [
-    "procesný audit",
-    "fractional engineering manager",
-    "OEE",
-    "PLM",
-    "PDM",
-    "NPI",
-    "ECO",
-    "výrobné MSP",
-    "Slovensko",
-    "Morava",
-    "AddValueEngineering",
-    "AVENG",
-  ],
+  ...buildMetadata({
+    path: "/404/",
+    title: "Stránka sa nenašla",
+    description:
+      "Táto adresa na webe nie je. Vráťte sa na úvodnú stránku alebo pokračujte na self-audit.",
+  }),
   authors: [{ name: company.founderName }],
   creator: company.legalName,
   publisher: company.legalName,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "sk_SK",
-    url: SITE,
-    siteName: company.brandName,
-    title: TITLE,
-    description: DESCRIPTION,
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "AddValueEngineering — procesný audit pre MSP",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-    images: ["/og-image.png"],
-  },
   robots: {
     index: true,
     follow: true,

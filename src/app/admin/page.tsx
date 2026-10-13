@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import AdminUnlockPanel from "@/components/admin/AdminUnlockPanel";
+import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Admin — prístupové kódy",
+  ...buildMetadata({
+    path: "/admin/",
+    title: "Admin — prístupové kódy",
+    description:
+      "Prihláste sa, vygenerujte jednorazový kód a odošlite ho klientovi e-mailom.",
+  }),
   robots: { index: false, follow: false },
 };
 

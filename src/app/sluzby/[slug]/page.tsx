@@ -9,7 +9,7 @@ import {
   buildBreadcrumbLd,
   buildServiceLd,
 } from "@/lib/jsonld";
-import { pageMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 
 type Props = { params: { slug: string } };
 
@@ -19,11 +19,17 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const pillar = getPillar(params.slug);
-  if (!pillar) return { title: "Služba" };
-  return pageMetadata({
+  if (!pillar) {
+    return buildMetadata({
+      path: `/sluzby/${params.slug}/`,
+      title: "Služba",
+      description: "Požadovaná služba na webe nie je.",
+    });
+  }
+  return buildMetadata({
+    path: `/sluzby/${pillar.slug}/`,
     title: pillar.title,
     description: pillar.short,
-    path: `/sluzby/${pillar.slug}/`,
   });
 }
 
