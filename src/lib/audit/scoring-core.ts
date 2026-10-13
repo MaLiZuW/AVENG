@@ -48,7 +48,7 @@ const RECOMMENDATION_BANK: Record<
       "Vyčísliť COPQ, implementovať kontrolný plán pre kritické znaky a posunúť ťažisko z výstupnej kontroly na prevenciu (Poka-Yoke / SPC).",
     impact: "vysoký",
     reason:
-      "Náklady nekvality a reklamácie vytvárajú najväčšiu finančnú medzeru voči odvetvovému štandardu.",
+      "Náklady nekvality a reklamácie vytvárajú najväčšiu finančnú medzeru voči referencii MSP.",
   },
   P4: {
     title: "Zvýšiť OTD a zrýchliť tok materiálu",

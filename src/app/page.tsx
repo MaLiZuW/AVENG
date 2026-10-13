@@ -26,7 +26,7 @@ export default function HomePage() {
         <AuditTeaser />
         <FaqSection />
       </main>
-      <Footer />
+      <Footer variant="full" />
       <JsonLd data={buildFaqPageLd()} />
     </>
   );

@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -10,17 +7,20 @@ import {
   Gauge,
   Shield,
 } from "lucide-react";
-import { LEVEL2_PRICE_EUR } from "@/lib/audit/questions";
-import MeetingRequestModal from "@/components/audit/MeetingRequestModal";
+import {
+  AUDIT_LEVELS,
+  levelBadge,
+  personalMeetingHref,
+} from "@/config/levels";
 
 const LEVELS = [
   {
     id: "l1",
     href: "/self-audit/#level-1",
-    badge: "Level 1 · Zdarma",
+    badge: levelBadge(1),
     Icon: Gauge,
     title: "Orientačný skríning",
-    price: "0 €",
+    price: AUDIT_LEVELS[1].priceLabel,
     priceNote: "20 otázok · 15–20 min",
     border: "border-signal/50 hover:border-signal",
     glow: "shadow-[0_0_0_1px_rgba(47,111,237,0.35),0_16px_48px_rgba(47,111,237,0.12)]",
@@ -37,10 +37,10 @@ const LEVELS = [
   {
     id: "l2",
     href: "/self-audit/#level-2",
-    badge: "Level 2 · Silver",
+    badge: levelBadge(2),
     Icon: Shield,
     title: "Detailný audit",
-    price: `${LEVEL2_PRICE_EUR} €`,
+    price: AUDIT_LEVELS[2].priceLabel,
     priceNote: "60 otázok · rozhodovací podklad",
     border: "border-[#c0c7d4]/70 hover:border-[#e8edf5]",
     glow: "shadow-[0_0_0_1px_rgba(192,199,212,0.35),0_16px_48px_rgba(0,0,0,0.35)]",
@@ -56,10 +56,10 @@ const LEVELS = [
   {
     id: "l3",
     href: "/self-audit/#level-3",
-    badge: "Level 3 · Gold",
+    badge: levelBadge(3),
     Icon: Crown,
     title: "Expert & DTO",
-    price: "Po dohode",
+    price: AUDIT_LEVELS[3].priceLabel,
     priceNote: "180 otázok · 6M + simulátor",
     border: "border-[#d4af37]/75 hover:border-[#f0d78c]",
     glow: "shadow-[0_0_0_1px_rgba(212,175,55,0.4),0_16px_48px_rgba(0,0,0,0.4)]",
@@ -75,7 +75,7 @@ const LEVELS = [
 ] as const;
 
 export default function AuditTeaser() {
-  const [meetingOpen, setMeetingOpen] = useState(false);
+  const meeting = personalMeetingHref();
 
   return (
     <section
@@ -165,27 +165,22 @@ export default function AuditTeaser() {
             Spustiť bezplatný self-audit
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
-          <button
-            type="button"
+          <a
+            href={meeting.href}
             className="btn-secondary !px-6 !py-3.5 inline-flex items-center gap-2"
-            onClick={() => setMeetingOpen(true)}
+            {...(meeting.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
           >
             <Calendar className="h-4 w-4" aria-hidden />
             Dohodnúť osobnú schôdzku
-          </button>
+          </a>
         </div>
         <p className="mt-4 text-center text-xs text-ink-300">
           Level 1 je online a zdarma. Level 2/3 odomknete kódom alebo po
           dohode — schôdzku môžete dohodnúť kedykoľvek.
         </p>
       </div>
-
-      <MeetingRequestModal
-        open={meetingOpen}
-        onClose={() => setMeetingOpen(false)}
-        sourceLabel="Homepage · Self-Audit sekcia — žiadosť o osobnú schôdzku"
-        title="Dohodnúť osobnú schôdzku"
-      />
     </section>
   );
 }

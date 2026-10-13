@@ -1,3 +1,7 @@
+import {
+  completedLevel3Body,
+  levelUpsellEyebrow,
+} from "../../../src/config/levels.ts";
 import { company } from "../_shared/company.ts";
 import {
   formatEurRange,
@@ -149,7 +153,7 @@ export function upsellForLevel(level: number, company: string): Upsell {
   const q = encodeURIComponent(`Self-Audit follow-up — ${company}`);
   if (level <= 1) {
     return {
-      eyebrow: "Ďalší krok · Level 2 Silver",
+      eyebrow: levelUpsellEyebrow(2),
       title: `Prejdite z orientácie na rozhodnutie — ${L2_PRICE} €`,
       body: "Level 1 ukázal, kde unikajú peniaze. Level 2 rozloží straty na OEE, COPQ a tok materiálu — podklad, ktorý unesie poradu majiteľov.",
       bullets: [
@@ -163,7 +167,7 @@ export function upsellForLevel(level: number, company: string): Upsell {
   }
   if (level === 2) {
     return {
-      eyebrow: "Ďalší krok · Level 3 Gold",
+      eyebrow: levelUpsellEyebrow(3),
       title: "Expertná diagnostika & DTO simulátor",
       body: "Keď potrebujete vedieť nielen kde unikajú peniaze, ale čo sa stane po konkrétnej investícii — pred podpisom rozpočtu.",
       bullets: [
@@ -178,7 +182,7 @@ export function upsellForLevel(level: number, company: string): Upsell {
   return {
     eyebrow: "Ďalší krok · Gemba Walk",
     title: "Overte čísla priamo vo výrobe",
-    body: "Premium audit máte hotový. Ďalší skok je obchôdzka vo výrobe — overenie predpokladov a 90-dňový akčný plán.",
+    body: completedLevel3Body(),
     bullets: [
       "30–60 min na mieste alebo online",
       "Validácia kritického procesu",

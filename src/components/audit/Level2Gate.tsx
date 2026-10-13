@@ -2,9 +2,13 @@
 
 import { FormEvent, useState } from "react";
 import { Calendar, Crown, Lock, Shield } from "lucide-react";
-import { LEVEL2_PRICE_EUR } from "@/lib/audit/questions";
+import {
+  accessCodeHref,
+  AUDIT_LEVELS,
+  levelBadge,
+  personalMeetingHref,
+} from "@/config/levels";
 import { requestUnlock } from "@/lib/unlock/session";
-import MeetingRequestModal from "./MeetingRequestModal";
 
 interface UnlockGateProps {
   onUnlocked: () => void;
@@ -68,8 +72,7 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
   const [code, setCode] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
-  const [meetingOpen, setMeetingOpen] = useState(false);
-  const [accessOpen, setAccessOpen] = useState(false);
+  const meeting = personalMeetingHref();
 
   async function tryUnlock(e: FormEvent) {
     e.preventDefault();
@@ -98,7 +101,7 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
           <div>
             <p className="inline-flex items-center gap-1.5 rounded-md border border-[#c0c7d4]/40 bg-[#c0c7d4]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#e8edf5]">
               <Shield className="h-3.5 w-3.5" aria-hidden />
-              Level 2 · Silver
+              {levelBadge(2)}
             </p>
             <h3 className="mt-3 font-display text-xl font-semibold text-ink-50 sm:text-2xl">
               Detailný audit pre rozhodnutia majiteľa
@@ -117,7 +120,7 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
               Investícia
             </p>
             <p className="font-display text-3xl font-semibold text-[#e8edf5]">
-              {LEVEL2_PRICE_EUR} €
+              {AUDIT_LEVELS[2].priceLabel}
             </p>
           </div>
           <p className="max-w-[14rem] text-right text-xs text-ink-300">
@@ -136,41 +139,24 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
         />
 
         <div className="relative mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <button
-            type="button"
+          <a
+            href={meeting.href}
             className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-[#c0c7d4]/50 bg-[#c0c7d4]/10 px-4 py-2.5 text-sm font-semibold text-ink-50 transition hover:bg-[#c0c7d4]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c0c7d4]"
-            onClick={() => setMeetingOpen(true)}
+            {...(meeting.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
           >
             <Calendar className="h-4 w-4" aria-hidden />
             Dohodnúť osobnú schôdzku
-          </button>
-          <button
-            type="button"
-            onClick={() => setAccessOpen(true)}
+          </a>
+          <a
+            href={accessCodeHref(2)}
             className="text-center text-xs text-ink-300 underline-offset-2 hover:text-[#e8edf5] hover:underline sm:text-left"
           >
             Požiadať o prístupový kód
-          </button>
+          </a>
         </div>
       </article>
-
-      <MeetingRequestModal
-        open={meetingOpen}
-        onClose={() => setMeetingOpen(false)}
-        requestType="meeting"
-        sourceLabel="Self-audit · Level 2 — žiadosť o osobnú schôdzku"
-        title="Level 2 — osobná schôdzka"
-      />
-      <MeetingRequestModal
-        open={accessOpen}
-        onClose={() => setAccessOpen(false)}
-        requestType="access_code"
-        sourceLabel="Self-audit · Level 2 — žiadosť o prístupový kód"
-        title="Level 2 — prístupový kód"
-        intro="Vyplňte formulár — žiadosť o prístupový kód sa odošle priamo na AVENG (bez otvárania e-mailového klienta)."
-        messagePlaceholder="Napr. fakturačné údaje, IČO, preferovaný spôsob úhrady…"
-        successNote="Ozveme sa vám ohľadom prístupového kódu a úhrady."
-      />
     </>
   );
 }
@@ -179,8 +165,7 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
   const [code, setCode] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
-  const [meetingOpen, setMeetingOpen] = useState(false);
-  const [accessOpen, setAccessOpen] = useState(false);
+  const meeting = personalMeetingHref();
 
   async function tryUnlock(e: FormEvent) {
     e.preventDefault();
@@ -209,7 +194,7 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
           <div>
             <p className="inline-flex items-center gap-1.5 rounded-md border border-[#d4af37]/45 bg-[#d4af37]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#f0d78c]">
               <Crown className="h-3.5 w-3.5" aria-hidden />
-              Level 3 · Gold · Premium
+              {levelBadge(3)}
             </p>
             <h3 className="mt-3 font-display text-xl font-semibold text-ink-50 sm:text-2xl">
               Expertná diagnostika &amp; DTO simulátor
@@ -228,7 +213,7 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
               Prístup
             </p>
             <p className="font-display text-2xl font-semibold text-[#f0d78c]">
-              Po dohode
+              {AUDIT_LEVELS[3].priceLabel}
             </p>
           </div>
           <p className="max-w-[14rem] text-right text-xs text-ink-300">
@@ -247,41 +232,24 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
         />
 
         <div className="relative mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <button
-            type="button"
+          <a
+            href={meeting.href}
             className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-[#d4af37]/55 bg-[#d4af37]/15 px-4 py-2.5 text-sm font-semibold text-[#f5e6b8] transition hover:bg-[#d4af37]/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4af37]"
-            onClick={() => setMeetingOpen(true)}
+            {...(meeting.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
           >
             <Calendar className="h-4 w-4" aria-hidden />
             Dohodnúť osobnú schôdzku
-          </button>
-          <button
-            type="button"
-            onClick={() => setAccessOpen(true)}
+          </a>
+          <a
+            href={accessCodeHref(3)}
             className="text-center text-xs text-ink-300 underline-offset-2 hover:text-[#f0d78c] hover:underline sm:text-left"
           >
             Požiadať o prístupový kód
-          </button>
+          </a>
         </div>
       </article>
-
-      <MeetingRequestModal
-        open={meetingOpen}
-        onClose={() => setMeetingOpen(false)}
-        requestType="meeting"
-        sourceLabel="Self-audit · Level 3 — žiadosť o osobnú schôdzku"
-        title="Level 3 — osobná schôdzka"
-      />
-      <MeetingRequestModal
-        open={accessOpen}
-        onClose={() => setAccessOpen(false)}
-        requestType="access_code"
-        sourceLabel="Self-audit · Level 3 — žiadosť o prístupový kód"
-        title="Level 3 — prístupový kód"
-        intro="Vyplňte formulár — žiadosť o Premium prístupový kód sa odošle priamo na AVENG (bez otvárania e-mailového klienta)."
-        messagePlaceholder="Napr. rozsah závodu, preferovaný termín kick-offu, fakturačné údaje…"
-        successNote="Ozveme sa vám ohľadom Premium prístupu a ďalších krokov."
-      />
     </>
   );
 }

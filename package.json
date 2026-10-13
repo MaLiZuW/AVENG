@@ -15,7 +15,8 @@
     "audit:sanity": "npx --yes tsx scripts/audit-sanity.ts",
     "check:shared": "npx --yes tsx scripts/check-shared-sync.ts",
     "check:benchmarks": "npx --yes tsx scripts/check-benchmarks.ts",
-    "check:meta": "npx --yes tsx scripts/check-meta.ts"
+    "check:meta": "npx --yes tsx scripts/check-meta.ts",
+    "check:copy": "npx --yes tsx scripts/check-public-copy.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

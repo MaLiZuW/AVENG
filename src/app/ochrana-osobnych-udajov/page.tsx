@@ -96,8 +96,8 @@ export default function PrivacyPage() {
                 6. Príjemcovia a sprostredkovatelia
               </h2>
               <p className="mt-2">
-                Osobné údaje spracúvajú len služby, ktoré táto aplikácia
-                skutočne používa:
+                Údaje spracúvajú naši poskytovatelia hostingu, databázy a
+                e-mailového doručenia:
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-5">
                 {processors.map((p) => (

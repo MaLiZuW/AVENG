@@ -37,7 +37,7 @@ export const RETENTION_NEUTRAL_SK =
 
 export function retentionPeriodClaimSk(): string {
   if (RETENTION_JOB_VERIFIED) {
-    return `Údaje auditu uchovávame najviac ${RETENTION_DAYS} dní, potom sa automaticky mažú.`;
+    return `Údaje auditu uchovávame najviac ${RETENTION_DAYS} dní.`;
   }
   return `${RETENTION_NEUTRAL_SK}.`;
 }

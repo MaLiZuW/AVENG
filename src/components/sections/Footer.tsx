@@ -18,7 +18,46 @@ const FOOTER_NAV = [
   { href: "/kontakt/", label: "Kontakt" },
 ];
 
-export default function Footer() {
+function FooterNav() {
+  return (
+    <nav
+      className="flex flex-wrap gap-x-5 gap-y-2 text-sm"
+      aria-label="Navigácia v pätičke"
+    >
+      {FOOTER_NAV.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="text-signal-bright underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
+function CompactFooter() {
+  return (
+    <footer className="border-t border-white/10 bg-ink-950 px-5 py-10 sm:px-8 lg:px-12">
+      <div className="container-aveng">
+        <FooterNav />
+        <p className="mt-6 text-xs leading-relaxed text-ink-300">
+          {company.legalName} · IČO {company.ico} · {company.registeredSeat} ·{" "}
+          <GdprLink className="text-signal-bright underline-offset-2 hover:underline" />
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+export default function Footer({
+  variant = "compact",
+}: {
+  variant?: "full" | "compact";
+}) {
+  if (variant === "compact") return <CompactFooter />;
+
   const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
   const socialLinks = getPublicSocialLinks();
 
@@ -127,17 +166,9 @@ export default function Footer() {
             <GdprLink />
           </div>
         </div>
-        <nav className="mt-10 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Navigácia v pätičke">
-          {FOOTER_NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-signal-bright underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="mt-10">
+          <FooterNav />
+        </div>
         <p className="mt-12 border-t border-white/10 pt-6 text-xs text-ink-300">
           © {new Date().getFullYear()} {company.brandName} · {company.legalName}{" "}
           · IČO {company.ico} · Všetky práva vyhradené.

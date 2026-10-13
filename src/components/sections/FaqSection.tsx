@@ -8,6 +8,15 @@ import { company } from "@/config/company";
 import { retentionPeriodClaimSk } from "@/config/retention";
 import { LEVEL2_PRICE_EUR } from "@/lib/audit/questions";
 
+const CONSULTATION_ANSWER_SK =
+  "Napíšte cez kontaktný formulár alebo na vladimir@addvalueengineering.sk. Ozveme sa s návrhom termínu.";
+
+const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL?.trim() ?? "";
+
+const consultationAnswer = BOOKING_URL
+  ? `${CONSULTATION_ANSWER_SK} Termín si môžete vybrať aj priamo cez rezerváciu.`
+  : CONSULTATION_ANSWER_SK;
+
 const FAQ = [
   {
     q: "Čo je fractional engineering manager?",
@@ -31,7 +40,7 @@ const FAQ = [
   },
   {
     q: "Ako spracúvate osobné údaje z auditu a kontaktov?",
-    a: `Údaje používame na vyhodnotenie auditu a vybavenie dopytu. Spracúvajú ich služby, ktoré web skutočne používa (hosting, databáza, e-mailové doručenie). Detail nájdete v Zásadách ochrany osobných údajov. Kontakt: ${company.email}.`,
+    a: `Údaje používame na vyhodnotenie auditu a vybavenie dopytu. Údaje spracúvajú naši poskytovatelia hostingu, databázy a e-mailového doručenia. Detail nájdete v Zásadách ochrany osobných údajov. Kontakt: ${company.email}.`,
   },
   {
     q: "Ako dlho uchovávate údaje z auditu?",
@@ -47,7 +56,7 @@ const FAQ = [
   },
   {
     q: "Ako sa objedná konzultácia alebo cenová ponuka?",
-    a: `Cez kontaktný formulár, e-mail ${company.email} alebo tlačidlo rezervácie, ak je na webe nastavené.`,
+    a: consultationAnswer,
   },
 ] as const;
 

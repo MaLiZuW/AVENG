@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type KeyboardEvent } from "react";
 import { Info } from "lucide-react";
 import Link from "next/link";
 import { domainLabel } from "@/config/audit-display";
+import { AUDIT_LEVELS, levelTitle, SELF_AUDIT_HEADER_SK } from "@/config/levels";
 import { auditStartNoticeSk } from "@/config/retention";
 import {
   clearAuditProgress,
@@ -27,7 +28,6 @@ import type {
   QualitativeOption,
 } from "@/lib/audit/types";
 import AuditQuestionCard from "./AuditQuestionCard";
-import GdprBanner from "./GdprBanner";
 import { Level2Gate, Level3Gate } from "./Level2Gate";
 import PreAuditForm from "./PreAuditForm";
 import QuestionContextPanel from "./QuestionContextPanel";
@@ -54,7 +54,7 @@ export default function AuditSection() {
   const [l2Questions, setL2Questions] = useState<Level2Question[] | null>(null);
   const [l3Questions, setL3Questions] = useState<Level3Question[] | null>(null);
   const [dimLabels, setDimLabels] = useState<DimLabels>({});
-  const [premiumReady, setPremiumReady] = useState(false);
+  const [levelsReady, setLevelsReady] = useState(false);
   const [calcL2, setCalcL2] = useState<
     | ((a: AuditAnswers, i: PreAuditInput) => AuditResult)
     | null
@@ -91,16 +91,16 @@ export default function AuditSection() {
     if (level < 2) return;
     let cancelled = false;
     (async () => {
-      const premium = await import("@/lib/audit/scoring-premium");
+      const extended = await import("@/lib/audit/scoring-premium");
       if (cancelled) return;
-      setCalcL2(() => premium.calculateLevel2AuditResult);
-      setCalcL3(() => premium.calculateLevel3AuditResult);
-      setL2Questions(premium.LEVEL2_QUESTIONS);
-      setL3Questions(premium.LEVEL3_QUESTIONS);
+      setCalcL2(() => extended.calculateLevel2AuditResult);
+      setCalcL3(() => extended.calculateLevel3AuditResult);
+      setL2Questions(extended.LEVEL2_QUESTIONS);
+      setL3Questions(extended.LEVEL3_QUESTIONS);
       const l3mod = await import("@/lib/audit/level3-questions");
       if (cancelled) return;
       setDimLabels(l3mod.DIMENSION_6M_LABELS as DimLabels);
-      setPremiumReady(true);
+      setLevelsReady(true);
     })();
     return () => {
       cancelled = true;
@@ -229,17 +229,12 @@ export default function AuditSection() {
     setResumeOffer(null);
   }
 
-  const levelLabel =
-    level === 1
-      ? "Level 1 — Skríning"
-      : level === 2
-        ? "Level 2 — Detailný audit (60 otázok)"
-        : "Level 3 — Premium 6M & DTO (180 otázok)";
+  const levelLabel = levelTitle(level);
 
-  const waitingPremium =
+  const waitingLevels =
     level >= 2 &&
     (phase === "quiz" || phase === "results" || phase === "setup") &&
-    !premiumReady;
+    !levelsReady;
 
   return (
     <section
@@ -253,8 +248,7 @@ export default function AuditSection() {
           3-úrovňový procesný audit
         </h1>
         <p className="prose-muted mt-4 max-w-2xl">
-          L1 (20) → L2 (60) → L3 (180 / 6M + DTO) — objektívne hodnotenie bez
-          viditeľných bodov, odvetvový benchmark a indikatívny potenciál úspor.
+          {SELF_AUDIT_HEADER_SK}{" "}
           Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).
         </p>
 
@@ -262,20 +256,20 @@ export default function AuditSection() {
           {[
             {
               lvl: "Level 1",
-              tag: "Zdarma",
-              desc: "Skríning · 20 otázok",
+              tag: AUDIT_LEVELS[1].priceLabel,
+              desc: `${AUDIT_LEVELS[1].name} · 20 otázok`,
               href: "#level-1",
             },
             {
               lvl: "Level 2",
-              tag: "290 €",
-              desc: "Detail · 60 otázok",
+              tag: AUDIT_LEVELS[2].priceLabel,
+              desc: `${AUDIT_LEVELS[2].name} · 60 otázok`,
               href: "#level-2",
             },
             {
               lvl: "Level 3",
-              tag: "Premium",
-              desc: "6M + DTO · 180 otázok",
+              tag: AUDIT_LEVELS[3].priceLabel,
+              desc: `${AUDIT_LEVELS[3].name} · 180 otázok`,
               href: "#level-3",
             },
           ].map((l) => (
@@ -300,7 +294,7 @@ export default function AuditSection() {
             />
           )}
 
-          {waitingPremium && (
+          {waitingLevels && (
             <p className="text-sm text-ink-200" role="status">
               Načítavam rozšírený audit…
             </p>
@@ -308,7 +302,6 @@ export default function AuditSection() {
 
           {phase === "intro" && !resumeOffer && (
             <div id="level-1" className="scroll-mt-28 space-y-6 animate-fade-up">
-              <GdprBanner />
               <p
                 className="flex gap-2 rounded-md border border-white/10 bg-ink-900/40 px-3 py-2.5 text-sm text-ink-200"
                 role="note"
@@ -342,7 +335,6 @@ export default function AuditSection() {
           {phase === "setup" && (
             <div className="space-y-4">
               <p className="text-sm text-signal-bright">{levelLabel}</p>
-              <GdprBanner />
               <PreAuditForm
                 initial={preAudit}
                 onComplete={(input) => {
@@ -361,7 +353,7 @@ export default function AuditSection() {
             </div>
           )}
 
-          {phase === "quiz" && question && !waitingPremium && (
+          {phase === "quiz" && question && !waitingLevels && (
             <div className="space-y-6 animate-fade-in">
               <div
                 className="rounded-md border border-signal/30 bg-signal/10 px-4 py-3 text-sm text-ink-100"

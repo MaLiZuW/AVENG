@@ -1,11 +1,12 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { z } from "zod";
 import GdprLink from "@/components/GdprModal";
 import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
+import { contactIntentPrefill } from "@/config/levels";
 import { submitSiteContact } from "@/lib/submitSiteContact";
 
 const schema = z.object({
@@ -18,6 +19,7 @@ const schema = z.object({
     .string()
     .min(2, "Zadajte firmu")
     .max(200, "Názov firmy je príliš dlhý"),
+  subject: z.string().max(160, "Predmet je príliš dlhý"),
   message: z
     .string()
     .min(10, "Správa je príliš krátka")
@@ -31,22 +33,42 @@ export default function KontaktPage() {
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
   const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
+
+  useEffect(() => {
+    const predmet = new URLSearchParams(window.location.search).get("predmet");
+    const prefill = contactIntentPrefill(predmet);
+    if (!prefill) return;
+    setSubject(prefill.subject);
+    setMessage(prefill.message);
+  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     const fd = new FormData(e.currentTarget);
     const website = String(fd.get("website") ?? "");
+    const subjectText = String(fd.get("subject") ?? "").trim();
+    const messageText = String(fd.get("message") ?? "").trim();
+    const composed = subjectText
+      ? `Predmet: ${subjectText}\n\n${messageText}`
+      : messageText;
     const parsed = schema.safeParse({
       fullName: String(fd.get("fullName") ?? "").trim(),
       email: String(fd.get("email") ?? "").trim(),
       companyName: String(fd.get("companyName") ?? "").trim(),
-      message: String(fd.get("message") ?? "").trim(),
+      subject: subjectText,
+      message: messageText,
       consent: fd.get("consent") === "on",
     });
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Skontrolujte formulár");
+      return;
+    }
+    if (composed.length > 4000) {
+      setError("Správa je príliš dlhá");
       return;
     }
     if (website.trim()) {
@@ -59,7 +81,7 @@ export default function KontaktPage() {
       name: parsed.data.fullName,
       email: parsed.data.email,
       company: parsed.data.companyName,
-      message: parsed.data.message,
+      message: composed,
       consent: true,
       website: "",
     });
@@ -155,12 +177,24 @@ export default function KontaktPage() {
                 />
               </label>
               <label className="block text-sm">
+                <span className="mb-1 block text-ink-200">Predmet</span>
+                <input
+                  name="subject"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  maxLength={160}
+                  className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
+                />
+              </label>
+              <label className="block text-sm">
                 <span className="mb-1 block text-ink-200">Správa</span>
                 <textarea
                   name="message"
                   rows={5}
                   required
                   maxLength={4000}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
                 />
               </label>
