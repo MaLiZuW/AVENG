@@ -22,9 +22,9 @@ export default function Optimization() {
     >
       <div className="container-aveng">
         <p className="eyebrow mb-4">Optimalizácia & AI</p>
-        <h2 id="opt-heading" className="heading-display max-w-2xl">
+        <h1 id="opt-heading" className="heading-display max-w-2xl">
           Procesy, IS a AI — prakticky pre výrobné MSP
-        </h2>
+        </h1>
         <p className="prose-muted mt-4 max-w-2xl">
           Žiadna teória z prezentácií. Konkrétne zásahy, ktoré znižujú chaos a
           zvyšujú predvídateľnosť.

@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { company } from "@/config/company";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = company.siteUrl.replace(/\/$/, "");
   const routes = [
@@ -17,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ochrana-osobnych-udajov/",
   ];
   return routes.map((path) => ({
-    url: `${base}${path}`,
+    url: `${base}${path || "/"}`,
     lastModified: new Date(),
     changeFrequency: path.includes("self-audit") ? "weekly" : "monthly",
     priority: path === "" ? 1 : 0.7,

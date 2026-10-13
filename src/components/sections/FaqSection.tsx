@@ -5,23 +5,32 @@
 
 import { company } from "@/config/company";
 import { retentionPeriodClaimSk } from "@/config/retention";
+import { LEVEL2_PRICE_EUR } from "@/lib/audit/questions";
 
 const FAQ = [
   {
-    q: "Čo je Fractional Technical Leadership?",
-    a: "Externé seniorné technické vedenie na čiastkový úväzok — nastavenie procesov, priorít a lídrov bez nutnosti full-time manažéra.",
+    q: "Čo je fractional engineering manager?",
+    a: "Fractional engineering manager (alebo Fractional Technical Leadership) je seniorné technické vedenie na čiastkový úväzok. Pomáha nastaviť procesy, priority a lídrov bez nutnosti plného úväzku manažéra vo firme.",
+  },
+  {
+    q: "Kedy sa fractional technické vedenie oplatí?",
+    a: "Keď firma rastie, chýba systém v technike alebo majiteľ denne hasí operatívu — a full-time Head of Engineering zatiaľ nie je úmerný veľkosti tímu. Čiastkové vedenie dáva zmysel aj pri dočasnej stabilizácii priorít a NPI/ECO.",
   },
   {
     q: "Pre koho je AddValueEngineering určené?",
-    a: "Pre majiteľov, CEO, COO a technických riaditeľov výrobných MSP (približne 20–250 zamestnancov) na Slovensku a Morave.",
+    a: "Pre majiteľov, CEO, COO a technických riaditeľov výrobných MSP (orientačne 20–250 zamestnancov) na Slovensku a Morave — najmä automotive, EMS, strojárstvo, plasty a kovovýroba.",
   },
   {
     q: "Čo obsahuje Level 1 self-audit?",
     a: "Orientačný skríning 20 otázok naprieč piatimi procesnými doménami. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE). Výstupom je indikatívny potenciál úspor a tri prioritné odporúčania — nie záruka výsledku.",
   },
   {
-    q: "Čo pridáva Level 2 a Level 3?",
-    a: "Level 2 rozkladá kľúčové metriky do väčšieho detailu (60 otázok). Level 3 ide do príčinovej analýzy a simulačného režimu investícií. Prístup je po úhrade alebo dohode.",
+    q: "Čo obsahuje Level 2 a Level 3?",
+    a: `Level 2 rozkladá kľúčové metriky do väčšieho detailu (60 otázok); prístup stojí ${LEVEL2_PRICE_EUR} €. Level 3 ide do príčinovej analýzy a simulačného režimu investícií. Prístup k L2/L3 je po úhrade alebo dohode.`,
+  },
+  {
+    q: "Ako spracúvate osobné údaje z auditu a kontaktov?",
+    a: `Údaje používame na vyhodnotenie auditu a vybavenie dopytu. Spracúvajú ich služby, ktoré web skutočne používa (hosting, databáza, e-mailové doručenie). Detail nájdete v Zásadách ochrany osobných údajov. Kontakt: ${company.email}.`,
   },
   {
     q: "Ako dlho uchovávate údaje z auditu?",
@@ -32,12 +41,12 @@ const FAQ = [
     a: "Nie. Level 1 je rýchla orientačná diagnostika založená na vašich odpovediach. Pre overenie dát odporúčame Level 2/3 alebo obchôdzku vo výrobe.",
   },
   {
-    q: "Odkiaľ pochádzajú referenčné hodnoty MSP?",
-    a: "Ide o interné referencie AVENG založené na expertnom odhade, nie oficiálnu štatistiku.",
+    q: "Odkiaľ pochádzajú referenčné hodnoty?",
+    a: "Ide o interné referencie AVENG založené na expertnom odhade a indikatívnych medzinárodných podkladoch — nie oficiálnu štatistiku ani priemer slovenských MSP.",
   },
   {
     q: "Ako sa objedná konzultácia alebo cenová ponuka?",
-    a: `Cez kontaktný formulár, e-mail ${company.email} alebo tlačidlo rezervácie, ak je nastavené.`,
+    a: `Cez kontaktný formulár, e-mail ${company.email} alebo tlačidlo rezervácie, ak je na webe nastavené.`,
   },
 ] as const;
 

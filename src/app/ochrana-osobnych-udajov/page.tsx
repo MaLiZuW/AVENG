@@ -8,13 +8,14 @@ import {
   RETENTION_JOB_VERIFIED,
   retentionPeriodClaimSk,
 } from "@/config/retention";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Ochrana osobných údajov | AVENG",
+export const metadata: Metadata = pageMetadata({
+  title: "Ochrana osobných údajov",
   description:
     "Zásady spracovania osobných údajov AddValueEngineering — účel, právny základ, doba uchovania a práva dotknutej osoby.",
-  alternates: { canonical: "/ochrana-osobnych-udajov/" },
-};
+  path: "/ochrana-osobnych-udajov/",
+});
 
 /**
  * Processors listed below are only those this repository actually uses:

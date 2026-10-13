@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
 import { company } from "@/config/company";
+import { buildProfessionalServiceLd } from "@/lib/jsonld";
 import "./globals.css";
 
 const display = Fraunces({
@@ -21,7 +22,7 @@ const sans = Manrope({
 const SITE = company.siteUrl;
 const TITLE = "AVENG | Procesný audit a technické vedenie pre MSP";
 const DESCRIPTION =
-  "Procesný self-audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).";
+  "Procesný self-audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
   authors: [{ name: company.founderName }],
   creator: company.legalName,
   publisher: company.legalName,
-  alternates: { canonical: SITE },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "sk_SK",
@@ -77,10 +78,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
       { url: "/aveng-icon.svg", type: "image/svg+xml" },
-      { url: "/aveng-mark.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
     ],
-    apple: [{ url: "/aveng-mark.png", sizes: "180x180", type: "image/png" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
@@ -98,7 +100,7 @@ export default function RootLayout({
   return (
     <html lang="sk" className={`${display.variable} ${sans.variable}`}>
       <body className="font-sans antialiased">
-        <JsonLd />
+        <JsonLd data={buildProfessionalServiceLd()} />
         {children}
       </body>
     </html>

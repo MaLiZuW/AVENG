@@ -20,9 +20,9 @@ export default function About() {
     <section id="o-nas" className="section-pad border-t border-white/5 bg-ink-900/40" aria-labelledby="about-heading">
       <div className="container-aveng">
         <p className="eyebrow mb-4">O nás</p>
-        <h2 id="about-heading" className="heading-display max-w-2xl">
+        <h1 id="about-heading" className="heading-display max-w-2xl">
           Fractional Engineering Manager s koučingom na dielni
-        </h2>
+        </h1>
         <div className="mt-10 grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-5 prose-muted">
             <p>

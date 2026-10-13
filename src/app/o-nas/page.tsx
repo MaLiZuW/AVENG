@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import About from "@/components/sections/About";
 import Footer from "@/components/sections/Footer";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "O nás | AVENG",
+export const metadata: Metadata = pageMetadata({
+  title: "O nás",
   description:
     "AddValueEngineering — technické vedenie a procesný audit pre výrobné MSP na Slovensku a Morave.",
-  alternates: { canonical: "/o-nas/" },
-};
+  path: "/o-nas/",
+});
 
 export default function AboutPage() {
   return (

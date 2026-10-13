@@ -249,9 +249,9 @@ export default function AuditSection() {
     >
       <div className="container-aveng">
         <p className="eyebrow mb-4">Self-Audit</p>
-        <h2 id="audit-heading" className="heading-display max-w-2xl">
+        <h1 id="audit-heading" className="heading-display max-w-2xl">
           3-úrovňový procesný audit
-        </h2>
+        </h1>
         <p className="prose-muted mt-4 max-w-2xl">
           L1 (20) → L2 (60) → L3 (180 / 6M + DTO) — objektívne hodnotenie bez
           viditeľných bodov, odvetvový benchmark a indikatívny potenciál úspor.

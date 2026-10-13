@@ -1,14 +1,20 @@
 import Link from "next/link";
 import { PILLARS } from "@/config/pillars";
 
-export default function Services() {
+type ServicesProps = {
+  /** Homepage keeps h2 under Hero h1; /sluzby/ uses h1. */
+  headingAs?: "h1" | "h2";
+};
+
+export default function Services({ headingAs = "h2" }: ServicesProps) {
+  const Heading = headingAs;
   return (
     <section id="sluzby" className="section-pad" aria-labelledby="services-heading">
       <div className="container-aveng">
         <p className="eyebrow mb-4">4 piliere efektivity</p>
-        <h2 id="services-heading" className="heading-display max-w-2xl">
+        <Heading id="services-heading" className="heading-display max-w-2xl">
           Systém, ktorý drží — od stratégie po dielňu
-        </h2>
+        </Heading>
         <p className="prose-muted mt-4 max-w-2xl">
           Štyri piliere, jeden cieľ: predvídateľná výroba a silní technickí
           lídri.
