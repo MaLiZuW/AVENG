@@ -99,7 +99,10 @@ export default function MeetingRequestModal({
     });
     setPending(false);
     if (!res.ok) {
-      setError(res.error ?? "Odoslanie zlyhalo. Skúste znova alebo zavolajte.");
+      setError(
+        res.error ??
+          "Odoslanie sa nepodarilo. Napíšte nám prosím na vladimir@addvalueengineering.sk.",
+      );
       return;
     }
     setDone(true);

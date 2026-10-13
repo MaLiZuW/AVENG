@@ -18,10 +18,8 @@ Len to, čo je v repozitári. Chýbajúci údaj je označený „neznáme - over
 
 | Cieľ | Odkiaľ |
 |---|---|
-| `https://api.web3forms.com/submit` | `src/lib/submitContactRequest.ts` |
-| `https://formsubmit.co/ajax/{inbox}` | ten istý súbor, záloha |
 | `NEXT_PUBLIC_SUPABASE_URL` | `src/lib/supabase.ts` (insert leadu) |
-| `NEXT_PUBLIC_CONTACT_API_URL` | `src/lib/submitSiteContact.ts` → funkcia `contact` |
+| `NEXT_PUBLIC_CONTACT_API_URL` | `src/lib/submitSiteContact.ts`, `src/lib/submitContactRequest.ts` → funkcia `contact` |
 | `NEXT_PUBLIC_UNLOCK_API_URL` | `src/lib/unlock/session.ts` → `verify-promo` |
 | `NEXT_PUBLIC_ISSUE_UNLOCK_API_URL` | `src/components/admin/AdminUnlockPanel.tsx` |
 | `NEXT_PUBLIC_AUDIT_REPORT_API_URL` | `src/lib/sendAuditReport.ts` |

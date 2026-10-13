@@ -65,7 +65,10 @@ export default function KontaktPage() {
     });
     setPending(false);
     if (!res.ok) {
-      setError(res.error ?? "Odoslanie zlyhalo");
+      setError(
+        res.error ??
+          "Odoslanie sa nepodarilo. Napíšte nám prosím na vladimir@addvalueengineering.sk.",
+      );
       return;
     }
     setDone(true);

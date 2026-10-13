@@ -1,6 +1,6 @@
 /**
- * Client-side contact / meeting / CP request → always delivered to AVENG inbox.
- * Static-export friendly (no Next API route).
+ * Audit contact / meeting / CP request → Supabase Edge Function `contact` (Resend).
+ * Static-export friendly (no Next API route). No third-party form relays.
  */
 
 import { company } from "@/config/company";
@@ -29,9 +29,10 @@ export interface ContactRequestPayload {
   };
 }
 
-const INBOX = process.env.NEXT_PUBLIC_CONTACT_INBOX ?? company.email;
+const CONTACT_API = process.env.NEXT_PUBLIC_CONTACT_API_URL?.trim() ?? "";
 
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
+const SEND_FAILED_SK =
+  "Odoslanie sa nepodarilo. Napíšte nám prosím na vladimir@addvalueengineering.sk.";
 
 const REQUEST_LABEL: Record<ContactRequestType, string> = {
   meeting: "Žiadosť o osobnú schôdzku",
@@ -73,77 +74,6 @@ function buildMessageBody(payload: ContactRequestPayload): string {
   return lines.filter((l) => l !== "").join("\n");
 }
 
-async function sendViaWeb3Forms(
-  payload: ContactRequestPayload,
-): Promise<{ ok: boolean; error?: string }> {
-  const res = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      access_key: WEB3FORMS_KEY,
-      subject: `[AVENG] ${REQUEST_LABEL[payload.requestType]}`,
-      from_name: payload.fullName,
-      email: payload.email,
-      to: INBOX,
-      message: buildMessageBody(payload),
-      company: payload.company,
-      phone: payload.phone,
-      request_type: payload.requestType,
-    }),
-  });
-  const data = (await res.json().catch(() => ({}))) as {
-    success?: boolean;
-    message?: string;
-  };
-  if (!res.ok || data.success === false) {
-    return { ok: false, error: data.message ?? "Web3Forms odoslanie zlyhalo." };
-  }
-  return { ok: true };
-}
-
-async function sendViaFormSubmit(
-  payload: ContactRequestPayload,
-): Promise<{ ok: boolean; error?: string }> {
-  const res = await fetch(`https://formsubmit.co/ajax/${INBOX}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      _subject: `[AVENG] ${REQUEST_LABEL[payload.requestType]}`,
-      _template: "table",
-      _captcha: "false",
-      name: payload.fullName,
-      email: payload.email,
-      company: payload.company,
-      phone: payload.phone,
-      request_type: REQUEST_LABEL[payload.requestType],
-      message: buildMessageBody(payload),
-    }),
-  });
-  const data = (await res.json().catch(() => ({}))) as {
-    success?: string | boolean;
-    message?: string;
-  };
-  const ok =
-    res.ok &&
-    (data.success === true ||
-      data.success === "true" ||
-      String(data.message ?? "")
-        .toLowerCase()
-        .includes("success"));
-  if (!ok) {
-    return {
-      ok: false,
-      error:
-        data.message ??
-        "Odoslanie e-mailu zlyhalo. Skúste neskôr alebo zavolajte.",
-    };
-  }
-  return { ok: true };
-}
-
 function backupLocally(payload: ContactRequestPayload): void {
   if (typeof window === "undefined") return;
   try {
@@ -151,7 +81,7 @@ function backupLocally(payload: ContactRequestPayload): void {
     const prev = JSON.parse(localStorage.getItem(key) ?? "[]") as unknown[];
     prev.push({
       ...payload,
-      inbox: INBOX,
+      inbox: company.email,
       created_at: new Date().toISOString(),
     });
     localStorage.setItem(key, JSON.stringify(prev));
@@ -161,19 +91,42 @@ function backupLocally(payload: ContactRequestPayload): void {
 }
 
 /**
- * Send request to AVENG inbox (defaults to company.email).
+ * Send request via Edge Function `contact` (Resend). No third-party fallback.
  */
 export async function submitContactRequest(
   payload: ContactRequestPayload,
 ): Promise<{ ok: boolean; error?: string }> {
   backupLocally(payload);
 
-  if (WEB3FORMS_KEY) {
-    const w3 = await sendViaWeb3Forms(payload);
-    if (w3.ok) return w3;
+  if (!CONTACT_API) {
+    return { ok: false, error: SEND_FAILED_SK };
   }
 
-  return sendViaFormSubmit(payload);
+  try {
+    const res = await fetch(CONTACT_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: payload.fullName,
+        email: payload.email,
+        company: payload.company,
+        message: buildMessageBody(payload),
+        consent: true,
+        website: "",
+      }),
+    });
+    const data = (await res.json().catch(() => ({}))) as {
+      ok?: boolean;
+      error?: string;
+    };
+    if (!res.ok || !data.ok) {
+      return { ok: false, error: SEND_FAILED_SK };
+    }
+    return { ok: true };
+  } catch {
+    return { ok: false, error: SEND_FAILED_SK };
+  }
 }
 
-export { INBOX as CONTACT_INBOX, REQUEST_LABEL };
+export const CONTACT_INBOX = company.email;
+export { REQUEST_LABEL, SEND_FAILED_SK };

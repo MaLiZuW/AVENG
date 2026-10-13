@@ -7,8 +7,10 @@
 | Migrácia `supabase/migrations/20261008140000_data_retention.sql` | Pripravená, **nenasadená** | Schváliť a spustiť v Supabase? |
 | `RETENTION_JOB_VERIFIED` | `false` | Zapnúť až po overení cron jobu |
 | `FOLLOWUP_CONSENT_ENABLED` / `FOLLOWUP_RETENTION_DAYS` | `false` / 180 | Chcete dlhšie uchovanie kontaktov so samostatným súhlasom? |
-| Text zásad GDPR | Návrh | Schválenie právnikom |
+| Text zásad GDPR | Publikovaný návrh (STEP 16) | Schválenie právnikom |
 | Expirácia DB backupov | Neznáma | Doplniť do zásad |
+| Sídlo (`registeredSeat`) | Bez ulice/čísla (`Košeca 01864`) | Overiť proti obchodnému registru a doplniť ulicu/číslo |
+| Prenosy mimo EÚ | Neutrálna veta v zásadách | Podpísať/overiť DPA so sprostredkovateľmi; potvrdiť mechanizmus prenosu; zvážiť e-mailového poskytovateľa v EÚ |
 
 **Upozornenie:** pri 28 dňoch bez follow-up súhlasu **stratíte kontakt** po uplynutí lehoty.
 

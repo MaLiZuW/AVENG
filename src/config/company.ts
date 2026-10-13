@@ -19,12 +19,14 @@ export const company = {
   legalNameAscii: "AV - Agency, s. r. o.",
   ico: "47054328",
   dic: "2023729796",
-  /** Street unknown — locality + postal only */
+  /** Street unknown — locality + postal only. TODO(owner): verify street/number against commercial register. */
   addressLocality: "Košeca",
   postalCode: "01864",
   addressCountry: "SK",
   addressCountryName: "Slovenská republika",
   addressDisplay: "Košeca 01864, Slovenská republika",
+  /** Legal seat for policy / footer; street/number not yet verified. */
+  registeredSeat: "Košeca 01864, Slovenská republika",
   phoneDisplay: "+421 948 007 304",
   phoneTel: "+421948007304",
   email: "vladimir@addvalueengineering.sk",

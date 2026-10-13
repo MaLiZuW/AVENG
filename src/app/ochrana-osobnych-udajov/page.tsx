@@ -3,11 +3,8 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
-import {
-  RETENTION_DAYS,
-  RETENTION_JOB_VERIFIED,
-  retentionPeriodClaimSk,
-} from "@/config/retention";
+import { POLICY_UPDATED, processors } from "@/config/processors";
+import { retentionPeriodClaimSk } from "@/config/retention";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -18,12 +15,10 @@ export const metadata: Metadata = pageMetadata({
 });
 
 /**
- * Processors listed below are only those this repository actually uses:
- * WebSupport (static hosting), Supabase (DB + Edge Functions),
- * Resend (send-audit-report, issue-unlock-code, functions/contact),
- * Web3Forms / FormSubmit (src/lib/submitContactRequest.ts).
+ * Processors are listed from src/config/processors.ts (code-backed only).
  * TODO(owner/legal): review with a lawyer
  * TODO(owner): database backup expiry is not in config
+ * TODO(owner): verify registeredSeat street/number against commercial register
  */
 export default function PrivacyPage() {
   return (
@@ -36,7 +31,7 @@ export default function PrivacyPage() {
             Zásady spracovania osobných údajov
           </h1>
           <p className="mt-4 text-sm text-ink-300">
-            Návrh textu na schválenie vlastníkom a právnym poradcom.
+            Posledná aktualizácia: {POLICY_UPDATED}
           </p>
 
           <div className="prose-muted mt-8 space-y-6 text-base text-ink-200">
@@ -46,7 +41,7 @@ export default function PrivacyPage() {
               </h2>
               <p className="mt-2">
                 {company.legalName}, IČO {company.ico}, DIČ {company.dic},{" "}
-                {company.addressDisplay}.
+                {company.registeredSeat}.
               </p>
             </section>
 
@@ -91,16 +86,8 @@ export default function PrivacyPage() {
                 5. Doba uchovávania
               </h2>
               <p className="mt-2">
-                {retentionPeriodClaimSk()}{" "}
-                {!RETENTION_JOB_VERIFIED ? (
-                  <>
-                    V konfigurácii je lehota {RETENTION_DAYS} dní pre údaje
-                    auditu v databáze. Automatické vymazanie sa neuplatňuje,
-                    kým nie je mazací mechanizmus overený.{" "}
-                  </>
-                ) : null}
-                Správu z kontaktného formulára doručíme e-mailom a uchovávame
-                ju po dobu vybavenia dopytu.
+                {retentionPeriodClaimSk()} Správu z kontaktného formulára
+                doručíme e-mailom a uchovávame ju po dobu vybavenia dopytu.
               </p>
             </section>
 
@@ -113,24 +100,11 @@ export default function PrivacyPage() {
                 skutočne používa:
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-5">
-                <li>WebSupport — hosting statickej webovej prezentácie.</li>
-                <li>
-                  Supabase — databáza auditných údajov a Edge Functions
-                  (overenie prístupu, odoslanie správy z auditu, prijatie
-                  kontaktného formulára).
-                </li>
-                <li>
-                  Resend — doručenie e-mailov (správa z auditu, odomykacie
-                  kódy a správa z kontaktného formulára).
-                </li>
-                <li>
-                  Web3Forms — doručenie formulárov v audite, ak je v
-                  konfigurácii nastavený prístupový kľúč.
-                </li>
-                <li>
-                  FormSubmit — záložné doručenie tých istých formulárov, ak
-                  Web3Forms nie je nastavený alebo doručenie zlyhá.
-                </li>
+                {processors.map((p) => (
+                  <li key={p.name}>
+                    {p.name} — {p.purpose} ({p.locationNote}).
+                  </li>
+                ))}
               </ul>
               <p className="mt-2">
                 Prenos medzi prehliadačom a týmito službami prebieha cez
@@ -140,7 +114,17 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                7. Práva dotknutej osoby
+                7. Prenos údajov mimo EÚ
+              </h2>
+              <p className="mt-2">
+                Niektorí poskytovatelia služieb môžu údaje spracúvať aj mimo
+                Európskej únie.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-display text-xl font-semibold text-ink-50">
+                8. Práva dotknutej osoby
               </h2>
               <p className="mt-2">
                 Máte právo na prístup k údajom, na opravu, na výmaz, na
@@ -152,7 +136,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                8. Kontakt
+                9. Kontakt
               </h2>
               <p className="mt-2">
                 Žiadosti o uplatnenie práv aj ostatné otázky zasielajte na{" "}
@@ -163,7 +147,7 @@ export default function PrivacyPage() {
                   {company.email}
                 </a>{" "}
                 alebo telefonicky na {company.phoneDisplay}. Poštová adresa:{" "}
-                {company.addressDisplay}.
+                {company.registeredSeat}.
               </p>
             </section>
           </div>

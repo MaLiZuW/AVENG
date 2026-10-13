@@ -1,9 +1,13 @@
 /**
  * /kontakt → Supabase Edge Function `contact`.
  * The function is the authoritative check; this client only posts JSON.
+ * Delivery is Resend only — no third-party form relays.
  */
 
 const CONTACT_API = process.env.NEXT_PUBLIC_CONTACT_API_URL?.trim() ?? "";
+
+const SEND_FAILED_SK =
+  "Odoslanie sa nepodarilo. Napíšte nám prosím na vladimir@addvalueengineering.sk.";
 
 export type SiteContactPayload = {
   name: string;
@@ -22,7 +26,7 @@ export async function submitSiteContact(
   payload: SiteContactPayload,
 ): Promise<{ ok: boolean; error?: string }> {
   if (!CONTACT_API) {
-    return { ok: false, error: "Odoslanie nie je nakonfigurované." };
+    return { ok: false, error: SEND_FAILED_SK };
   }
 
   try {
@@ -36,10 +40,10 @@ export async function submitSiteContact(
       error?: string;
     };
     if (!res.ok || !data.ok) {
-      return { ok: false, error: data.error ?? "Odoslanie zlyhalo." };
+      return { ok: false, error: SEND_FAILED_SK };
     }
     return { ok: true };
   } catch {
-    return { ok: false, error: "Odoslanie zlyhalo (sieť)." };
+    return { ok: false, error: SEND_FAILED_SK };
   }
 }
