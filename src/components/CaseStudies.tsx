@@ -1,20 +1,11 @@
 /**
- * Placeholder structure for future case studies.
- * Intentionally NOT rendered on the public site until owner provides real data.
- * TODO(owner): doplniť overené referencie a zapnúť export v page.tsx
+ * Placeholder for future case studies.
+ * Not mounted on any route. Renders nothing while CASE_STUDIES is empty.
+ * TODO(owner): add verified references before importing this into a page.
  */
 
-export interface CaseStudy {
-  id: string;
-  sector: string;
-  summary: string;
-  outcome: string;
-}
+import { CASE_STUDIES } from "@/data/case-studies";
 
-/** Empty until owner supplies verified entries */
-export const CASE_STUDIES: CaseStudy[] = [];
-
-/** Hidden stub — do not import into public pages yet */
 export default function CaseStudies() {
   if (CASE_STUDIES.length === 0) return null;
   return (

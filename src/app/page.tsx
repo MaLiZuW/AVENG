@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
-import About from "@/components/sections/About";
 import AuditTeaser from "@/components/sections/AuditTeaser";
 import Footer from "@/components/sections/Footer";
 import Hero from "@/components/sections/Hero";
-import Optimization from "@/components/sections/Optimization";
 import Services from "@/components/sections/Services";
 import FaqSection from "@/components/sections/FaqSection";
 
@@ -21,9 +19,7 @@ export default function HomePage() {
       <Header />
       <main className="site-main">
         <Hero />
-        <About />
         <Services />
-        <Optimization />
         <AuditTeaser />
         <FaqSection />
       </main>

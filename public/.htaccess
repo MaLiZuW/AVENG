@@ -1,11 +1,20 @@
+# TODO(owner): verify the hosting honours .htaccess
+
 RewriteEngine On
 
-# Force HTTPS & WWW
+# Legacy WordPress paths (301) to the canonical host
+RewriteRule ^zadarmo-pre-vas/?$ https://www.addvalueengineering.sk/self-audit/ [R=301,L]
+RewriteRule ^category/category-1/?$ https://www.addvalueengineering.sk/ [R=301,L]
+
+# Force HTTPS and www — matches metadataBase (https://www.addvalueengineering.sk)
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteRule ^(.*)$ https://www.addvalueengineering.sk/$1 [L,R=301]
 
-# Security Headers
+# Static export 404 (out/404.html)
+ErrorDocument 404 /404.html
+
+# Security headers (no CSP — add only after a tested policy)
 <IfModule mod_headers.c>
   Header set X-Frame-Options "SAMEORIGIN"
   Header set X-Content-Type-Options "nosniff"
@@ -13,12 +22,14 @@ RewriteRule ^(.*)$ https://www.addvalueengineering.sk/$1 [L,R=301]
   Header set X-XSS-Protection "1; mode=block"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # Long cache only for content-hashed Next assets
+  SetEnvIf Request_URI "^/_next/static/" hashed_asset
+  Header set Cache-Control "public, max-age=31536000, immutable" env=hashed_asset
 </IfModule>
 
-# SPA-like fallback for trailingSlash static export
 DirectoryIndex index.html
 
-# Cache static assets
+# Cache static asset types (hashed bundles live under /_next/static/)
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType text/css "access plus 1 year"
@@ -30,7 +41,6 @@ DirectoryIndex index.html
   ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
 
-# Compress text assets
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
 </IfModule>

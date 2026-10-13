@@ -9,6 +9,15 @@ const SOCIAL_LABEL: Record<SocialKey, string> = {
   facebook: "Facebook",
 };
 
+const FOOTER_NAV = [
+  { href: "/", label: "Domov" },
+  { href: "/o-nas/", label: "O nás" },
+  { href: "/sluzby/", label: "Služby" },
+  { href: "/optimalizacia-a-ai/", label: "Optimalizácia & AI" },
+  { href: "/self-audit/", label: "Self-Audit" },
+  { href: "/kontakt/", label: "Kontakt" },
+];
+
 export default function Footer() {
   const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
   const socialLinks = getPublicSocialLinks();
@@ -118,6 +127,17 @@ export default function Footer() {
             <GdprLink />
           </div>
         </div>
+        <nav className="mt-10 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Navigácia v pätičke">
+          {FOOTER_NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-signal-bright underline-offset-2 hover:underline"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
         <p className="mt-12 border-t border-white/10 pt-6 text-xs text-ink-300">
           © {new Date().getFullYear()} {company.brandName} · {company.legalName}{" "}
           · IČO {company.ico} · Všetky práva vyhradené.
