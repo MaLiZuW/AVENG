@@ -2,6 +2,7 @@
  * Shared L1 scoring primitives — no Level 2/3 question imports.
  */
 
+import { formatEuroRounded } from "../format";
 import { computeWeightedProcessPercent } from "./calculationEngine";
 import { getProcessBenchmarks, getSector, PROCESSES } from "./benchmarks";
 import { LEVEL1_QUESTIONS } from "./questions";
@@ -224,11 +225,7 @@ export function calculateAuditResult(
 }
 
 export function formatEur(n: number): string {
-  return new Intl.NumberFormat("sk-SK", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(n);
+  return formatEuroRounded(n);
 }
 
 export {

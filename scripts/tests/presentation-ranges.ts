@@ -236,7 +236,15 @@ assert(
   "edge imports the shared module",
 );
 assert(edgeShared.includes("formatEurRange"), "edge formats with formatEurRange");
-assert(edgeShared.includes("LEVEL1_DISCLAIMER_SK"), "edge uses the shared disclaimer");
+assert(
+  edgeShared.includes('from "../../../src/config/audit-copy.ts"'),
+  "edge imports level-aware copy",
+);
+assert(edgeShared.includes("disclaimerForLevel"), "edge resolves disclaimer by level");
+assert(
+  !edgeShared.includes("LEVEL1_DISCLAIMER_SK"),
+  "edge does not pin the Level 1 disclaimer",
+);
 assert(edgeShared.includes("reliabilityWording"), "edge uses shared reliability wording");
 assert(html.includes("formatGapEur") && html.includes("LABEL_GAP_HEADLINE_SK"), "html uses shared labels");
 assert(html.includes("reliabilityBlock"), "html shows reliability");

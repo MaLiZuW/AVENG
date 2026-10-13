@@ -2,7 +2,7 @@ import {
   BRAND,
   CTA_MAIL,
   CTA_PHONE,
-  DISCLAIMER_SK,
+  disclaimerForLevel,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_MSP_REF_SK,
@@ -35,7 +35,7 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
     body.presentation?.gapSmeHighEur,
     r.gapSmeEur ?? 0,
   );
-  const rel = reliabilityBlock(body.presentation?.reliabilityLevel);
+  const rel = reliabilityBlock(body.presentation?.reliabilityLevel, level);
   const date = new Date().toLocaleDateString("sk-SK", {
     day: "numeric",
     month: "long",
@@ -140,7 +140,7 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
       <td width="48%" style="background:#121a2b;border-radius:14px;padding:20px 18px;border:1px solid rgba(232,165,75,.35)">
         <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.12em">${escapeHtml(LABEL_GAP_HEADLINE_SK)}</div>
         <div style="font-size:18px;font-weight:800;color:#e8a54b;margin-top:8px;line-height:1.35">${escapeHtml(headline)}</div>
-        <div style="font-size:11px;color:#94a3b8;margin-top:8px;line-height:1.45">${escapeHtml(DISCLAIMER_SK)}</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:8px;line-height:1.45">${escapeHtml(disclaimerForLevel(level))}</div>
         ${
           rel
             ? `<div style="font-size:12px;color:#e8edf5;margin-top:8px">${escapeHtml(rel.lineSk)}</div>
@@ -162,7 +162,7 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#0b1220;border-radius:12px">
       <tr>
         <td style="padding:14px 16px;font-size:12px;color:#94a3b8">Obrat<br/><strong style="color:#e8edf5;font-size:14px">${escapeHtml(eur(r.annualRevenueEur ?? 0))}</strong></td>
-        <td style="padding:14px 16px;font-size:12px;color:#94a3b8">COGS<br/><strong style="color:#e8edf5;font-size:14px">${r.cogsPercent ?? 0} %</strong></td>
+        <td style="padding:14px 16px;font-size:12px;color:#94a3b8">COGS<br/><strong style="color:#e8edf5;font-size:14px">${pct(r.cogsPercent ?? 0, 0)}</strong></td>
         <td style="padding:14px 16px;font-size:12px;color:#94a3b8">Otázky<br/><strong style="color:#e8edf5;font-size:14px">${r.answeredCount ?? "—"}/${r.totalQuestions ?? "—"}</strong></td>
         <td style="padding:14px 16px;font-size:12px;color:#94a3b8">Level<br/><strong style="color:#e8edf5;font-size:14px">${level}</strong></td>
       </tr>

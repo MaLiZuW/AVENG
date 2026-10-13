@@ -1,5 +1,7 @@
 "use client";
 
+import { formatDateTimeSk } from "@/lib/format";
+
 interface Props {
   updatedAt?: string;
   onContinue: () => void;
@@ -11,12 +13,7 @@ export default function ResumeBanner({
   onContinue,
   onRestart,
 }: Props) {
-  const when = updatedAt
-    ? new Date(updatedAt).toLocaleString("sk-SK", {
-        dateStyle: "short",
-        timeStyle: "short",
-      })
-    : null;
+  const when = updatedAt ? formatDateTimeSk(updatedAt) : null;
 
   return (
     <div

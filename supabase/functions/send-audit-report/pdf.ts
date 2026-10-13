@@ -11,7 +11,7 @@ import {
   BRAND,
   CTA_MAIL,
   CTA_PHONE,
-  DISCLAIMER_SK,
+  disclaimerForLevel,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_MSP_REF_SK,
@@ -22,6 +22,7 @@ import {
   formatGapEur,
   formatProcessGap,
   pct,
+  pdfFooterForLevel,
   reliabilityBlock,
   sortedByGap,
   upsellForLevel,
@@ -82,7 +83,13 @@ function fill(page: PDFPage) {
   page.drawRectangle({ x: 0, y: 0, width, height, color: C.bg });
 }
 
-function footer(page: PDFPage, font: PDFFont, n: number, total: number) {
+function footer(
+  page: PDFPage,
+  font: PDFFont,
+  n: number,
+  total: number,
+  auditLevel: number,
+) {
   const { width } = page.getSize();
   page.drawText(`${BRAND} · Self-Audit report · ${n}/${total}`, {
     x: 40,
@@ -91,7 +98,7 @@ function footer(page: PDFPage, font: PDFFont, n: number, total: number) {
     font,
     color: C.muted,
   });
-  const right = "Indikatívny skríning — nie je zárukou výsledku";
+  const right = pdfFooterForLevel(auditLevel);
   page.drawText(right, {
     x: width - 40 - font.widthOfTextAtSize(right, 8),
     y: 26,
@@ -180,7 +187,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     body.presentation?.gapSmeHighEur,
     r.gapSmeEur ?? 0,
   );
-  const rel = reliabilityBlock(body.presentation?.reliabilityLevel);
+  const rel = reliabilityBlock(body.presentation?.reliabilityLevel, level);
   const date = new Date().toLocaleDateString("sk-SK");
   const TOTAL = 4;
 
@@ -351,7 +358,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     });
 
     y -= 120;
-    for (const line of wrap(DISCLAIMER_SK, font, 8, width - 80)) {
+    for (const line of wrap(disclaimerForLevel(level), font, 8, width - 80)) {
       page.drawText(line, { x: 40, y, size: 8, font, color: C.muted });
       y -= 11;
     }
@@ -435,7 +442,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     y -= 20;
     for (const t of [
       `Ročný obrat: ${eur(r.annualRevenueEur ?? 0)}`,
-      `COGS: ${r.cogsPercent ?? 0} %`,
+      `COGS: ${pct(r.cogsPercent ?? 0, 0)}`,
       `Zodpovedané otázky: ${r.answeredCount ?? "—"} / ${r.totalQuestions ?? "—"}`,
       `Kontakt: ${body.work_email ?? ""}${body.phone ? ` · ${body.phone}` : ""}`,
     ]) {
@@ -443,7 +450,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       y -= 16;
     }
 
-    footer(page, font, 1, TOTAL);
+    footer(page, font, 1, TOTAL, level);
   }
 
   // ═══════════════ PAGE 2 — Table + bars ═══════════════
@@ -624,7 +631,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       y -= 62;
     }
 
-    footer(page, font, 2, TOTAL);
+    footer(page, font, 2, TOTAL, level);
   }
 
   // ═══════════════ PAGE 3 — Radar + recommendations ═══════════════
@@ -722,7 +729,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       y -= blockH + 12;
     });
 
-    footer(page, font, 3, TOTAL);
+    footer(page, font, 3, TOTAL, level);
   }
 
   // ═══════════════ PAGE 4 — Upsell CTA ═══════════════
@@ -816,7 +823,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       color: C.muted,
     });
 
-    footer(page, font, 4, TOTAL);
+    footer(page, font, 4, TOTAL, level);
   }
 
   return pdf.save();

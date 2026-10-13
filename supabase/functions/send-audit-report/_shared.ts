@@ -1,7 +1,13 @@
 import {
+  disclaimerForLevel,
+  pdfFooterForLevel,
+  reliabilityHintForLevel,
+} from "../../../src/config/audit-copy.ts";
+import {
   completedLevel3Body,
   levelUpsellEyebrow,
 } from "../../../src/config/levels.ts";
+import { formatEuroRounded, formatPercent } from "../../../src/lib/format.ts";
 import { company } from "../_shared/company.ts";
 import {
   formatEurRange,
@@ -11,11 +17,12 @@ import {
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
   LABEL_WC_CEILING_SK,
-  LEVEL1_DISCLAIMER_SK,
   reliabilityWording,
   type ReliabilityLevel,
   type ReportPresentationPayload,
 } from "../../../shared/audit-presentation.ts";
+
+export { disclaimerForLevel, pdfFooterForLevel };
 
 export {
   LABEL_COST_BASE_SHARE_SK,
@@ -106,15 +113,11 @@ export function domainLabel(id: string): string {
 }
 
 export function eur(n: number): string {
-  return new Intl.NumberFormat("sk-SK", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(n);
+  return formatEuroRounded(n);
 }
 
-export function pct(n: number, digits = 0): string {
-  return `${n.toFixed(digits)} %`;
+export function pct(n: number, digits = 1): string {
+  return formatPercent(n, digits);
 }
 
 export function escapeHtml(s: string): string {
@@ -193,8 +196,6 @@ export function upsellForLevel(level: number, company: string): Upsell {
   };
 }
 
-export const DISCLAIMER_SK = LEVEL1_DISCLAIMER_SK;
-
 export function formatGapEur(
   low: number | undefined,
   high: number | undefined,
@@ -223,8 +224,12 @@ export function formatProcessGap(
 
 export function reliabilityBlock(
   level: ReliabilityLevel | undefined,
+  auditLevel = 1,
 ): { lineSk: string; hintSk: string } | null {
   if (!level) return null;
   const wording = reliabilityWording(level);
-  return { lineSk: wording.lineSk, hintSk: wording.hintSk };
+  return {
+    lineSk: wording.lineSk,
+    hintSk: reliabilityHintForLevel(auditLevel),
+  };
 }

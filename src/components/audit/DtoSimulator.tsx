@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Flame, AlertTriangle, Zap } from "lucide-react";
 import { domainLabel } from "@/config/audit-display";
 import { formatEur, getTopLossProcesses } from "@/lib/audit/scoring";
+import { formatDecimal, formatDecimalTrim, formatInt, formatPercent } from "@/lib/format";
 import type {
   AuditAnswers,
   AuditResult,
@@ -256,7 +257,7 @@ export default function DtoSimulator({ answers, result, preAudit }: Props) {
         <span className="mb-1 flex justify-between text-ink-200">
           <span>Plánované výrobné hodiny / rok (pre Δ kapacitu)</span>
           <span className="text-signal-bright">
-            {plannedHours.toLocaleString("sk-SK")} h
+            {formatInt(plannedHours)} h
           </span>
         </span>
         <input
@@ -284,7 +285,7 @@ export default function DtoSimulator({ answers, result, preAudit }: Props) {
                 {dimLabels[dim] ?? dim}
               </p>
               <p className="mt-0.5 text-[11px] text-ink-200">
-                Aktuálna zrelosť (interná): {avg.toFixed(1)} / 10
+                Aktuálna zrelosť (interná): {formatDecimal(avg, 1)} / 10
               </p>
               <div className="mt-2 flex flex-wrap gap-1">
                 <button
@@ -370,10 +371,10 @@ export default function DtoSimulator({ answers, result, preAudit }: Props) {
             Extra kapacita (h/rok)
           </p>
           <p className="mt-1 font-display text-2xl font-semibold text-signal-bright">
-            {sim.extraMachineHours.toLocaleString("sk-SK")}
+            {formatDecimalTrim(sim.extraMachineHours, 1)}
           </p>
           <p className="text-[11px] text-ink-200">
-            Δ efektivita +{sim.deltaOeePercent} p.b.
+            Δ efektivita +{formatDecimal(sim.deltaOeePercent, 1)} p.b.
           </p>
         </div>
         <div className="rounded-md border border-white/10 p-4">
@@ -398,7 +399,7 @@ export default function DtoSimulator({ answers, result, preAudit }: Props) {
         Medzera voči referencii MSP (focus) {formatEur(sim.focusedGapSmeEur)} ·
         teoretický strop WC {formatEur(sim.baselineGapWcEur)} → simulácia{" "}
         {formatEur(sim.simulatedGapWcEur)} · efektivita simulácie{" "}
-        {sim.simulatedOverallPercent.toFixed(1)} %.
+        {formatPercent(sim.simulatedOverallPercent)}.
       </p>
 
       {Object.keys(selected).length > 0 && (

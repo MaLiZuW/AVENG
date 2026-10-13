@@ -2,6 +2,7 @@
 
 import { useId, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { disclaimerForLevel, resultTitle } from "@/config/audit-copy";
 import {
   domainLabel,
   SHOW_WORLD_CLASS_CEILING,
@@ -14,11 +15,11 @@ import {
   LABEL_GAP_SHORT_SK,
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
-  LEVEL1_DISCLAIMER_SK,
   referenceSourceNotesSk,
   toReportPresentation,
   wcCeilingDisplay,
 } from "@/lib/audit/presentation";
+import { formatPercent } from "@/lib/format";
 import { formatEur } from "@/lib/audit/scoring";
 import type {
   AnswerDetailsMap,
@@ -105,8 +106,7 @@ export default function ResultsDashboard({
           Zrkadlo podniku · {result.sectorLabel} · Level {result.auditLevel}
         </p>
         <h3 className="mt-1 font-display text-2xl font-semibold text-ink-50">
-          Výsledky Level {result.auditLevel} auditu
-          {result.auditLevel === 2 ? " (60 podotázok)" : ""}
+          {resultTitle(result.auditLevel, result.totalQuestions)}
         </h3>
       </div>
 
@@ -147,7 +147,7 @@ export default function ResultsDashboard({
             </button>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-ink-300">
-            {LEVEL1_DISCLAIMER_SK}
+            {disclaimerForLevel(result.auditLevel)}
           </p>
           <div
             id={methodPanelId}
@@ -164,7 +164,7 @@ export default function ResultsDashboard({
                         ? `Tržby ${formatEur(preAudit.annualRevenueEur)}`
                         : null,
                       Number.isFinite(preAudit.cogsPercent)
-                        ? `COGS ${preAudit.cogsPercent} %`
+                        ? `COGS ${formatPercent(preAudit.cogsPercent, 0)}`
                         : null,
                     ]
                       .filter(Boolean)
@@ -177,7 +177,7 @@ export default function ResultsDashboard({
                   }Odvetvie ${result.sectorLabel}.`}
                 </p>
                 <p>
-                  {`Najväčšia medzera je v doméne ${domainLabel(cp.processId)} · ${cp.label}. Vaše skóre je ${cp.userPercent.toFixed(0)} % a referencia MSP je ${cp.smePercent.toFixed(0)} %.`}
+                  {`Najväčšia medzera je v doméne ${domainLabel(cp.processId)} · ${cp.label}. Vaše skóre je ${formatPercent(cp.userPercent)} a referencia MSP je ${formatPercent(cp.smePercent)}.`}
                 </p>
                 <details className="text-xs text-ink-300">
                   <summary className="cursor-pointer text-signal-bright">
@@ -187,8 +187,9 @@ export default function ResultsDashboard({
                     Skóre domény je 100 krát súčet (váha otázky krát skóre)
                     deleno súčtom (váha otázky krát 10). Medzera v eurách je
                     tržby krát podiel COGS krát váha nákladov domény krát max(0,
-                    (referencia mínus vaše skóre) deleno 100). Celok je súčet
-                    domén. Rozsah vzniká z pásiem odpovedí A–E. Pri presne
+                    (referencia mínus vaše skóre) deleno 100). Celková medzera
+                    je súčtom medzier jednotlivých domén. Rozsah vzniká z pásiem
+                    odpovedí A–E. Pri presne
                     zadanom čísle je dolná hranica rovnaká ako horná.
                   </p>
                 </details>
@@ -264,14 +265,14 @@ export default function ResultsDashboard({
                     {domainLabel(p.processId)} {p.shortLabel}
                   </td>
                   <td className="py-2.5 pr-2 font-semibold text-signal-bright">
-                    {p.percent.toFixed(1)} %
+                    {formatPercent(p.percent)}
                   </td>
                   <td className="py-2.5 pr-2 text-ember">
-                    {p.smePercent.toFixed(1)} %
+                    {formatPercent(p.smePercent)}
                   </td>
                   {showWc ? (
                     <td className="py-2.5 text-green-400">
-                      {p.wcPercent.toFixed(1)} %
+                      {formatPercent(p.wcPercent)}
                     </td>
                   ) : null}
                 </tr>
@@ -279,14 +280,14 @@ export default function ResultsDashboard({
               <tr className="font-semibold">
                 <td className="pt-3 pr-2 text-ink-50">Celkom (vážené)</td>
                 <td className="pt-3 pr-2 text-signal-bright">
-                  {result.overallPercent.toFixed(1)} %
+                  {formatPercent(result.overallPercent)}
                 </td>
                 <td className="pt-3 pr-2 text-ember">
-                  {result.smeOverallPercent.toFixed(1)} %
+                  {formatPercent(result.smeOverallPercent)}
                 </td>
                 {showWc ? (
                   <td className="pt-3 text-green-400">
-                    {result.wcOverallPercent.toFixed(1)} %
+                    {formatPercent(result.wcOverallPercent)}
                   </td>
                 ) : null}
               </tr>
@@ -329,8 +330,8 @@ export default function ResultsDashboard({
                 : "Vaša úroveň vs referencia MSP"}
             </dt>
             <dd className="font-semibold text-ink-100">
-              {cp.userPercent.toFixed(0)} % · {cp.smePercent.toFixed(0)} %
-              {showWc ? ` · ${cp.wcPercent.toFixed(0)} %` : null}
+              {formatPercent(cp.userPercent)} · {formatPercent(cp.smePercent)}
+              {showWc ? ` · ${formatPercent(cp.wcPercent)}` : null}
             </dd>
           </div>
         </dl>

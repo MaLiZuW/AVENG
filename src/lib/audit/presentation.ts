@@ -11,6 +11,7 @@ import {
   MAX_DISPLAYED_POTENTIAL_SHARE,
   SHOW_WORLD_CLASS_CEILING,
 } from "@/config/audit-display";
+import { disclaimerForLevel, reliabilityHintForLevel } from "@/config/audit-copy";
 import {
   getKpiReference,
   isBenchmarkAvailable,
@@ -18,10 +19,10 @@ import {
   type KpiReference,
   type PublishedKpiKey,
 } from "@/config/benchmarks";
+import { formatDecimalTrim, formatInt } from "@/lib/format";
 import {
   formatEurRange,
   LABEL_WC_CEILING_SK,
-  LEVEL1_DISCLAIMER_SK,
   reliabilityLevelFromShare,
   reliabilityWording,
   type ReliabilityLevel,
@@ -148,7 +149,7 @@ export function estimateReliability(
     visible: wAll > 0,
     level,
     lineSk: wording.lineSk,
-    hintSk: wording.hintSk,
+    hintSk: reliabilityHintForLevel(result.auditLevel),
     exactWeightShare: share,
   };
 }
@@ -179,7 +180,7 @@ export function buildLevel1Presentation(
     processes: pointProcesses,
     critical: pointGap(result.criticalProcess.gapSmeEur),
     reliability,
-    disclaimerSk: LEVEL1_DISCLAIMER_SK,
+    disclaimerSk: disclaimerForLevel(result.auditLevel),
   };
 
   if (!preAudit || result.auditLevel !== 1 || !details) return base;
@@ -210,7 +211,7 @@ export function buildLevel1Presentation(
     processes,
     critical,
     reliability,
-    disclaimerSk: LEVEL1_DISCLAIMER_SK,
+    disclaimerSk: disclaimerForLevel(result.auditLevel),
   };
 }
 
@@ -257,7 +258,7 @@ export function wcCeilingDisplay(result: AuditResult): {
   const share = base > 0 ? raw / base : 0;
   if (share > 0.5 && process.env.NODE_ENV === "development") {
     console.warn(
-      `[AVENG] WC potential share ${(share * 100).toFixed(0)}% exceeds 50% of cost base`,
+      `[AVENG] WC potential share ${formatInt(Math.round(share * 100))}% exceeds 50% of cost base`,
     );
   }
   const cap = base * MAX_DISPLAYED_POTENTIAL_SHARE;
@@ -299,13 +300,7 @@ export interface KpiComparisonRow {
 }
 
 function skNumber(n: number): string {
-  const rounded = Math.round(n * 100) / 100;
-  const negative = rounded < 0;
-  const [intRaw, frac] = Math.abs(rounded).toFixed(2).split(".");
-  const grouped = intRaw!.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  const trimmed = frac!.replace(/0+$/, "");
-  const body = trimmed ? `${grouped},${trimmed}` : grouped;
-  return negative ? `−${body}` : body;
+  return formatDecimalTrim(n, 2);
 }
 
 function pct(n: number): string {

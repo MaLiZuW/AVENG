@@ -68,10 +68,22 @@ export interface SectorDef {
   absence: { sme: number; wc: number };
 }
 
+/** Public Slovak names. Internal `id` values stay unchanged. */
+export const SECTOR_PUBLIC_LABELS: Record<SectorId, string> = {
+  automotive: "Automobilový priemysel",
+  ems: "Elektronika / EMS",
+  plastics: "Plasty a kaučuk",
+  food: "Potravinárstvo",
+  metal: "Kovospracovanie a strojárstvo",
+  pharma: "Farmácia a chémia",
+  packaging: "Obaly a tlač",
+  general: "Všeobecná priemyselná výroba",
+};
+
 export const SECTORS: SectorDef[] = [
   {
     id: "automotive",
-    label: "Automotive (Automobilový priemysel)",
+    label: SECTOR_PUBLIC_LABELS.automotive,
     oee: { sme: 65, wc: 86 },
     copq: { sme: 5.0, wc: 0.5 },
     dpmo: { sme: 6210, wc: 233 },
@@ -81,7 +93,7 @@ export const SECTORS: SectorDef[] = [
   },
   {
     id: "ems",
-    label: "Elektronika / EMS (Electronics Manufacturing Services)",
+    label: SECTOR_PUBLIC_LABELS.ems,
     oee: { sme: 70, wc: 88 },
     copq: { sme: 4.0, wc: 0.4 },
     dpmo: { sme: 6210, wc: 233 },
@@ -91,7 +103,7 @@ export const SECTORS: SectorDef[] = [
   },
   {
     id: "plastics",
-    label: "Plasty a kaučuk (Plastics & Rubber)",
+    label: SECTOR_PUBLIC_LABELS.plastics,
     oee: { sme: 63, wc: 86 },
     copq: { sme: 6.0, wc: 0.8 },
     dpmo: { sme: 10000, wc: 500 },
@@ -101,7 +113,7 @@ export const SECTORS: SectorDef[] = [
   },
   {
     id: "food",
-    label: "Potravinárstvo (Food & Beverage)",
+    label: SECTOR_PUBLIC_LABELS.food,
     oee: { sme: 58, wc: 83 },
     copq: { sme: 7.0, wc: 1.0 },
     dpmo: { sme: 15000, wc: 700 },
@@ -111,7 +123,7 @@ export const SECTORS: SectorDef[] = [
   },
   {
     id: "metal",
-    label: "Kovospracovanie a strojárstvo (Metalworking & Machinery)",
+    label: SECTOR_PUBLIC_LABELS.metal,
     oee: { sme: 60, wc: 82 },
     copq: { sme: 7.0, wc: 1.2 },
     dpmo: { sme: 15000, wc: 1000 },
@@ -121,7 +133,7 @@ export const SECTORS: SectorDef[] = [
   },
   {
     id: "pharma",
-    label: "Farmácia a chémia (Pharma & Chemicals)",
+    label: SECTOR_PUBLIC_LABELS.pharma,
     oee: { sme: 62, wc: 84 },
     copq: { sme: 5.0, wc: 0.6 },
     dpmo: { sme: 6210, wc: 100 },
@@ -131,7 +143,7 @@ export const SECTORS: SectorDef[] = [
   },
   {
     id: "packaging",
-    label: "Obaly a tlač (Packaging & Printing)",
+    label: SECTOR_PUBLIC_LABELS.packaging,
     oee: { sme: 60, wc: 83 },
     copq: { sme: 6.0, wc: 1.0 },
     dpmo: { sme: 10000, wc: 700 },
@@ -141,7 +153,7 @@ export const SECTORS: SectorDef[] = [
   },
   {
     id: "general",
-    label: "Všeobecná priemyselná výroba (General Manufacturing)",
+    label: SECTOR_PUBLIC_LABELS.general,
     oee: { sme: 62, wc: 85 },
     copq: { sme: 6.0, wc: 1.0 },
     dpmo: { sme: 10000, wc: 233 },
