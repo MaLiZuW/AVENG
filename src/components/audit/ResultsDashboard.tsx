@@ -10,7 +10,15 @@ import {
 import {
   buildKpiComparisonRows,
   buildResultView,
+  COL_COST_BASE_SK,
+  COL_COGS_SHARE_SK,
+  COL_DOMAIN_SK,
+  COL_REF_SOURCE_SK,
+  costBaseDisclosureRows,
+  COST_BASE_SHARES_NOTE_SK,
+  EXPERT_ESTIMATE_SOURCE_SK,
   formatEurRange,
+  LABEL_COST_BASE_TABLE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_MATURITY_TABLE_SK,
@@ -102,6 +110,10 @@ export default function ResultsDashboard({
         ...kpiRows.map((row) => row.key),
       ]),
     [kpiRows],
+  );
+  const costBaseRows = useMemo(
+    () => costBaseDisclosureRows(result),
+    [result],
   );
 
   const processList = useMemo(() => {
@@ -204,6 +216,54 @@ export default function ResultsDashboard({
                     odpovedí A–E. Pri presne
                     zadanom čísle je dolná hranica rovnaká ako horná.
                   </p>
+                  <p className="mt-3 text-ink-200">
+                    {EXPERT_ESTIMATE_SOURCE_SK}
+                  </p>
+                  <h5 className="mt-3 font-medium text-ink-100">
+                    {LABEL_COST_BASE_TABLE_SK}
+                  </h5>
+                  <div className="mt-2 overflow-x-auto">
+                    <table className="w-full min-w-[320px] text-left text-xs">
+                      <thead>
+                        <tr className="border-b border-white/10 text-[10px] uppercase tracking-wider text-ink-200">
+                          <th className="pb-1.5 pr-2 font-medium">
+                            {COL_DOMAIN_SK}
+                          </th>
+                          <th className="pb-1.5 pr-2 font-medium">
+                            {COL_COGS_SHARE_SK}
+                          </th>
+                          <th className="pb-1.5 pr-2 font-medium">
+                            {COL_COST_BASE_SK}
+                          </th>
+                          <th className="pb-1.5 font-medium">
+                            {COL_REF_SOURCE_SK}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {costBaseRows.map((row) => (
+                          <tr
+                            key={row.processId}
+                            className="border-b border-white/5"
+                          >
+                            <td className="py-1.5 pr-2 text-ink-100">
+                              {row.domainLabel}
+                            </td>
+                            <td className="py-1.5 pr-2">
+                              {formatPercent(row.cogsShare * 100, 0)}
+                            </td>
+                            <td className="py-1.5 pr-2">
+                              {formatEur(row.costBaseEur)}
+                            </td>
+                            <td className="py-1.5 text-ink-200">
+                              {row.referenceSourceSk}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="mt-2">{COST_BASE_SHARES_NOTE_SK}</p>
                 </details>
               </div>
             </div>

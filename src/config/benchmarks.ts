@@ -4,6 +4,11 @@
  * TODO(owner): confirm source classification / citations when published.
  */
 
+import {
+  CROSSCHECK_SUPPORTED_PROCESS_IDS,
+  domainReferenceSourceLabelSk,
+  EXPERT_ESTIMATE_SOURCE_SK,
+} from "../../shared/audit-presentation";
 import referenceJson from "./benchmarks.reference.json";
 
 export type BenchmarkSource =
@@ -14,8 +19,7 @@ export const BENCHMARK_SOURCE: BenchmarkSource = {
   kind: "expert-estimate",
 };
 
-export const EXPERT_ESTIMATE_SOURCE_SK =
-  "Referenčné hodnoty MSP sú interné referencie AVENG založené na expertnom odhade, nie oficiálna štatistika.";
+export { EXPERT_ESTIMATE_SOURCE_SK };
 
 export const PUBLISHED_REFERENCE_SOURCE_SK =
   "Referencie sú medzinárodné orientačné hodnoty z verejných zdrojov (napr. ASQ, IISE, Vorne/OEE.com). Pre Slovensko verejný procesný benchmark nie je k dispozícii. Hodnoty sa líšia podľa odvetvia a spôsobu merania.";
@@ -38,6 +42,12 @@ export type PublishedKpiKey = (typeof PUBLISHED_KPI_KEYS)[number];
 
 /** Process domains whose S_SME / S_WC come from the existing model. */
 export type ModelReferenceDomain = "P1" | "P2" | "P3" | "P4" | "P5";
+
+/** @see CROSSCHECK_SUPPORTED_PROCESS_IDS in shared/audit-presentation.ts */
+export const CROSSCHECK_SUPPORTED_DOMAINS: ReadonlySet<ModelReferenceDomain> =
+  new Set(CROSSCHECK_SUPPORTED_PROCESS_IDS);
+
+export { domainReferenceSourceLabelSk };
 
 export type ReferenceStatusKey = ModelReferenceDomain | PublishedKpiKey;
 

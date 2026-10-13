@@ -1,8 +1,16 @@
 import {
   BRAND,
+  COL_COST_BASE_SK,
+  COL_COGS_SHARE_SK,
+  COL_DOMAIN_SK,
+  COL_REF_SOURCE_SK,
+  COST_BASE_SHARES_NOTE_SK,
+  costBaseDisclosureRowsForReport,
   CTA_MAIL,
   CTA_PHONE,
   disclaimerForLevel,
+  EXPERT_ESTIMATE_SOURCE_SK,
+  LABEL_COST_BASE_TABLE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_MATURITY_TABLE_SK,
@@ -38,11 +46,23 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
     r.gapSmeEur ?? 0,
   );
   const rel = reliabilityBlock(body.presentation?.reliabilityLevel, level);
+  const costBaseRows = costBaseDisclosureRowsForReport(r);
   const date = new Date().toLocaleDateString("sk-SK", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+
+  const costBaseTableRows = costBaseRows
+    .map(
+      (row) => `<tr>
+        <td style="padding:8px;border-bottom:1px solid rgba(148,163,184,.12);color:#e2e8f0;font-size:12px">${escapeHtml(row.domainLabel)}</td>
+        <td style="padding:8px;border-bottom:1px solid rgba(148,163,184,.12);color:#94a3b8;font-size:12px;text-align:right">${pct(row.cogsShare * 100, 0)}</td>
+        <td style="padding:8px;border-bottom:1px solid rgba(148,163,184,.12);color:#e8edf5;font-size:12px;text-align:right">${escapeHtml(eur(row.costBaseEur))}</td>
+        <td style="padding:8px;border-bottom:1px solid rgba(148,163,184,.12);color:#94a3b8;font-size:11px">${escapeHtml(row.referenceSourceSk)}</td>
+      </tr>`,
+    )
+    .join("");
 
   const intro = forOwner
     ? `<p style="margin:0 0 18px;font-size:14px;color:#cbd5e1;line-height:1.55">
@@ -210,7 +230,27 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
       </tr>
     </table>
     <div style="font-size:12px;color:#64748b;margin-top:10px;line-height:1.45">${escapeHtml(NOTE_MATURITY_TABLE_SK)}</div>
+    <div style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.45">${escapeHtml(EXPERT_ESTIMATE_SOURCE_SK)}</div>
   </td></tr>
+
+  ${
+    costBaseRows.length > 0
+      ? `<!-- COST BASE -->
+  <tr><td style="padding:20px 34px 8px">
+    <div style="font-size:17px;font-weight:800;color:#e8edf5;margin-bottom:10px">${escapeHtml(LABEL_COST_BASE_TABLE_SK)}</div>
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#121a2b;border-radius:12px;overflow:hidden">
+      <tr style="background:#0b1220">
+        <th align="left" style="padding:10px 8px;font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em">${escapeHtml(COL_DOMAIN_SK)}</th>
+        <th align="right" style="padding:10px 8px;font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em">${escapeHtml(COL_COGS_SHARE_SK)}</th>
+        <th align="right" style="padding:10px 8px;font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em">${escapeHtml(COL_COST_BASE_SK)}</th>
+        <th align="left" style="padding:10px 8px;font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em">${escapeHtml(COL_REF_SOURCE_SK)}</th>
+      </tr>
+      ${costBaseTableRows}
+    </table>
+    <div style="font-size:12px;color:#64748b;margin-top:10px;line-height:1.45">${escapeHtml(COST_BASE_SHARES_NOTE_SK)}</div>
+  </td></tr>`
+      : ""
+  }
 
   <!-- BARS -->
   <tr><td style="padding:28px 34px 8px">

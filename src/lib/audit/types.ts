@@ -180,6 +180,8 @@ export interface ProcessScore {
   gapSmeEur: number;
   gapWcEur: number;
   costBaseEur: number;
+  /** k_Pi — share of COGS used for the cost base (disclosure only). */
+  costFactor: number;
 }
 
 export interface Recommendation {

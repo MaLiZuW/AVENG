@@ -400,7 +400,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     questionText: "Existuje kontrolný plán pre kritické charakteristiky?",
     targetExplanation:
       "Kontrolný plán definuje merania, frekvenciu a reakcie.",
-    methodology: "Kontrolný plán – kritické charakteristiky",
+    methodology: "Riadenie kvality – kontrolný plán",
     inputType: "MATURITY_SCALE",
     weight: 4,
     maturityLabels: [
@@ -455,7 +455,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     questionText: "Aká je miera dodania na čas (OTD)?",
     targetExplanation:
       "OTD meria spoľahlivosť voči zákazníkovi a stabilitu toku.",
-    methodology: "Lean – lead time",
+    methodology: "Lean – spoľahlivosť dodávok",
     inputType: "NUMERIC_INPUT",
     weight: 5,
     numericUnit: "%",
@@ -592,7 +592,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     questionText: "Aká je miera absencie zamestnancov?",
     targetExplanation:
       "Vysoká absencia znižuje dostupnosť a kvalitu.",
-    methodology: "Miera absencie",
+    methodology: "WCM – People pillar",
     inputType: "NUMERIC_INPUT",
     weight: 3,
     numericUnit: "%",
@@ -691,7 +691,7 @@ export const LEVEL3_FEATURES = [
   "Kvalitatívne A–E bez viditeľných bodov + guidance karty",
   "Digital Twin of Organization (DTO) — What-If simulátor",
   "Live úspory €/rok, extra kapacita (h) a ROI v mesiacoch",
-  "Agregácia L3→L2→L1 + odvetvová referencia MSP / world-class medzera",
+  "Agregácia L3→L2→L1 + referencia MSP / world-class medzera",
 ];
 
 export const LEVEL2_PRICE_EUR = 290;

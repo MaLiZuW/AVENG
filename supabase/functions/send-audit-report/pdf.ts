@@ -9,9 +9,17 @@ import fontkit from "https://esm.sh/@pdf-lib/fontkit@1.1.1";
 import { MARK_PNG_B64 } from "./mark.ts";
 import {
   BRAND,
+  COL_COST_BASE_SK,
+  COL_COGS_SHARE_SK,
+  COL_DOMAIN_SK,
+  COL_REF_SOURCE_SK,
+  COST_BASE_SHARES_NOTE_SK,
+  costBaseDisclosureRowsForReport,
   CTA_MAIL,
   CTA_PHONE,
   disclaimerForLevel,
+  EXPERT_ESTIMATE_SOURCE_SK,
+  LABEL_COST_BASE_TABLE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_MATURITY_TABLE_SK,
@@ -580,6 +588,107 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       });
     });
     y -= noteLines.length * 11;
+
+    y -= 10;
+    const sourceLines = wrap(EXPERT_ESTIMATE_SOURCE_SK, font, 8, width - 80);
+    sourceLines.forEach((line, i) => {
+      page.drawText(line, {
+        x: 40,
+        y: y - i * 11,
+        size: 8,
+        font,
+        color: C.muted,
+      });
+    });
+    y -= sourceLines.length * 11;
+
+    const costBaseRows = costBaseDisclosureRowsForReport(r);
+    if (costBaseRows.length > 0) {
+      y -= 22;
+      page.drawText(LABEL_COST_BASE_TABLE_SK, {
+        x: 40,
+        y,
+        size: 12,
+        font: fontBold,
+        color: C.ink,
+      });
+      y -= 16;
+      const cbCols = [48, 150, 250, 360];
+      page.drawText(COL_DOMAIN_SK, {
+        x: cbCols[0],
+        y,
+        size: 7,
+        font: fontBold,
+        color: C.muted,
+      });
+      page.drawText(COL_COGS_SHARE_SK, {
+        x: cbCols[1],
+        y,
+        size: 7,
+        font: fontBold,
+        color: C.muted,
+      });
+      page.drawText(COL_COST_BASE_SK, {
+        x: cbCols[2],
+        y,
+        size: 7,
+        font: fontBold,
+        color: C.muted,
+      });
+      page.drawText(COL_REF_SOURCE_SK, {
+        x: cbCols[3],
+        y,
+        size: 7,
+        font: fontBold,
+        color: C.muted,
+      });
+      y -= 12;
+      for (const row of costBaseRows) {
+        page.drawText(row.domainLabel, {
+          x: cbCols[0],
+          y,
+          size: 8,
+          font,
+          color: C.ink,
+        });
+        page.drawText(pct(row.cogsShare * 100, 0), {
+          x: cbCols[1],
+          y,
+          size: 8,
+          font,
+          color: C.muted,
+        });
+        page.drawText(eur(row.costBaseEur), {
+          x: cbCols[2],
+          y,
+          size: 8,
+          font,
+          color: C.ink,
+        });
+        const srcWrap = wrap(row.referenceSourceSk, font, 7, width - cbCols[3] - 40);
+        srcWrap.forEach((line, i) => {
+          page.drawText(line, {
+            x: cbCols[3],
+            y: y - i * 9,
+            size: 7,
+            font,
+            color: C.muted,
+          });
+        });
+        y -= Math.max(14, srcWrap.length * 9 + 4);
+      }
+      const shareNote = wrap(COST_BASE_SHARES_NOTE_SK, font, 8, width - 80);
+      shareNote.forEach((line, i) => {
+        page.drawText(line, {
+          x: 40,
+          y: y - i * 11,
+          size: 8,
+          font,
+          color: C.muted,
+        });
+      });
+      y -= shareNote.length * 11;
+    }
 
     y -= 28;
     page.drawText(LABEL_PROCESS_GAPS_SK, {

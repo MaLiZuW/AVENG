@@ -7,11 +7,12 @@ import {
   CARD_SCORE_BOUNDS,
   optionKeyFromScore,
 } from "@/config/audit-bands";
+import { disclaimerForLevel, reliabilityHintForLevel } from "@/config/audit-copy";
 import {
+  domainLabel,
   MAX_DISPLAYED_POTENTIAL_SHARE,
   SHOW_WORLD_CLASS_CEILING,
 } from "@/config/audit-display";
-import { disclaimerForLevel, reliabilityHintForLevel } from "@/config/audit-copy";
 import {
   getKpiReference,
   isBenchmarkAvailable,
@@ -21,15 +22,19 @@ import {
 } from "@/config/benchmarks";
 import { formatDecimalTrim, formatInt } from "@/lib/format";
 import {
+  buildCostBaseTableRows,
+  domainReferenceSourceLabelSk,
   formatEurRange,
   LABEL_WC_CEILING_SK,
   reliabilityLevelFromShare,
   reliabilityShowsRange,
   reliabilityWording,
   ZERO_GAP_SK,
+  type CostBaseTableRow,
   type ReliabilityLevel,
   type ReportPresentationPayload,
 } from "../../../shared/audit-presentation";
+import { PROCESSES } from "./benchmarks";
 import { LEVEL1_QUESTIONS } from "./questions";
 import { calculateAuditResult } from "./scoring";
 import type {
@@ -41,9 +46,17 @@ import type {
 } from "./types";
 
 export {
+  buildCostBaseTableRows,
   formatEurRange,
   round2sig,
+  COL_COST_BASE_SK,
+  COL_COGS_SHARE_SK,
+  COL_DOMAIN_SK,
+  COL_REF_SOURCE_SK,
+  COST_BASE_SHARES_NOTE_SK,
+  EXPERT_ESTIMATE_SOURCE_SK,
   LABEL_COST_BASE_SHARE_SK,
+  LABEL_COST_BASE_TABLE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_GEMBA_KICKER_SK,
@@ -60,6 +73,8 @@ export {
   reliabilityShowsRange,
   reliabilityWording,
 } from "../../../shared/audit-presentation";
+
+export type { CostBaseTableRow };
 
 export { referenceSourceNotesSk };
 
@@ -321,6 +336,30 @@ export function toReportPresentation(
     criticalLowEur: view.critical.low,
     criticalHighEur: view.critical.high,
   };
+}
+
+/**
+ * Cost-base disclosure: k_Pi (= PROCESSES.costFactor) read programmatically;
+ * euro amounts from the scored result (same formula as scoring-core).
+ */
+export function costBaseDisclosureRows(
+  result: AuditResult,
+): CostBaseTableRow[] {
+  const byId = new Map(
+    result.processScores.map((ps) => [ps.processId, ps] as const),
+  );
+  return buildCostBaseTableRows(
+    PROCESSES.map((p) => {
+      const scored = byId.get(p.id);
+      return {
+        processId: p.id,
+        domainLabel: `${domainLabel(p.id)} · ${p.shortLabel}`,
+        costFactor: p.costFactor,
+        costBaseEur: scored?.costBaseEur ?? 0,
+        referenceSourceSk: domainReferenceSourceLabelSk(p.id),
+      };
+    }),
+  );
 }
 
 export function wcCeilingDisplay(result: AuditResult): {

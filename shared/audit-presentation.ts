@@ -43,6 +43,66 @@ export const RELIABILITY_HINT_SK =
 export const LEVEL1_DISCLAIMER_SK =
   "Výsledky Level 1 sú rýchla orientačná diagnostika založená na vašich odpovediach. Nepredstavujú záruku úspor. Pre presné priority a overenie dát odporúčame Level 2/3 alebo obchôdzku vo výrobe.";
 
+/** MSP reference provenance — web, PDF and e-mail must show the same sentence. */
+export const EXPERT_ESTIMATE_SOURCE_SK =
+  "Referenčné hodnoty MSP sú interné referencie AVENG založené na expertnom odhade, nie oficiálna štatistika.";
+
+export const LABEL_COST_BASE_TABLE_SK = "Nákladová báza procesov";
+export const COL_DOMAIN_SK = "Doména";
+export const COL_COGS_SHARE_SK = "Podiel z COGS";
+export const COL_COST_BASE_SK = "Nákladová báza";
+export const COL_REF_SOURCE_SK = "Zdroj referencie";
+export const COST_BASE_SHARES_NOTE_SK =
+  "Podiely sú expertný odhad AVENG, nie meraná hodnota vašej firmy.";
+export const REF_SOURCE_EXPERT_SK = "expertný odhad";
+export const REF_SOURCE_PUBLIC_ALIGNED_SK =
+  "orientačne zodpovedá verejným zdrojom";
+
+/**
+ * Domains whose model S_SME/S_WC align with published KPI ranges
+ * (`docs/benchmark-crosscheck.md`: P2 OEE, P4 OTD).
+ */
+export const CROSSCHECK_SUPPORTED_PROCESS_IDS = ["P2", "P4"] as const;
+
+export function domainReferenceSourceLabelSk(processId: string): string {
+  return (CROSSCHECK_SUPPORTED_PROCESS_IDS as readonly string[]).includes(
+    processId,
+  )
+    ? REF_SOURCE_PUBLIC_ALIGNED_SK
+    : REF_SOURCE_EXPERT_SK;
+}
+
+export interface CostBaseTableRow {
+  processId: string;
+  domainLabel: string;
+  /** k_Pi share of COGS (0–1), supplied by caller from PROCESSES.costFactor. */
+  cogsShare: number;
+  costBaseEur: number;
+  referenceSourceSk: string;
+}
+
+/**
+ * Build cost-base disclosure rows. Shares must come from existing k_Pi
+ * (`PROCESSES.costFactor`) — never hardcode coefficients here.
+ */
+export function buildCostBaseTableRows(
+  processes: readonly {
+    processId: string;
+    domainLabel: string;
+    costFactor: number;
+    costBaseEur: number;
+    referenceSourceSk: string;
+  }[],
+): CostBaseTableRow[] {
+  return processes.map((p) => ({
+    processId: p.processId,
+    domainLabel: p.domainLabel,
+    cogsShare: p.costFactor,
+    costBaseEur: p.costBaseEur,
+    referenceSourceSk: p.referenceSourceSk,
+  }));
+}
+
 export interface ReportProcessGap {
   processId: string;
   lowEur: number;

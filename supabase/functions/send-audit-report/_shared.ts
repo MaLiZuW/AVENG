@@ -10,8 +10,17 @@ import {
 import { formatEuroRounded, formatPercent } from "../../../src/lib/format.ts";
 import { company } from "../_shared/company.ts";
 import {
+  buildCostBaseTableRows,
+  COL_COST_BASE_SK,
+  COL_COGS_SHARE_SK,
+  COL_DOMAIN_SK,
+  COL_REF_SOURCE_SK,
+  COST_BASE_SHARES_NOTE_SK,
+  domainReferenceSourceLabelSk,
+  EXPERT_ESTIMATE_SOURCE_SK,
   formatEurRange,
   LABEL_COST_BASE_SHARE_SK,
+  LABEL_COST_BASE_TABLE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_MATURITY_TABLE_SK,
@@ -20,6 +29,7 @@ import {
   LABEL_WC_CEILING_SK,
   NOTE_MATURITY_TABLE_SK,
   reliabilityWording,
+  type CostBaseTableRow,
   type ReliabilityLevel,
   type ReportPresentationPayload,
 } from "../../../shared/audit-presentation.ts";
@@ -27,7 +37,16 @@ import {
 export { disclaimerForLevel, pdfFooterForLevel };
 
 export {
+  buildCostBaseTableRows,
+  COL_COST_BASE_SK,
+  COL_COGS_SHARE_SK,
+  COL_DOMAIN_SK,
+  COL_REF_SOURCE_SK,
+  COST_BASE_SHARES_NOTE_SK,
+  domainReferenceSourceLabelSk,
+  EXPERT_ESTIMATE_SOURCE_SK,
   LABEL_COST_BASE_SHARE_SK,
+  LABEL_COST_BASE_TABLE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_MATURITY_TABLE_SK,
@@ -37,7 +56,7 @@ export {
   NOTE_MATURITY_TABLE_SK,
   reliabilityWording,
 };
-export type { ReliabilityLevel, ReportPresentationPayload };
+export type { CostBaseTableRow, ReliabilityLevel, ReportPresentationPayload };
 
 export const SITE = company.siteUrl;
 export const BRAND = company.brandName;
@@ -55,6 +74,8 @@ export type ProcessScore = {
   gapSmeEur: number;
   gapWcEur?: number;
   costBaseEur?: number;
+  /** k_Pi share of COGS from the scored result. */
+  costFactor?: number;
 };
 
 export type Recommendation = {
@@ -224,6 +245,37 @@ export function formatProcessGap(
   const row = presentation?.processGaps?.find((p) => p.processId === processId);
   if (!row) return formatEurRange(fallback, fallback);
   return formatEurRange(row.lowEur, row.highEur);
+}
+
+/**
+ * Cost-base table for HTML/PDF. Shares come from scored `costFactor` (k_Pi);
+ * when missing, derive from costBaseEur / (revenue × COGS).
+ */
+export function costBaseDisclosureRowsForReport(
+  result: ReportResult,
+): CostBaseTableRow[] {
+  const revenue = Math.max(0, result.annualRevenueEur ?? 0);
+  const cogs = Math.max(0, Math.min(100, result.cogsPercent ?? 0)) / 100;
+  const denom = revenue * cogs;
+  const scores = result.processScores ?? [];
+  return buildCostBaseTableRows(
+    scores.map((p) => {
+      const costBaseEur = p.costBaseEur ?? 0;
+      const costFactor =
+        typeof p.costFactor === "number" && Number.isFinite(p.costFactor)
+          ? p.costFactor
+          : denom > 0
+            ? costBaseEur / denom
+            : 0;
+      return {
+        processId: p.processId,
+        domainLabel: `${domainLabel(p.processId)} · ${p.shortLabel}`,
+        costFactor,
+        costBaseEur,
+        referenceSourceSk: domainReferenceSourceLabelSk(p.processId),
+      };
+    }),
+  );
 }
 
 export function reliabilityBlock(

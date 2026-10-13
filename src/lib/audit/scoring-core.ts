@@ -144,6 +144,7 @@ export function buildResult(
       gapSmeEur: Math.round(gapSme),
       gapWcEur: Math.round(gapWc),
       costBaseEur: Math.round(costBase),
+      costFactor: p.costFactor,
     };
   });
 
