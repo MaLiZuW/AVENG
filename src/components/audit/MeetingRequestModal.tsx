@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { X } from "lucide-react";
 import { company } from "@/config/company";
 import { retentionPeriodClaimSk } from "@/config/retention";
 import {
@@ -126,11 +127,11 @@ export default function MeetingRequestModal({
           </h3>
           <button
             type="button"
-            className="rounded-md border border-white/15 px-2 py-1 text-sm text-ink-200 hover:bg-white/5"
+            className="rounded-md border border-white/15 p-1.5 text-ink-200 hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
             onClick={onClose}
             aria-label="Zavrieť"
           >
-            ✕
+            <X className="h-4 w-4" aria-hidden />
           </button>
         </div>
 

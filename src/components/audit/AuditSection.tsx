@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type KeyboardEvent } from "react";
 import { Info } from "lucide-react";
 import Link from "next/link";
 import { domainLabel } from "@/config/audit-display";
@@ -452,16 +452,62 @@ export default function AuditSection() {
                   aria-label="Vyberte najvýstižnejší popis"
                 >
                   {"options" in question &&
-                    question.options.map((opt) => {
+                    question.options.map((opt, index) => {
                       const selected = answers[question.id] === opt.score;
+                      const anySelected = question.options.some(
+                        (o) => answers[question.id] === o.score,
+                      );
+                      const onCardKeyDown = (
+                        e: KeyboardEvent<HTMLButtonElement>,
+                      ) => {
+                        const keys = [
+                          "ArrowDown",
+                          "ArrowRight",
+                          "ArrowUp",
+                          "ArrowLeft",
+                          "Home",
+                          "End",
+                        ];
+                        if (!keys.includes(e.key)) return;
+                        e.preventDefault();
+                        const group = e.currentTarget.closest(
+                          '[role="radiogroup"]',
+                        );
+                        if (!group) return;
+                        const radios = Array.from(
+                          group.querySelectorAll<HTMLButtonElement>(
+                            '[role="radio"]',
+                          ),
+                        );
+                        const len = question.options.length;
+                        let next = index;
+                        if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+                          next = (index + 1) % len;
+                        } else if (
+                          e.key === "ArrowUp" ||
+                          e.key === "ArrowLeft"
+                        ) {
+                          next = (index - 1 + len) % len;
+                        } else if (e.key === "Home") {
+                          next = 0;
+                        } else if (e.key === "End") {
+                          next = len - 1;
+                        }
+                        radios[next]?.focus();
+                        radios[next]?.click();
+                      };
                       return (
                         <button
                           key={opt.key}
                           type="button"
                           role="radio"
                           aria-checked={selected}
+                          tabIndex={
+                            selected || (!anySelected && index === 0) ? 0 : -1
+                          }
                           onClick={() => selectOption(opt)}
-                          className={`rounded-md border px-4 py-3.5 text-left text-sm leading-relaxed transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal ${
+                          onKeyDown={onCardKeyDown}
+                          className={`rounded-md border px-4 py-3.5 text-left text-sm leading-relaxed transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright ${
                             selected
                               ? "border-signal bg-signal/20 text-ink-50 shadow-signal"
                               : "border-white/10 bg-ink-900/60 text-ink-100 hover:border-signal/50 hover:bg-white/5"

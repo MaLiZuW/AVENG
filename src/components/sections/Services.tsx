@@ -23,7 +23,7 @@ export default function Services({ headingAs = "h2" }: ServicesProps) {
           {PILLARS.map((p) => (
             <li key={p.slug} className="group relative">
               <span
-                className="font-display text-5xl font-semibold text-signal/45 transition group-hover:text-signal/70"
+                className="font-display text-5xl font-semibold text-signal-soft transition group-hover:text-signal-bright motion-reduce:transition-none"
                 aria-hidden
               >
                 {p.num}

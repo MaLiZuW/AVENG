@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Lock, Shield } from "lucide-react";
+import { Lock, Menu, Shield, X } from "lucide-react";
 
 const NAV = [
   { href: "/", label: "Domov" },
@@ -33,7 +33,7 @@ export default function Header() {
       <div className="container-aveng flex h-[4.5rem] items-center justify-between gap-4">
         <Link
           href="/"
-          className="group flex shrink-0 items-center gap-2"
+          className="group flex shrink-0 items-center gap-2 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
           aria-label="AddValueEngineering Domov"
         >
           <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-signal">
@@ -60,7 +60,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-2.5 py-2 text-sm text-ink-200 transition hover:bg-white/5 hover:text-ink-50"
+              className="rounded-md px-2.5 py-2 text-sm text-ink-200 transition hover:bg-white/5 hover:text-ink-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
             >
               {item.label}
             </Link>
@@ -92,15 +92,17 @@ export default function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/15 text-ink-50 lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/15 text-ink-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Zavrieť menu" : "Otvoriť menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          <span aria-hidden className="text-lg">
-            {open ? "✕" : "☰"}
-          </span>
+          {open ? (
+            <X className="h-5 w-5" aria-hidden />
+          ) : (
+            <Menu className="h-5 w-5" aria-hidden />
+          )}
         </button>
       </div>
 
@@ -114,7 +116,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-md px-3 py-2.5 text-sm text-ink-100 hover:bg-white/5"
+                className="rounded-md px-3 py-2.5 text-sm text-ink-100 hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
                 onClick={() => setOpen(false)}
               >
                 {item.label}

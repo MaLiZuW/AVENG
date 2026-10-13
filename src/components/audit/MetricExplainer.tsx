@@ -19,7 +19,7 @@ export default function MetricExplainer({ processId }: Props) {
     <div className="mt-3 rounded-md border border-white/10 bg-ink-950/40">
       <button
         type="button"
-        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-xs font-medium text-ink-200 hover:text-ink-50"
+        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-xs font-medium text-ink-200 hover:text-ink-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
@@ -28,7 +28,7 @@ export default function MetricExplainer({ processId }: Props) {
           Vysvetlenie metrík · {domainLabel(processId)}
         </span>
         <ChevronDown
-          className={`h-4 w-4 text-signal-bright transition ${open ? "rotate-180" : ""}`}
+          className={`h-4 w-4 text-signal-bright transition motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
           aria-hidden
         />
       </button>

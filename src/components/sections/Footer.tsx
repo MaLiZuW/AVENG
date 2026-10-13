@@ -132,7 +132,7 @@ export default function Footer() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-signal-bright underline-offset-2 hover:underline"
+              className="text-signal-bright underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
             >
               {item.label}
             </Link>

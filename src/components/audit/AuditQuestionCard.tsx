@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type KeyboardEvent } from "react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import {
   hasNumericVdaMapper,
   mapNumericValueToVdaScore,
@@ -12,6 +13,34 @@ import type {
   QualitativeOption,
   VdaScore,
 } from "@/lib/audit/types";
+
+/** WAI-ARIA radiogroup: arrow/Home/End move focus and select. */
+function onAnswerCardKeyDown(
+  e: KeyboardEvent<HTMLButtonElement>,
+  index: number,
+  length: number,
+) {
+  const keys = ["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft", "Home", "End"];
+  if (!keys.includes(e.key)) return;
+  e.preventDefault();
+  const group = e.currentTarget.closest('[role="radiogroup"]');
+  if (!group) return;
+  const radios = Array.from(
+    group.querySelectorAll<HTMLButtonElement>('[role="radio"]'),
+  );
+  let next = index;
+  if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+    next = (index + 1) % length;
+  } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+    next = (index - 1 + length) % length;
+  } else if (e.key === "Home") {
+    next = 0;
+  } else if (e.key === "End") {
+    next = length - 1;
+  }
+  radios[next]?.focus();
+  radios[next]?.click();
+}
 
 interface Props {
   question: AuditQuestion;
@@ -101,28 +130,37 @@ export default function AuditQuestionCard({
     emit(cardBaseline, true, parsed);
   }
 
+  const anyCardSelected = question.options.some(
+    (opt) => answer?.selectedCardScore === opt.score,
+  );
+
   const cardsBlock = (
     <div
       className="grid gap-3"
       role="radiogroup"
       aria-label="Vyberte najvýstižnejší popis"
     >
-      {question.options.map((opt) => {
+      {question.options.map((opt, index) => {
         const selected =
           answer?.selectedCardScore === opt.score &&
           answer?.numericOverrideValue === undefined;
         const selectedViaOverride =
           answer?.selectedCardScore === opt.score &&
           answer?.numericOverrideValue !== undefined;
+        const checked = selected || selectedViaOverride;
         return (
           <button
             key={opt.key}
             type="button"
             role="radio"
-            aria-checked={selected || selectedViaOverride}
+            aria-checked={checked}
+            tabIndex={checked || (!anyCardSelected && index === 0) ? 0 : -1}
             onClick={() => onSelectCard(opt)}
-            className={`rounded-md border px-4 py-3.5 text-left text-sm leading-relaxed transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal ${
-              selected || selectedViaOverride
+            onKeyDown={(e) =>
+              onAnswerCardKeyDown(e, index, question.options.length)
+            }
+            className={`rounded-md border px-4 py-3.5 text-left text-sm leading-relaxed transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright ${
+              checked
                 ? "border-signal bg-signal/20 text-ink-50 shadow-signal"
                 : "border-white/10 bg-ink-900/60 text-ink-100 hover:border-signal/50 hover:bg-white/5"
             }`}
@@ -153,7 +191,7 @@ export default function AuditQuestionCard({
       >
         <button
           type="button"
-          className="flex w-full items-center gap-3 px-4 py-3 text-left transition"
+          className="flex w-full items-center gap-3 px-4 py-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
           aria-expanded={overrideOpen}
           onClick={() => setOverrideOpen((v) => !v)}
         >
@@ -178,12 +216,17 @@ export default function AuditQuestionCard({
                 : "Presná hodnota zvýši spoľahlivosť výsledku."}
             </span>
           </span>
-          <span
-            className="shrink-0 text-sm font-medium text-signal-bright"
-            aria-hidden
-          >
-            {overrideOpen ? "▾" : "▸"}
-          </span>
+          {overrideOpen ? (
+            <ChevronDown
+              className="h-4 w-4 shrink-0 text-signal-bright"
+              aria-hidden
+            />
+          ) : (
+            <ChevronRight
+              className="h-4 w-4 shrink-0 text-signal-bright"
+              aria-hidden
+            />
+          )}
         </button>
 
         <div

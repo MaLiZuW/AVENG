@@ -119,7 +119,7 @@ export default function AuditTeaser() {
             >
               <Link
                 href={lvl.href}
-                className={`relative flex h-full flex-col rounded-xl border-2 bg-ink-900/70 p-5 backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-ink-900 sm:p-6 ${lvl.border} ${lvl.glow} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright`}
+                className={`relative flex h-full flex-col rounded-xl border-2 bg-ink-900/70 p-5 backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-ink-900 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-6 ${lvl.border} ${lvl.glow} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright`}
                 aria-label={`${lvl.badge}: ${lvl.title} — prejsť na audit`}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -129,7 +129,7 @@ export default function AuditTeaser() {
                     <lvl.Icon className="h-3.5 w-3.5" aria-hidden />
                     {lvl.badge}
                   </p>
-                  <span className="font-display text-2xl font-semibold text-ink-300/40">
+                  <span className="font-display text-2xl font-semibold text-ink-400">
                     0{i + 1}
                   </span>
                 </div>

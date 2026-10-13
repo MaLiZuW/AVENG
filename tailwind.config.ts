@@ -13,12 +13,12 @@ const config: Config = {
           DEFAULT: "#070b12",
           50: "#e8edf5",
           100: "#c5d0e0",
-          /** Secondary body — WCAG-friendly on dark surfaces */
+          /** Secondary body — ≥4.5:1 on ink-950 */
           200: "#b6c2d4",
-          /** Muted labels / helper copy */
-          300: "#9aabc0",
-          /** Tertiary / meta — still readable on ink-950 */
-          400: "#7f92ab",
+          /** Muted labels / footer / subtitles — ≥4.5:1 on ink-950 */
+          300: "#a3b4c9",
+          /** Tertiary / meta / decorative level nums — ≥4.5:1 on ink-950 */
+          400: "#8fa3bc",
           500: "#334155",
           600: "#1e293b",
           700: "#152033",
@@ -32,8 +32,12 @@ const config: Config = {
           dark: "#121c2e",
         },
         signal: {
+          /** Button fill — white text ≥4.5:1; do not use as small text on dark */
           DEFAULT: "#2f6fed",
+          /** Small text / badges / links on dark — ≥4.5:1 on ink-950 */
           bright: "#5b93ff",
+          /** Large decorative numerals (01–04) — solid, ≥3:1 on ink-950 */
+          soft: "#6ba0ff",
           dim: "#1e4db8",
         },
         ember: {

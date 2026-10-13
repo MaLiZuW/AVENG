@@ -19,14 +19,14 @@ export default function QuestionContextPanel({
     <div className="rounded-md border border-white/10 bg-ink-900/40">
       <button
         type="button"
-        className="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-xs font-medium text-ink-200 transition hover:text-ink-50"
+        className="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-xs font-medium text-ink-200 transition hover:text-ink-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
       >
         <span>Kontext merania a metodika</span>
         <ChevronDown
-          className={`h-4 w-4 text-signal-bright transition ${open ? "rotate-180" : ""}`}
+          className={`h-4 w-4 text-signal-bright transition motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
           aria-hidden
         />
       </button>
