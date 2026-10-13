@@ -118,8 +118,9 @@ Identifier `k_Pi`: **not found** in source (docs refer to it conceptually).
 - Zaokrúhlenie skóre (výpočet, nemeniť): `src/lib/audit/calculationEngine.ts`, `Math.round` v `scoring-core.ts`.
 
 ### Rozsah a spoľahlivosť
-- Prahy: `shared/audit-presentation.ts` — `RELIABILITY_STREDNA_MIN` 0,25, `RELIABILITY_VYSSIA_MIN` 0,55; `reliabilityLevelFromShare`, `reliabilityWording`.
-- Rozsah aj podiel presných odpovedí len pri `auditLevel === 1`: `src/lib/audit/presentation.ts` `estimateReliability`, `buildLevel1Presentation`. Inak bodový odhad.
+- Prahy: `shared/audit-presentation.ts` — `RELIABILITY_THRESHOLDS` (stredná 0,25 / vyššia 0,60); `reliabilityLevelFromShare`, `reliabilityShowsRange`, `reliabilityWording`.
+- View model pre všetky úrovne: `src/lib/audit/presentation.ts` `buildResultView` (nízka/stredná → rozsah; vyššia → bod s „približne“). Headline = súčet dolných/horných medzier domén. L2/L3 calculator cez `recalculate` z odomknutého chunku.
+- Tabuľka zrelosti: `LABEL_MATURITY_TABLE_SK` + `NOTE_MATURITY_TABLE_SK` (web, HTML, PDF).
 
 ### Výsledok na webe
 - `ResultsDashboard.tsx`, `RadarChart.tsx`, `KpiReferenceTable.tsx`, `LeadForm.tsx`.

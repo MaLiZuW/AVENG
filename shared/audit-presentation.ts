@@ -8,11 +8,16 @@ export type ReliabilityLevel = "nizka" | "stredna" | "vyssia";
 
 /**
  * Cutoffs on the w_q-weighted share of exactly entered answers.
- * Qualitative only — not a probability.
- * TODO(owner): confirm 0.25 / 0.55.
+ * Qualitative heuristic — not statistics / not a probability.
+ * TODO(owner): confirm 0.25 / 0.60.
  */
-export const RELIABILITY_STREDNA_MIN = 0.25;
-export const RELIABILITY_VYSSIA_MIN = 0.55;
+export const RELIABILITY_THRESHOLDS = {
+  strednaMin: 0.25,
+  vyssiaMin: 0.6,
+} as const;
+
+export const RELIABILITY_STREDNA_MIN = RELIABILITY_THRESHOLDS.strednaMin;
+export const RELIABILITY_VYSSIA_MIN = RELIABILITY_THRESHOLDS.vyssiaMin;
 
 export const LABEL_GAP_HEADLINE_SK =
   "Indikatívny potenciál úspor voči referencii MSP";
@@ -26,6 +31,12 @@ export const LABEL_COST_BASE_SHARE_SK =
 export const LABEL_MSP_REF_SK = "Referencia MSP";
 export const LABEL_GEMBA_KICKER_SK =
   "Odporúčaný ďalší krok: obchôdzka vo výrobe (Gemba Walk)";
+export const LABEL_MATURITY_TABLE_SK =
+  "Porovnanie voči referencii MSP (úroveň zrelosti, %)";
+export const LABEL_MATURITY_TABLE_WC_SK =
+  "3-cestné porovnanie (úroveň zrelosti, %)";
+export const NOTE_MATURITY_TABLE_SK =
+  "Úroveň zrelosti je skóre z vašich odpovedí, nie meraná hodnota ukazovateľa (napr. OTD alebo OEE).";
 export const ZERO_GAP_SK = "bez výraznej medzery voči referencii";
 export const RELIABILITY_HINT_SK =
   "Spoľahlivosť zvýšite zadaním presných čísel alebo prechodom na Level 2.";
@@ -121,9 +132,14 @@ export function formatEurRange(low: number, high: number): string {
 }
 
 export function reliabilityLevelFromShare(share: number): ReliabilityLevel {
-  if (share >= RELIABILITY_VYSSIA_MIN) return "vyssia";
-  if (share >= RELIABILITY_STREDNA_MIN) return "stredna";
+  if (share >= RELIABILITY_THRESHOLDS.vyssiaMin) return "vyssia";
+  if (share >= RELIABILITY_THRESHOLDS.strednaMin) return "stredna";
   return "nizka";
+}
+
+/** nízka / stredná → range; vyššia → rounded point with "približne". */
+export function reliabilityShowsRange(level: ReliabilityLevel): boolean {
+  return level === "nizka" || level === "stredna";
 }
 
 export function reliabilityWording(level: ReliabilityLevel): {

@@ -14,8 +14,10 @@ import {
   disclaimerForLevel,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
+  LABEL_MATURITY_TABLE_SK,
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
+  NOTE_MATURITY_TABLE_SK,
   SITE,
   domainLabel,
   eur,
@@ -460,15 +462,15 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     const { width, height } = page.getSize();
     let y = height - 56;
 
-    page.drawText("Porovnanie voči referencii MSP", {
+    page.drawText(LABEL_MATURITY_TABLE_SK, {
       x: 40,
       y,
-      size: 16,
+      size: 14,
       font: fontBold,
       color: C.ink,
     });
     y -= 16;
-    page.drawText("Efektivita procesu (%) a indikatívna medzera (€ / rok)", {
+    page.drawText("Úroveň zrelosti (%) a indikatívna medzera (€ / rok)", {
       x: 40,
       y,
       size: 9,
@@ -566,7 +568,20 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     });
     y -= Math.max(0, (totalLines.length - 1) * 9);
 
-    y -= 40;
+    y -= 18;
+    const noteLines = wrap(NOTE_MATURITY_TABLE_SK, font, 8, width - 80);
+    noteLines.forEach((line, i) => {
+      page.drawText(line, {
+        x: 40,
+        y: y - i * 11,
+        size: 8,
+        font,
+        color: C.muted,
+      });
+    });
+    y -= noteLines.length * 11;
+
+    y -= 28;
     page.drawText(LABEL_PROCESS_GAPS_SK, {
       x: 40,
       y,

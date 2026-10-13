@@ -5,8 +5,10 @@ import {
   disclaimerForLevel,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
+  LABEL_MATURITY_TABLE_SK,
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
+  NOTE_MATURITY_TABLE_SK,
   SITE,
   domainLabel,
   escapeHtml,
@@ -190,8 +192,8 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
 
   <!-- COMPARISON TABLE -->
   <tr><td style="padding:0 34px 8px">
-    <div style="font-size:17px;font-weight:800;color:#e8edf5;margin-bottom:4px">Porovnanie voči referencii MSP</div>
-    <div style="font-size:12px;color:#64748b;margin-bottom:12px">Efektivita procesu (%) a indikatívna medzera (€ / rok)</div>
+    <div style="font-size:17px;font-weight:800;color:#e8edf5;margin-bottom:4px">${escapeHtml(LABEL_MATURITY_TABLE_SK)}</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:12px">Úroveň zrelosti (%) a indikatívna medzera (€ / rok)</div>
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#121a2b;border-radius:12px;overflow:hidden">
       <tr style="background:#0b1220">
         <th align="left" style="padding:12px 8px;font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em">Doména</th>
@@ -207,6 +209,7 @@ export function buildHtml(body: ReportBody, forOwner: boolean): string {
         <td style="padding:12px 8px;font-size:13px;font-weight:800;color:#e8a54b;text-align:right">${escapeHtml(headline)}</td>
       </tr>
     </table>
+    <div style="font-size:12px;color:#64748b;margin-top:10px;line-height:1.45">${escapeHtml(NOTE_MATURITY_TABLE_SK)}</div>
   </td></tr>
 
   <!-- BARS -->

@@ -14,9 +14,11 @@ import {
   LABEL_COST_BASE_SHARE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
+  LABEL_MATURITY_TABLE_SK,
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
   LABEL_WC_CEILING_SK,
+  NOTE_MATURITY_TABLE_SK,
   reliabilityWording,
   type ReliabilityLevel,
   type ReportPresentationPayload,
@@ -28,9 +30,11 @@ export {
   LABEL_COST_BASE_SHARE_SK,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
+  LABEL_MATURITY_TABLE_SK,
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
   LABEL_WC_CEILING_SK,
+  NOTE_MATURITY_TABLE_SK,
   reliabilityWording,
 };
 export type { ReliabilityLevel, ReportPresentationPayload };

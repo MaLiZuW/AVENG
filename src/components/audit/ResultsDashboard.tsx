@@ -9,15 +9,19 @@ import {
 } from "@/config/audit-display";
 import {
   buildKpiComparisonRows,
-  buildLevel1Presentation,
+  buildResultView,
   formatEurRange,
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
+  LABEL_MATURITY_TABLE_SK,
+  LABEL_MATURITY_TABLE_WC_SK,
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
+  NOTE_MATURITY_TABLE_SK,
   referenceSourceNotesSk,
   toReportPresentation,
   wcCeilingDisplay,
+  type ResultViewRaw,
 } from "@/lib/audit/presentation";
 import { formatPercent } from "@/lib/format";
 import { formatEur } from "@/lib/audit/scoring";
@@ -39,6 +43,7 @@ interface Props {
   answers: AuditAnswers;
   preAudit: PreAuditInput;
   answerDetails?: AnswerDetailsMap;
+  recalculate?: ResultViewRaw["recalculate"];
 }
 
 function useGembaTrigger(result: AuditResult) {
@@ -62,12 +67,19 @@ export default function ResultsDashboard({
   answers,
   preAudit,
   answerDetails,
+  recalculate,
 }: Props) {
   const cp = result.criticalProcess;
   const gemba = useGembaTrigger(result);
   const view = useMemo(
-    () => buildLevel1Presentation(result, answerDetails, preAudit),
-    [result, answerDetails, preAudit],
+    () =>
+      buildResultView(result.auditLevel, {
+        result,
+        details: answerDetails,
+        preAudit,
+        recalculate,
+      }),
+    [result, answerDetails, preAudit, recalculate],
   );
   const smeRange = view.headline;
   const reliability = view.reliability;
@@ -237,9 +249,7 @@ export default function ResultsDashboard({
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="steel-panel overflow-x-auto p-5 sm:p-6">
           <h4 className="font-display text-lg font-semibold text-ink-50">
-            {showWc
-              ? "3-cestné porovnanie (efektivita %)"
-              : "Porovnanie voči referencii MSP (efektivita %)"}
+            {showWc ? LABEL_MATURITY_TABLE_WC_SK : LABEL_MATURITY_TABLE_SK}
           </h4>
           <table className="mt-4 w-full min-w-[280px] text-left text-sm">
             <thead>
@@ -293,6 +303,9 @@ export default function ResultsDashboard({
               </tr>
             </tbody>
           </table>
+          <p className="mt-3 text-xs leading-relaxed text-ink-300">
+            {NOTE_MATURITY_TABLE_SK}
+          </p>
         </div>
 
         <div className="steel-panel flex flex-col items-center justify-center p-4">

@@ -24,7 +24,9 @@ import {
   formatEurRange,
   LABEL_WC_CEILING_SK,
   reliabilityLevelFromShare,
+  reliabilityShowsRange,
   reliabilityWording,
+  ZERO_GAP_SK,
   type ReliabilityLevel,
   type ReportPresentationPayload,
 } from "../../../shared/audit-presentation";
@@ -45,12 +47,17 @@ export {
   LABEL_GAP_HEADLINE_SK,
   LABEL_GAP_SHORT_SK,
   LABEL_GEMBA_KICKER_SK,
+  LABEL_MATURITY_TABLE_SK,
+  LABEL_MATURITY_TABLE_WC_SK,
   LABEL_MSP_REF_SK,
   LABEL_PROCESS_GAPS_SK,
   LABEL_WC_CEILING_SK,
   LEVEL1_DISCLAIMER_SK,
+  NOTE_MATURITY_TABLE_SK,
   RELIABILITY_HINT_SK,
+  RELIABILITY_THRESHOLDS,
   ZERO_GAP_SK,
+  reliabilityShowsRange,
   reliabilityWording,
 } from "../../../shared/audit-presentation";
 
@@ -64,7 +71,14 @@ export interface DisplayMoneyRange {
   labelSk: string;
 }
 
-export interface Level1Presentation {
+export interface ResultViewFlags {
+  /** True when reliability is nízka or stredná (show ranges). */
+  showAsRange: boolean;
+  /** True when the headline renders the zero-gap phrase. */
+  zeroGap: boolean;
+}
+
+export interface ResultView {
   headline: DisplayMoneyRange;
   processes: { processId: string; gap: DisplayMoneyRange }[];
   critical: DisplayMoneyRange;
@@ -77,6 +91,25 @@ export interface Level1Presentation {
     exactWeightShare: number;
   };
   disclaimerSk: string;
+  flags: ResultViewFlags;
+}
+
+/** @deprecated Prefer ResultView — kept for existing call sites. */
+export type Level1Presentation = ResultView;
+
+/** Raw inputs for the presentation view model (scoring math untouched). */
+export interface ResultViewRaw {
+  result: AuditResult;
+  details?: AnswerDetailsMap;
+  preAudit?: PreAuditInput;
+  /**
+   * Level 2/3 calculator supplied by the unlocked chunk so premium
+   * question banks stay out of the Level 1 client bundle.
+   */
+  recalculate?: (
+    answers: AuditAnswers,
+    preAudit: PreAuditInput,
+  ) => AuditResult;
 }
 
 function weightForQuestion(questionId: string): number {
@@ -94,6 +127,7 @@ function scoreAtBound(n: number): VdaScore {
 
 /**
  * Low map = lower maturity (higher gap). High map = higher maturity (lower gap).
+ * Any answered question id (L1/L2/L3) with card/exact detail participates.
  */
 function boundAnswerMaps(details: AnswerDetailsMap | undefined): {
   lowAnswers: AuditAnswers;
@@ -102,17 +136,18 @@ function boundAnswerMaps(details: AnswerDetailsMap | undefined): {
   const lowAnswers: AuditAnswers = {};
   const highAnswers: AuditAnswers = {};
 
-  for (const q of LEVEL1_QUESTIONS) {
-    const d = details?.[q.id];
+  if (!details) return { lowAnswers, highAnswers };
+
+  for (const [qid, d] of Object.entries(details)) {
     if (!d) continue;
     if (d.numericOverrideValue !== undefined) {
-      lowAnswers[q.id] = d.finalEvaluatedScore;
-      highAnswers[q.id] = d.finalEvaluatedScore;
+      lowAnswers[qid] = d.finalEvaluatedScore;
+      highAnswers[qid] = d.finalEvaluatedScore;
     } else {
       const key = optionKeyFromScore(d.selectedCardScore);
       const band = CARD_SCORE_BOUNDS[key];
-      lowAnswers[q.id] = scoreAtBound(band.low);
-      highAnswers[q.id] = scoreAtBound(band.high);
+      lowAnswers[qid] = scoreAtBound(band.low);
+      highAnswers[qid] = scoreAtBound(band.high);
     }
   }
 
@@ -129,13 +164,23 @@ function pointGap(n: number): DisplayMoneyRange {
   return spanGap(n, n);
 }
 
+function viewFlags(
+  headline: DisplayMoneyRange,
+  showAsRange: boolean,
+): ResultViewFlags {
+  return {
+    showAsRange,
+    zeroGap: headline.labelSk === ZERO_GAP_SK,
+  };
+}
+
 export function estimateReliability(
   result: AuditResult,
   details?: AnswerDetailsMap,
-): Level1Presentation["reliability"] {
+): ResultView["reliability"] {
   let wNum = 0;
   let wAll = 0;
-  if (details && result.auditLevel === 1) {
+  if (details) {
     for (const [qid, d] of Object.entries(details)) {
       const w = weightForQuestion(qid);
       wAll += w;
@@ -161,37 +206,74 @@ export function gapSmeDisplayRange(
   result: AuditResult,
   details: AnswerDetailsMap | undefined,
   preAudit?: PreAuditInput,
+  recalculate?: ResultViewRaw["recalculate"],
 ): DisplayMoneyRange {
-  return buildLevel1Presentation(result, details, preAudit).headline;
+  return buildResultView(result.auditLevel, {
+    result,
+    details,
+    preAudit,
+    recalculate,
+  }).headline;
 }
 
-export function buildLevel1Presentation(
-  result: AuditResult,
-  details: AnswerDetailsMap | undefined,
-  preAudit?: PreAuditInput,
-): Level1Presentation {
+/**
+ * Presentation view model for every audit level.
+ * Uncertainty comes only from A–E bands and exact inputs — never ±% or level narrowing.
+ */
+export function buildResultView(
+  level: number,
+  raw: ResultViewRaw,
+): ResultView {
+  const { result, details, preAudit, recalculate } = raw;
   const reliability = estimateReliability(result, details);
+  const showAsRange = reliabilityShowsRange(reliability.level);
+  const disclaimerSk = disclaimerForLevel(level);
+
   const pointProcesses = result.processScores.map((p) => ({
     processId: p.processId,
     gap: pointGap(p.gapSmeEur),
   }));
-  const base: Level1Presentation = {
-    headline: pointGap(result.gapSmeEur),
-    processes: pointProcesses,
-    critical: pointGap(result.criticalProcess.gapSmeEur),
-    reliability,
-    disclaimerSk: disclaimerForLevel(result.auditLevel),
+
+  const withPoints = (processes: ResultView["processes"]): ResultView => {
+    const headline = showAsRange
+      ? (() => {
+          const sumLow = processes.reduce((a, p) => a + p.gap.low, 0);
+          const sumHigh = processes.reduce((a, p) => a + p.gap.high, 0);
+          return spanGap(sumLow, sumHigh);
+        })()
+      : pointGap(result.gapSmeEur);
+    const criticalId = result.criticalProcess.processId;
+    const critical =
+      processes.find((p) => p.processId === criticalId)?.gap ??
+      pointGap(result.criticalProcess.gapSmeEur);
+    return {
+      headline,
+      processes,
+      critical,
+      reliability,
+      disclaimerSk,
+      flags: viewFlags(headline, showAsRange),
+    };
   };
 
-  if (!preAudit || result.auditLevel !== 1 || !details) return base;
+  const pointView = withPoints(pointProcesses);
+
+  if (!preAudit || !details) return pointView;
 
   const { lowAnswers, highAnswers } = boundAnswerMaps(details);
-  if (Object.keys(lowAnswers).length === 0) return base;
+  if (Object.keys(lowAnswers).length === 0) return pointView;
 
-  const pessimistic = calculateAuditResult(lowAnswers, preAudit);
-  const optimistic = calculateAuditResult(highAnswers, preAudit);
+  const calc: ResultViewRaw["recalculate"] =
+    recalculate ??
+    (level <= 1
+      ? (answers, input) => calculateAuditResult(answers, input)
+      : undefined);
+  if (!calc) return pointView;
 
-  const processes = result.processScores.map((p) => {
+  const pessimistic = calc(lowAnswers, preAudit);
+  const optimistic = calc(highAnswers, preAudit);
+
+  const rangedProcesses = result.processScores.map((p) => {
     const hi =
       pessimistic.processScores.find((s) => s.processId === p.processId)
         ?.gapSmeEur ?? p.gapSmeEur;
@@ -201,22 +283,29 @@ export function buildLevel1Presentation(
     return { processId: p.processId, gap: spanGap(lo, hi) };
   });
 
-  const criticalId = result.criticalProcess.processId;
-  const critical =
-    processes.find((p) => p.processId === criticalId)?.gap ??
-    pointGap(result.criticalProcess.gapSmeEur);
+  if (!showAsRange) {
+    return withPoints(pointProcesses);
+  }
 
-  return {
-    headline: spanGap(optimistic.gapSmeEur, pessimistic.gapSmeEur),
-    processes,
-    critical,
-    reliability,
-    disclaimerSk: disclaimerForLevel(result.auditLevel),
-  };
+  return withPoints(rangedProcesses);
+}
+
+export function buildLevel1Presentation(
+  result: AuditResult,
+  details: AnswerDetailsMap | undefined,
+  preAudit?: PreAuditInput,
+  recalculate?: ResultViewRaw["recalculate"],
+): ResultView {
+  return buildResultView(result.auditLevel, {
+    result,
+    details,
+    preAudit,
+    recalculate,
+  });
 }
 
 export function toReportPresentation(
-  view: Level1Presentation,
+  view: ResultView,
 ): ReportPresentationPayload {
   return {
     gapSmeLowEur: view.headline.low,

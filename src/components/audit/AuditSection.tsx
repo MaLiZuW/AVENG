@@ -554,6 +554,13 @@ export default function AuditSection() {
                 answers={answers}
                 preAudit={preAudit}
                 answerDetails={answerDetails}
+                recalculate={
+                  level === 2 && calcL2
+                    ? (a, input) => calcL2(a, input)
+                    : level === 3 && calcL3
+                      ? (a, input) => calcL3(a, input)
+                      : undefined
+                }
               />
               <button type="button" className="btn-secondary" onClick={resetAll}>
                 Spustiť audit znova
