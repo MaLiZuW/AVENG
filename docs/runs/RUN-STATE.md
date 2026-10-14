@@ -36,8 +36,15 @@
 - Status: done
 
 ## STEP 20
-- Commit: `d9975dc657f02e7ca192eda63967078e1dd1f234`
+- Commit: `c22240ce014c831b61b116e34bd89e23cf183200`
 - Checks: lint OK, tsc OK, build OK; presentation-ranges ok; calc files diff empty
 - TODO(owner): potvrdiť RELIABILITY_THRESHOLDS 0.25 / 0.60
 - Odchýlky: implementácia už v histórii (`0c9f8ce`); tento commit len verifikácia + RUN-STATE
+- Status: done
+
+## STEP 21
+- Commit: `2cdd0865c8cdb05f77e20ab49482d9a71b5032ef`
+- Checks: lint OK, tsc OK, build OK; odvetvov v src/supabase — 0 hits; metodika-review.md existuje
+- TODO(owner): —
+- Odchýlky: implementácia už v histórii (`0e78584`); tento commit len verifikácia + RUN-STATE
 - Status: done
