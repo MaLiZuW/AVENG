@@ -22,8 +22,15 @@
 - Status: done
 
 ## STEP 18
-- Commit: `33e8fe6cd3ff8c0492387a7d2af22801d9c19553`
+- Commit: `c103deb0cd920b6483e7d8f302e0cad72bc73ef6`
 - Checks: lint OK, tsc OK, build OK, check:copy OK
 - TODO(owner): —
 - Odchýlky: väčšina W5–W12 už v histórii; doplnené `retentionFaqClaimSk` (FAQ bez auto-delete vety zo STEP 16)
+- Status: done
+
+## STEP 19
+- Commit: `9af91f0ec5a0edde160087f0ed7fdc4f76034e04`
+- Checks: lint OK, tsc OK, build OK; format-and-copy ok; toFixed len v `src/lib/format.ts` (src/supabase)
+- TODO(owner): —
+- Odchýlky: implementácia už v histórii (`b01e30f`); tento commit len verifikácia + RUN-STATE; `shared/audit-presentation.ts` má legacy toFixed mimo Done-when cesty
 - Status: done
