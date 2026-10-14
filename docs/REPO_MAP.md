@@ -86,78 +86,46 @@ Identifier `k_Pi`: **not found** in source (docs refer to it conceptually).
 ## Wave 2
 
 ### Verejné metadáta (per route)
-- Helper: `src/lib/seo.ts` — `pageMetadata` (title, description, canonical, OG, Twitter).
-- Koreň: `src/app/layout.tsx` — `title.template` `%s | AVENG`, `keywords`, OG `url` = celý web, obrázok `/og-image.png`.
-- `pageMetadata`: `src/app/page.tsx` (`absoluteTitle`), `o-nas/page.tsx`, `self-audit/page.tsx`, `sluzby/page.tsx`, `sluzby/[slug]/page.tsx` (`generateMetadata`), `optimalizacia-a-ai/page.tsx`, `ochrana-osobnych-udajov/page.tsx`, `kontakt/layout.tsx`.
-- Bez helpera: `src/app/admin/page.tsx`. `robots` / `sitemap`: `src/app/robots.ts`, `src/app/sitemap.ts`.
+- Helper: `src/lib/seo.ts` — `buildMetadata` / `HOME_TITLE` (title, description, canonical, OG, Twitter).
+- Koreň: `src/app/layout.tsx` — `metadataBase`, ikony, robots; bez `keywords`.
+- `buildMetadata`: `page.tsx`, `o-nas/`, `self-audit/`, `sluzby/`, `sluzby/[slug]/` (`generateMetadata`), `optimalizacia-a-ai/`, `ochrana-osobnych-udajov/`, `kontakt/layout.tsx`, `admin/page.tsx`.
+- `robots` / `sitemap`: `src/app/robots.ts`, `src/app/sitemap.ts`. Skript: `scripts/check-meta.ts` (`npm run check:meta`).
 
 ### Päta
-- `src/components/sections/Footer.tsx` — jeden plný kontaktný blok, bez `variant`.
-- Všetky stránky v `src/app/` vrátane `kontakt/page.tsx` a `not-found.tsx`.
+- `src/components/sections/Footer.tsx` — `variant`: `"full"` len na `/` (`page.tsx`); inde `"compact"` (nav + právny riadok).
 
 ### Texty auditu (disclaimer, hint, titulky, päty)
-- Spoločné L1 vety: `shared/audit-presentation.ts` (`LEVEL1_DISCLAIMER_SK`, `RELIABILITY_HINT_SK`, peňažné labely).
-- Ten istý disclaimer aj mimo L1: `src/lib/audit/presentation.ts` `buildLevel1Presentation`.
-- Zrkadlo pre správu: `supabase/functions/send-audit-report/_shared.ts` (`DISCLAIMER_SK`).
-- Päta PDF, pevný L1 text: `supabase/functions/send-audit-report/pdf.ts` (reťazec „Indikatívny skríning“).
-- Titulok výsledku a „Celok je súčet procesov.“: `src/components/audit/ResultsDashboard.tsx`.
-- Hlavička („odvetvový benchmark“, štítok Premium): `src/components/audit/AuditSection.tsx`.
-- Silver / Gold: `src/components/sections/AuditTeaser.tsx`, `src/components/audit/Level2Gate.tsx`.
-- Anglické zátvorky sektorov: `src/lib/audit/benchmarks.ts` (`label`, napr. plastics).
-- FAQ a vety pre vývojára: `src/components/sections/FaqSection.tsx`.
-- Tri oznámenia na `/self-audit/`: `src/components/audit/GdprBanner.tsx` (intro aj setup) a odsek `auditStartNoticeSk()` v `AuditSection.tsx`; texty `src/config/retention.ts`.
-- Sídlo bez ulice: `src/config/company.ts` `addressDisplay`; kópia `supabase/functions/_shared/company.ts`.
-- Koncept stránky: `src/app/ochrana-osobnych-udajov/page.tsx` (banner, retention, sprostredkovatelia).
+- Per-level: `src/config/audit-copy.ts` (`disclaimerForLevel`, `reliabilityHintForLevel`, `pdfFooterForLevel`, `resultTitleForLevel`).
+- Legacy L1 konštanty ešte v `shared/audit-presentation.ts`; view: `src/lib/audit/presentation.ts` `buildResultView`.
+- PDF/HTML: `supabase/functions/send-audit-report/` (`pdf.ts`, `html.ts`, `_shared.ts`) cez audit-copy.
+- Názvy úrovní: `src/config/levels.ts` (`USE_TIER_NAMES`, default false). Hlavička: `AuditSection.tsx`. Teaser/gate: `AuditTeaser.tsx`, `Level2Gate.tsx`.
+- Sektorové labely: `src/lib/audit/benchmarks.ts`. FAQ: `FaqSection.tsx`.
+- Jedno oznámenie `/self-audit/`: `auditStartNoticeSk()` v `AuditSection.tsx` + `src/config/retention.ts`.
+- Sídlo: `src/config/company.ts` (`registeredSeat`); kópia `supabase/functions/_shared/company.ts`.
+- Politika: `src/app/ochrana-osobnych-udajov/page.tsx` + `src/config/processors.ts`.
 
 ### Formát čísel a zaokrúhlenie
-- Rozsah a 2 platné číslice: `shared/audit-presentation.ts` `round2sig`, `formatEurRange`.
-- KPI percentá s čiarkou: `src/lib/audit/presentation.ts` `skNumber`.
-- Percentá s bodkou: `ResultsDashboard.tsx` (`toFixed`).
-- Eurá cez `Intl`: `src/lib/audit/scoring-core.ts` `formatEur` (aj `DtoSimulator.tsx`, `Level4OnsiteCard.tsx`).
-- E-mail / PDF: `supabase/functions/send-audit-report/_shared.ts` `eur`, `pct` (`toFixed`).
-- Zaokrúhlenie skóre (výpočet, nemeniť): `src/lib/audit/calculationEngine.ts`, `Math.round` v `scoring-core.ts`.
+- Kanón: `src/lib/format.ts` (`formatPercent`, `formatEuroRounded`, `formatEuroRange`, `formatInt`, `round2sig`); zrkadlo v Edge cez shared sync.
+- `shared/audit-presentation.ts` stále má `round2sig` / `formatEurRange` (legacy). `formatEur` v `scoring-core.ts` pre UI sumy.
+- Zaokrúhlenie skóre (nemeniť): `calculationEngine.ts`, `Math.round` v `scoring-core.ts`.
 
 ### Rozsah a spoľahlivosť
-- Prahy: `shared/audit-presentation.ts` — `RELIABILITY_THRESHOLDS` (stredná 0,25 / vyššia 0,60); `reliabilityLevelFromShare`, `reliabilityShowsRange`, `reliabilityWording`.
-- View model pre všetky úrovne: `src/lib/audit/presentation.ts` `buildResultView` (nízka/stredná → rozsah; vyššia → bod s „približne“). Headline = súčet dolných/horných medzier domén. L2/L3 calculator cez `recalculate` z odomknutého chunku.
-- Tabuľka zrelosti: `LABEL_MATURITY_TABLE_SK` + `NOTE_MATURITY_TABLE_SK` (web, HTML, PDF).
+- Prahy: `shared/audit-presentation.ts` `RELIABILITY_THRESHOLDS` (0,25 / 0,60).
+- View: `presentation.ts` `buildResultView` (nízka/stredná → rozsah; vyššia → bod + „približne“); headline = súčet medzí domén.
+- Tabuľka zrelosti: `LABEL_MATURITY_TABLE_SK` + `NOTE_MATURITY_TABLE_SK`.
 
-### Výsledok na webe
-- `ResultsDashboard.tsx`, `RadarChart.tsx`, `KpiReferenceTable.tsx`, `LeadForm.tsx`.
-- L3: `DtoSimulator.tsx`. Obchôdzka: `Level4OnsiteCard.tsx`.
-- Fáza `results`: `src/components/audit/AuditSection.tsx`.
+### Výsledok / MetricExplainer / odporúčania
+- Web: `ResultsDashboard.tsx`, `RadarChart.tsx`, `KpiReferenceTable.tsx`, `LeadForm.tsx`, `DtoSimulator.tsx`, `Level4OnsiteCard.tsx`; fáza `AuditSection.tsx`.
+- `MetricExplainer.tsx` — volanie v `ResultsDashboard.tsx`; metodika pri otázke: `QuestionGuidance.tsx`.
+- Odporúčania / `impact`: `scoring-core.ts` `RECOMMENDATION_BANK`, `buildRecommendations`; typ `types.ts`.
 
-### MetricExplainer
-- `src/components/audit/MetricExplainer.tsx` — všetky L1 otázky domény (`questions.ts`).
-- Jediné volanie: `ResultsDashboard.tsx` v slučke procesov.
-- Metodika pri otázke: `src/components/audit/QuestionGuidance.tsx`.
-
-### Odporúčania a štítok dopadu
-- Pevná banka a top 3 podľa `gapSmeEur`; `impact` je konštanta, nie veľkosť medzery: `src/lib/audit/scoring-core.ts` `RECOMMENDATION_BANK`, `buildRecommendations`.
-- Typ: `src/lib/audit/types.ts`. Zobrazenie: `ResultsDashboard.tsx`. PDF/HTML berú `recommendations` z výsledku.
-
-### Karty odomknutia a úroveň
-- Session: `src/lib/unlock/session.ts` — `sessionStorage` kľúč `aveng_unlock_session_v1`, `requestUnlock`. `hasUnlockFor` sa nikde nevolá.
-- Karty: `Level2Gate.tsx` (`Level2Gate`, `Level3Gate`). Po kóde `AuditSection.startLevel` nastaví React stav `level`.
-- Karty sa kreslia aj pri `phase === "results"` (`AuditSection.tsx`).
-- `auditLevel` vo výsledku: argument `buildResult` v `scoring-core.ts`. Overenie kódu: `supabase/functions/verify-promo/index.ts`.
-
-### PDF, šablóna, fonty, e-mail správy
-- Funkcia: `supabase/functions/send-audit-report/index.ts` → `https://api.resend.com/emails`.
-- HTML: `html.ts`. PDF: `pdf.ts` (pdf-lib, tmavé pozadie, CTA = URL). Fonty: Noto Sans z `cdn.jsdelivr.net`. Značka: `mark.ts`.
-- Klient: `src/lib/sendAuditReport.ts` → `NEXT_PUBLIC_AUDIT_REPORT_API_URL`.
-
-### Formuláre a odchádzajúce ciele
-- Lead auditu: `LeadForm.tsx` → `src/lib/supabase.ts` `submitAuditLead` (`NEXT_PUBLIC_SUPABASE_URL`).
-- Schôdzka / kód / obchôdzka: `MeetingRequestModal.tsx`, `Level4OnsiteCard.tsx` → `src/lib/submitContactRequest.ts` (`https://api.web3forms.com/submit`, záloha `https://formsubmit.co/ajax/…`).
-- `/kontakt/`: `src/app/kontakt/page.tsx` → `src/lib/submitSiteContact.ts` → `NEXT_PUBLIC_CONTACT_API_URL` (`supabase/functions/contact/`).
-- Admin: `src/components/admin/AdminUnlockPanel.tsx` → issue URL. Odomknutie: `session.ts` → verify-promo URL.
-- Ďalší Resend: `supabase/functions/contact/index.ts`, `issue-unlock-code/index.ts`.
-- Importy Deno (nie biznis dáta): `https://esm.sh/…` v `verify-promo`, `issue-unlock-code`, `pdf.ts`.
-- Odkazy, nie `fetch`: citácie v `src/config/benchmarks.reference.json` (cez `KpiReferenceTable.tsx`). Sociálne URL v `src/config/social.ts` sú prázdne.
+### Odomknutie, PDF, formuláre, sieť
+- Session: `src/lib/unlock/session.ts`; karty `Level2Gate.tsx` / `Level3Gate`; stav `level` v `AuditSection.tsx`; verify `supabase/functions/verify-promo/`.
+- PDF/e-mail: `send-audit-report/` → Resend; fonty Noto Sans z `cdn.jsdelivr.net`; klient `sendAuditReport.ts`.
+- Lead: `supabase.ts` → `NEXT_PUBLIC_SUPABASE_URL`. Kontakt/schôdzka: `submitContactRequest.ts` + `submitSiteContact.ts` → `NEXT_PUBLIC_CONTACT_API_URL` (`contact/`). Bez Web3Forms/FormSubmit.
+- Admin issue URL; Resend aj v `contact/`, `issue-unlock-code/`; Deno `esm.sh` v verify/issue/pdf.
 
 ### Analytika, fonty, public, npm
-- Analytický skript v `src/` a `supabase/functions/` nie je.
-- Fonty webu: `src/app/layout.tsx` — `next/font/google` (Fraunces, Manrope), súbor vo výstupe buildu.
-- `public/`: `.htaccess`, `og-image.png`, `og-image.svg`, `favicon-32.png`, `icon-192.png`, `apple-touch-icon.png`, `aveng-icon.svg`, `aveng-mark.png`, `logo.svg`.
-- npm (`package.json`): `dev`, `build`, `export`, `start`, `lint`, `typecheck`, `generate:l3`, `smoke:audit`, `smoke:calc`, `audit:sanity`, `check:shared`, `check:benchmarks`.
+- Analytika: nie. Fonty webu: `next/font/google` (Fraunces, Manrope) v `layout.tsx`.
+- `public/`: `.htaccess`, `og-image.png`/`.svg`, favicon/icon/apple, `aveng-icon.svg`, `aveng-mark.png`, `aveng-mark-white.png`, `logo.svg`.
+- npm: `dev`, `build`, `export`, `start`, `lint`, `typecheck`, `generate:l3`, `smoke:audit`, `smoke:calc`, `audit:sanity`, `check:shared`, `check:benchmarks`, `check:meta`, `check:copy`.
