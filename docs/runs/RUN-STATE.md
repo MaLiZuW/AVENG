@@ -8,8 +8,15 @@
 - Status: done
 
 ## STEP 16
-- Commit: `5adee7a2d7334b558e9eafde3f45b72e196d1eee`
+- Commit: `fe6cc1e5660da72d9136fc6528ed799374795b46`
 - Checks: lint OK, tsc OK, build OK; Web3Forms/FormSubmit v src/supabase/out — 0 hits
 - TODO(owner): DPA/prenosy mimo EÚ; sídlo ulica/číslo; právnická revízia zásad (OWNER_DECISIONS)
 - Odchýlky: väčšina W1/W2 už bola v histórii; doplnená len veta „potom sa automaticky mažú“ pri RETENTION_JOB_VERIFIED=true; plán v docs/runs/plan-16.md
+- Status: done
+
+## STEP 17
+- Commit: `126f2fddb161503c8ec1701462b5c7812bbca98e`
+- Checks: lint OK, tsc OK, build OK, check:meta OK (13 pages)
+- TODO(owner): —
+- Odchýlky: implementácia už v histórii (`862fe5b`); tento commit len verifikácia + RUN-STATE; žiadna zmena kódu
 - Status: done
