@@ -29,8 +29,15 @@
 - Status: done
 
 ## STEP 19
-- Commit: `9af91f0ec5a0edde160087f0ed7fdc4f76034e04`
+- Commit: `18f42c431d0de186986f5cb20d8dad4f83110025`
 - Checks: lint OK, tsc OK, build OK; format-and-copy ok; toFixed len v `src/lib/format.ts` (src/supabase)
 - TODO(owner): —
 - Odchýlky: implementácia už v histórii (`b01e30f`); tento commit len verifikácia + RUN-STATE; `shared/audit-presentation.ts` má legacy toFixed mimo Done-when cesty
+- Status: done
+
+## STEP 20
+- Commit: `d9975dc657f02e7ca192eda63967078e1dd1f234`
+- Checks: lint OK, tsc OK, build OK; presentation-ranges ok; calc files diff empty
+- TODO(owner): potvrdiť RELIABILITY_THRESHOLDS 0.25 / 0.60
+- Odchýlky: implementácia už v histórii (`0c9f8ce`); tento commit len verifikácia + RUN-STATE
 - Status: done
