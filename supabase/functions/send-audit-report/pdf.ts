@@ -9,6 +9,7 @@ import fontkit from "https://esm.sh/@pdf-lib/fontkit@1.1.1";
 import { MARK_PNG_B64 } from "./mark.ts";
 import {
   BRAND,
+  bookingUrlFromEnv,
   COL_COST_BASE_SK,
   COL_COGS_SHARE_SK,
   COL_DOMAIN_SK,
@@ -39,19 +40,55 @@ import {
   type ReportBody,
 } from "./_shared.ts";
 
-const C = {
-  bg: rgb(0.027, 0.043, 0.071),
-  surface: rgb(0.059, 0.09, 0.165),
-  card: rgb(0.08, 0.12, 0.2),
-  signal: rgb(0.184, 0.435, 0.929),
-  signalBright: rgb(0.357, 0.576, 1),
-  ember: rgb(0.91, 0.647, 0.294),
-  ink: rgb(0.91, 0.93, 0.96),
-  muted: rgb(0.58, 0.64, 0.72),
-  track: rgb(0.12, 0.16, 0.24),
-  white: rgb(1, 1, 1),
-  line: rgb(0.18, 0.22, 0.3),
+export type PdfThemeName = "light" | "dark";
+
+type Theme = {
+  bg: ReturnType<typeof rgb>;
+  surface: ReturnType<typeof rgb>;
+  card: ReturnType<typeof rgb>;
+  signal: ReturnType<typeof rgb>;
+  signalBright: ReturnType<typeof rgb>;
+  ember: ReturnType<typeof rgb>;
+  ink: ReturnType<typeof rgb>;
+  muted: ReturnType<typeof rgb>;
+  track: ReturnType<typeof rgb>;
+  white: ReturnType<typeof rgb>;
+  line: ReturnType<typeof rgb>;
+  onSignal: ReturnType<typeof rgb>;
 };
+
+const THEMES: Record<PdfThemeName, Theme> = {
+  light: {
+    bg: rgb(1, 1, 1),
+    surface: rgb(0.96, 0.97, 0.985),
+    card: rgb(0.97, 0.975, 0.99),
+    signal: rgb(0.184, 0.435, 0.929),
+    signalBright: rgb(0.12, 0.35, 0.82),
+    ember: rgb(0.72, 0.45, 0.12),
+    ink: rgb(0.08, 0.1, 0.14),
+    muted: rgb(0.35, 0.4, 0.48),
+    track: rgb(0.88, 0.9, 0.93),
+    white: rgb(1, 1, 1),
+    line: rgb(0.82, 0.85, 0.9),
+    onSignal: rgb(1, 1, 1),
+  },
+  dark: {
+    bg: rgb(0.027, 0.043, 0.071),
+    surface: rgb(0.059, 0.09, 0.165),
+    card: rgb(0.08, 0.12, 0.2),
+    signal: rgb(0.184, 0.435, 0.929),
+    signalBright: rgb(0.357, 0.576, 1),
+    ember: rgb(0.91, 0.647, 0.294),
+    ink: rgb(0.91, 0.93, 0.96),
+    muted: rgb(0.58, 0.64, 0.72),
+    track: rgb(0.12, 0.16, 0.24),
+    white: rgb(1, 1, 1),
+    line: rgb(0.18, 0.22, 0.3),
+    onSignal: rgb(1, 1, 1),
+  },
+};
+
+let C: Theme = THEMES.light;
 
 let cachedRegular: Uint8Array | null = null;
 let cachedBold: Uint8Array | null = null;
@@ -91,6 +128,31 @@ function wrap(text: string, font: PDFFont, size: number, maxW: number): string[]
 function fill(page: PDFPage) {
   const { width, height } = page.getSize();
   page.drawRectangle({ x: 0, y: 0, width, height, color: C.bg });
+}
+
+function addUriLink(
+  pdf: PDFDocument,
+  page: PDFPage,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  uri: string,
+) {
+  const link = pdf.context.register(
+    pdf.context.obj({
+      Type: "Annot",
+      Subtype: "Link",
+      Rect: [x, y, x + w, y + h],
+      Border: [0, 0, 0],
+      A: {
+        Type: "Action",
+        S: "URI",
+        URI: pdf.context.obj(uri),
+      },
+    }),
+  );
+  page.node.addAnnot(link);
 }
 
 function footer(
@@ -182,7 +244,17 @@ function drawRadar(
   poly(values, C.signalBright, 2);
 }
 
-export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
+export type BuildPdfOptions = {
+  theme?: PdfThemeName;
+  bookingUrl?: string | null;
+  getEnv?: (key: string) => string | undefined;
+};
+
+export async function buildPdf(
+  body: ReportBody,
+  options: BuildPdfOptions = {},
+): Promise<Uint8Array> {
+  C = THEMES[options.theme === "dark" ? "dark" : "light"];
   const r = body.result!;
   const level = r.auditLevel ?? 1;
   const scores = r.processScores ?? [];
@@ -199,9 +271,19 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
   );
   const rel = reliabilityBlock(body.presentation?.reliabilityLevel, level);
   const date = new Date().toLocaleDateString("sk-SK");
-  const TOTAL = 4;
+  const breakdown = body.presentation?.questionBreakdown ?? [];
+  const hasBreakdown = level >= 2 && breakdown.length > 0;
+  /** cover + table + radar + CTA + optional breakdown + methodology */
+  const TOTAL = hasBreakdown ? 6 : 5;
+  const booking =
+    options.bookingUrl !== undefined
+      ? options.bookingUrl
+      : bookingUrlFromEnv(options.getEnv);
 
   const pdf = await PDFDocument.create();
+  pdf.setTitle(`AVENG Self-Audit Level ${level} — ${company || "report"}`);
+  pdf.setAuthor("AddValueEngineering");
+  pdf.setLanguage("sk");
   pdf.registerFontkit(fontkit);
   const { regular, bold } = await loadFonts();
   const font = await pdf.embedFont(regular, { subset: true });
@@ -765,7 +847,7 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
     const { width, height } = page.getSize();
     let y = height - 56;
 
-    page.drawText("Radar efektivity (vs referencia MSP)", {
+    page.drawText("Radar zrelosti (vs referencia MSP)", {
       x: 40,
       y,
       size: 16,
@@ -909,21 +991,35 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       page.drawText(`✓  ${b}`, { x: 58, y: ty, size: 11, font: fontBold, color: C.white });
       ty -= 18;
     }
-    page.drawText(`${upsell.cta}  →  ${SITE.replace("https://", "")}/self-audit/`, {
+    const ctaLine = upsell.cta;
+    page.drawText(ctaLine, {
       x: 58,
       y: y - 200,
       size: 11,
       font: fontBold,
-      color: C.white,
+      color: C.onSignal,
     });
+    addUriLink(
+      pdf,
+      page,
+      58,
+      y - 204,
+      fontBold.widthOfTextAtSize(ctaLine, 11) + 8,
+      16,
+      upsell.href.startsWith("mailto:") || upsell.href.startsWith("http")
+        ? upsell.href
+        : `${SITE}${upsell.href.startsWith("/") ? "" : "/"}${upsell.href}`,
+    );
 
     y -= 270;
     page.drawRectangle({
       x: 40,
-      y: y - 90,
+      y: y - 110,
       width: width - 80,
-      height: 100,
+      height: 120,
       color: C.card,
+      borderColor: C.line,
+      borderWidth: 0.8,
     });
     page.drawText(`Kontakt ${BRAND}`, {
       x: 56,
@@ -932,22 +1028,164 @@ export async function buildPdf(body: ReportBody): Promise<Uint8Array> {
       font: fontBold,
       color: C.ink,
     });
-    page.drawText(`${CTA_MAIL}  ·  ${CTA_PHONE}`, {
+    page.drawText(CTA_MAIL, {
       x: 56,
       y: y - 46,
       size: 11,
       font,
       color: C.signalBright,
     });
-    page.drawText(SITE.replace("https://", ""), {
+    addUriLink(
+      pdf,
+      page,
+      56,
+      y - 50,
+      font.widthOfTextAtSize(CTA_MAIL, 11) + 4,
+      14,
+      `mailto:${CTA_MAIL}`,
+    );
+    page.drawText(CTA_PHONE, {
       x: 56,
       y: y - 66,
       size: 10,
       font,
       color: C.muted,
     });
+    if (booking) {
+      page.drawText("Rezervovať konzultáciu", {
+        x: 56,
+        y: y - 86,
+        size: 10,
+        font: fontBold,
+        color: C.signalBright,
+      });
+      addUriLink(
+        pdf,
+        page,
+        56,
+        y - 90,
+        fontBold.widthOfTextAtSize("Rezervovať konzultáciu", 10) + 4,
+        14,
+        booking,
+      );
+    }
 
     footer(page, font, 4, TOTAL, level);
+  }
+
+  // ═══════════════ PAGE — Rozpis po otázkach (L2/L3) ═══════════════
+  if (hasBreakdown) {
+    const page = pdf.addPage([595.28, 841.89]);
+    fill(page);
+    const { width, height } = page.getSize();
+    let y = height - 56;
+    page.drawText("Rozpis po otázkach", {
+      x: 40,
+      y,
+      size: 16,
+      font: fontBold,
+      color: C.ink,
+    });
+    y -= 24;
+    for (const row of breakdown.slice(0, 28)) {
+      if (y < 70) break;
+      const head = `${domainLabel(row.processId)} · ${row.bandLabelSk}`;
+      page.drawText(head, {
+        x: 40,
+        y,
+        size: 9,
+        font: fontBold,
+        color: C.ember,
+      });
+      y -= 12;
+      for (const line of wrap(row.text, font, 9, width - 80).slice(0, 2)) {
+        page.drawText(line, { x: 40, y, size: 9, font, color: C.ink });
+        y -= 12;
+      }
+      y -= 6;
+    }
+    footer(page, font, 5, TOTAL, level);
+  }
+
+  // ═══════════════ PAGE — Metodika ═══════════════
+  {
+    const page = pdf.addPage([595.28, 841.89]);
+    fill(page);
+    const { width, height } = page.getSize();
+    let y = height - 56;
+    const methodPage = hasBreakdown ? 6 : 5;
+    page.drawText("Metodika a zdroje", {
+      x: 40,
+      y,
+      size: 16,
+      font: fontBold,
+      color: C.ink,
+    });
+    y -= 22;
+    page.drawText("Vstupy", {
+      x: 40,
+      y,
+      size: 12,
+      font: fontBold,
+      color: C.ink,
+    });
+    y -= 16;
+    for (const t of [
+      `Ročný obrat: ${eur(r.annualRevenueEur ?? 0)}`,
+      `COGS: ${pct(r.cogsPercent ?? 0, 0)}`,
+      `Odvetvie: ${r.sectorLabel ?? "—"}`,
+      `Úroveň auditu: Level ${level}`,
+      `Zodpovedané otázky: ${r.answeredCount ?? "—"} / ${r.totalQuestions ?? "—"}`,
+    ]) {
+      page.drawText(`•  ${t}`, { x: 40, y, size: 10, font, color: C.muted });
+      y -= 14;
+    }
+    y -= 10;
+    page.drawText("Výpočet medzery", {
+      x: 40,
+      y,
+      size: 12,
+      font: fontBold,
+      color: C.ink,
+    });
+    y -= 16;
+    for (const line of wrap(
+      "Skóre domény je 100 × súčet (váha otázky × skóre) / súčet (váha otázky × 10). Medzera v eurách je tržby × podiel COGS × váha nákladov domény × max(0, (referencia − vaše skóre) / 100). Celková medzera je súčtom medzier domén. Rozsah vzniká z pásiem odpovedí A–E.",
+      font,
+      9,
+      width - 80,
+    )) {
+      page.drawText(line, { x: 40, y, size: 9, font, color: C.muted });
+      y -= 12;
+    }
+    y -= 12;
+    page.drawText(LABEL_COST_BASE_TABLE_SK, {
+      x: 40,
+      y,
+      size: 12,
+      font: fontBold,
+      color: C.ink,
+    });
+    y -= 16;
+    const costRows = costBaseDisclosureRowsForReport(r);
+    for (const row of costRows) {
+      page.drawText(
+        `${row.domainLabel}: ${pct(row.cogsShare * 100, 0)} · ${eur(row.costBaseEur)} · ${row.referenceSourceSk}`,
+        { x: 40, y, size: 8, font, color: C.muted },
+      );
+      y -= 12;
+    }
+    y -= 10;
+    for (const line of wrap(EXPERT_ESTIMATE_SOURCE_SK, font, 9, width - 80)) {
+      page.drawText(line, { x: 40, y, size: 9, font, color: C.ink });
+      y -= 12;
+    }
+    y -= 8;
+    for (const line of wrap(COST_BASE_SHARES_NOTE_SK, font, 8, width - 80)) {
+      page.drawText(line, { x: 40, y, size: 8, font, color: C.muted });
+      y -= 11;
+    }
+    footer(page, font, methodPage, TOTAL, level);
   }
 
   return pdf.save();

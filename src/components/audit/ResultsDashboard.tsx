@@ -32,6 +32,10 @@ import {
   type ResultViewRaw,
 } from "@/lib/audit/presentation";
 import { presentRecommendations } from "@/lib/audit/recommendations";
+import {
+  buildDomainBreakdown,
+  type BreakdownQuestion,
+} from "@/lib/audit/question-breakdown";
 import { formatPercent } from "@/lib/format";
 import { formatEur } from "@/lib/audit/scoring";
 import type {
@@ -41,7 +45,6 @@ import type {
   PreAuditInput,
   ProcessId,
 } from "@/lib/audit/types";
-import type { BreakdownQuestion } from "@/lib/audit/question-breakdown";
 import DtoSimulator from "./DtoSimulator";
 import ExactInputBlocks from "./ExactInputBlocks";
 import LeadForm from "./LeadForm";
@@ -110,6 +113,21 @@ export default function ResultsDashboard({
     () => presentRecommendations(result, answers, answerDetails),
     [result, answers, answerDetails],
   );
+  const reportPresentation = useMemo(() => {
+    const base = toReportPresentation(view);
+    if (result.auditLevel < 2 || !levelQuestions?.length) return base;
+    const processes: ProcessId[] = ["P1", "P2", "P3", "P4", "P5"];
+    const questionBreakdown = processes.flatMap((pid) =>
+      buildDomainBreakdown(pid, levelQuestions, answers, answerDetails).map(
+        (row) => ({
+          processId: row.processId,
+          text: row.text,
+          bandLabelSk: row.bandLabelSk,
+        }),
+      ),
+    );
+    return { ...base, questionBreakdown };
+  }, [view, result.auditLevel, levelQuestions, answers, answerDetails]);
   function showDomainMetrics(processId: ProcessId) {
     setOpenExplainers((prev) => ({ ...prev, [processId]: true }));
     const el = document.getElementById(domainExplainerId(processId));
@@ -551,7 +569,7 @@ export default function ResultsDashboard({
         result={result}
         answers={answers}
         preAudit={preAudit}
-        presentation={toReportPresentation(view)}
+        presentation={reportPresentation}
       />
     </div>
   );

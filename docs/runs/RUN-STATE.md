@@ -57,8 +57,15 @@
 - Status: done
 
 ## STEP 23
-- Commit: `182320c8bd13a060cc637dbf40c534e08136dc5c`
+- Commit: `82c34595c109a8a23fdb1745a523b3f6faf68394`
 - Checks: lint OK, tsc OK, build OK, kpi-table OK, impact-recommendations OK
 - TODO(owner): NUMERIC_INPUT A/P/Q na L2 pre OEE dekompozíciu (l2-gap.md)
 - Odchýlky: OEE A×P×Q sa nezobrazuje (žiadne exact vstupy); COPQ blok len pri L1 exact; plán plan-23.md
+- Status: done
+
+## STEP 24
+- Commit: `baf133792d045e20bc59124b429bd01d2c4dfc27`
+- Checks: lint OK, tsc OK, build OK, pdf-fixtures OK
+- TODO(owner): —
+- Odchýlky: Node port `scripts/lib/build-audit-pdf-node.ts` zrkadlí Deno `pdf.ts` (bez Deno na CI); devDeps pdf-parse/pdf-lib/@pdf-lib/fontkit; plán plan-24.md
 - Status: done

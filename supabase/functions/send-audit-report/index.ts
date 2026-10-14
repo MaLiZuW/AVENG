@@ -9,7 +9,12 @@
 import { buildHtml } from "./html.ts";
 import { buildPdf } from "./pdf.ts";
 import { company } from "../_shared/company.ts";
-import { formatGapEur, isEmail, type ReportBody } from "./_shared.ts";
+import {
+  auditReportPdfFilename,
+  formatGapEur,
+  isEmail,
+  type ReportBody,
+} from "./_shared.ts";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -102,9 +107,11 @@ Deno.serve(async (req) => {
       return json(500, { ok: false, error: "Neplatný OWNER e-mail." });
     }
 
-    const pdfBytes = await buildPdf(body);
-    const safeCompany = company.replace(/[^\w\-]+/g, "_").slice(0, 40);
-    const filename = `AVENG_SelfAudit_L${body.result.auditLevel ?? 1}_${safeCompany}.pdf`;
+    const pdfBytes = await buildPdf(body, {
+      theme: "light",
+      getEnv: (k) => Deno.env.get(k) ?? undefined,
+    });
+    const filename = auditReportPdfFilename(body.result.auditLevel ?? 1);
     const gap = formatGapEur(
       body.presentation?.gapSmeLowEur,
       body.presentation?.gapSmeHighEur,

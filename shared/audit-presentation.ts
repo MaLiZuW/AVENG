@@ -109,6 +109,13 @@ export interface ReportProcessGap {
   highEur: number;
 }
 
+/** Optional L2/L3 per-question rows for the PDF breakdown page. */
+export type ReportQuestionBreakdownRow = {
+  processId: string;
+  text: string;
+  bandLabelSk: string;
+};
+
 /** Numbers and the reliability band. Wording is formatted from this module. */
 export interface ReportPresentationPayload {
   gapSmeLowEur: number;
@@ -117,6 +124,7 @@ export interface ReportPresentationPayload {
   processGaps: ReportProcessGap[];
   criticalLowEur: number;
   criticalHighEur: number;
+  questionBreakdown?: ReportQuestionBreakdownRow[];
 }
 
 /** Round to 2 significant figures. */

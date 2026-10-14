@@ -183,14 +183,14 @@ export function upsellForLevel(level: number, company: string): Upsell {
     return {
       eyebrow: levelUpsellEyebrow(2),
       title: `Prejdite z orientácie na rozhodnutie — ${L2_PRICE} €`,
-      body: "Level 1 ukázal, kde unikajú peniaze. Level 2 rozloží straty na OEE, COPQ a tok materiálu — podklad, ktorý unesie poradu majiteľov.",
+      body: "Level 1 ukázal, kde unikajú peniaze. Level 2 pridá rozpis po otázkach a prioritizáciu podľa finančného dopadu — podklad na poradu majiteľov.",
       bullets: [
         "60 otázok — jasnejšie páky a priority",
-        "Rozklad podľa finančného dopadu",
-        "Prístupový kód e-mailom po úhrade",
+        "Rozpis po otázkach a finančný dopad",
+        "Prístupový kód e-mailom po objednaní",
       ],
-      cta: "Požiadať o Level 2",
-      href: `${SITE}/self-audit/#level-2`,
+      cta: "Objednať Level 2",
+      href: `${SITE}/kontakt/?predmet=level-2`,
     };
   }
   if (level === 2) {
@@ -288,4 +288,23 @@ export function reliabilityBlock(
     lineSk: wording.lineSk,
     hintSk: reliabilityHintForLevel(auditLevel),
   };
+}
+
+/** `AVENG_Self-Audit_L{level}_{YYYY-MM-DD}.pdf` */
+export function auditReportPdfFilename(
+  level: number,
+  date = new Date(),
+): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  const lv = level === 2 || level === 3 ? level : 1;
+  return `AVENG_Self-Audit_L${lv}_${y}-${m}-${d}.pdf`;
+}
+
+export function bookingUrlFromEnv(
+  getEnv?: (key: string) => string | undefined,
+): string | null {
+  const v = (getEnv?.("NEXT_PUBLIC_BOOKING_URL") ?? "").trim();
+  return v || null;
 }
