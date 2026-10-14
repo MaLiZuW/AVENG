@@ -64,8 +64,15 @@
 - Status: done
 
 ## STEP 24
-- Commit: `baf133792d045e20bc59124b429bd01d2c4dfc27`
+- Commit: `e53d4f4401aec40f053ad66cf07ce71bc2051656`
 - Checks: lint OK, tsc OK, build OK, pdf-fixtures OK
 - TODO(owner): —
 - Odchýlky: Node port `scripts/lib/build-audit-pdf-node.ts` zrkadlí Deno `pdf.ts` (bez Deno na CI); devDeps pdf-parse/pdf-lib/@pdf-lib/fontkit; plán plan-24.md
 - Status: done
+
+## STEP 25
+- Commit: `ade33870f60f9c5c6d75973b6eae7b3c2f1ee3d4`
+- Checks: lint/tsc/build netreba (bez zmeny kódu); len docs
+- TODO(owner): všetky otázky v docs/content-drafts/QUESTIONS_FOR_OWNER.md — pred STEP 26 odstrániť každý [[TODO
+- Odchýlky: —
+- Status: done — STOP (čaká na odpovede vlastníka)
