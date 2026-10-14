@@ -464,7 +464,10 @@ function benchmarkCells(
         topSk: pctRange(ref.ranges.worldClassRange),
       };
     case "schedule_adherence_pct":
-      return null;
+      return {
+        typicalSk: `prah dobrého výsledku ${pctRange(ref.ranges.goodThresholdRange)} (prah softvérových zdrojov, nie nameraný priemer)`,
+        topSk: pctRange(ref.ranges.goodThresholdRange),
+      };
     default: {
       const _exhaustive: never = ref;
       return _exhaustive;

@@ -563,6 +563,15 @@ export default function AuditSection() {
                 answers={answers}
                 preAudit={preAudit}
                 answerDetails={answerDetails}
+                levelQuestions={
+                  level >= 2
+                    ? questions.map((q) => ({
+                        id: q.id,
+                        processId: q.processId,
+                        text: q.text,
+                      }))
+                    : undefined
+                }
                 recalculate={
                   level === 2 && calcL2
                     ? (a, input) => calcL2(a, input)

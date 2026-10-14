@@ -48,9 +48,7 @@ const LEVELS = [
     iconClass: "text-[#c0c7d4]",
     checkClass: "text-[#c0c7d4]",
     points: [
-      "Rozklad OEE, COPQ a toku materiálu",
-      "Prioritizácia podľa finančného dopadu",
-      "Jasný podklad na poradu majiteľov",
+      "Rozpis po otázkach, prioritizácia podľa finančného dopadu, podklad na poradu majiteľov.",
     ],
   },
   {

@@ -126,6 +126,7 @@ export const LEVEL1_QUESTIONS: AuditQuestion[] = [
     inputType: "NUMERIC_INPUT",
     weight: 5,
     numericUnit: "%",
+    kpiKey: "schedule_adherence_pct",
     numericMapping: {
       score0: "< 50%",
       score4: "50 – 69%",
@@ -680,8 +681,7 @@ export const LEVEL1_INPUT_SUMMARY = {
 
 export const LEVEL2_FEATURES = [
   "60 podotázok (20 × 3) bez viditeľných skóre — kvalitatívne A–E",
-  "OEE dekompozícia: Availability / Performance / Quality",
-  "COPQ, DPMO, Poka-Yoke, Traceability a 8D hĺbka",
+  "Rozpis po otázkach, prioritizácia podľa finančného dopadu, podklad na poradu majiteľov.",
   "Guidance karty: cieľ · metodika · Gemba overenie",
   "Indikatívny potenciál €/rok + kritický proces (referencia MSP vs world-class)",
 ];

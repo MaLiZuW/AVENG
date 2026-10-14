@@ -50,8 +50,15 @@
 - Status: done
 
 ## STEP 22
-- Commit: `c381f13c90459712f3a6433e19c834a7a1be6d61`
+- Commit: `16e1989d95608a57db12f1ca13b63e4f701bec64`
 - Checks: lint OK (warning Header img), tsc OK, build OK, impact-recommendations OK
 - TODO(owner): IMPACT_THRESHOLDS 35 %/15 %; spôsob úhrady L2/L3; per-question texty v recommendations-gap.md
 - Odchýlky: impact/prefix v presentation (`recommendations.ts`), scoring-core nemený; plán docs/runs/plan-22.md
+- Status: done
+
+## STEP 23
+- Commit: `182320c8bd13a060cc637dbf40c534e08136dc5c`
+- Checks: lint OK, tsc OK, build OK, kpi-table OK, impact-recommendations OK
+- TODO(owner): NUMERIC_INPUT A/P/Q na L2 pre OEE dekompozíciu (l2-gap.md)
+- Odchýlky: OEE A×P×Q sa nezobrazuje (žiadne exact vstupy); COPQ blok len pri L1 exact; plán plan-23.md
 - Status: done

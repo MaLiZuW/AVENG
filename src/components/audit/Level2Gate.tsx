@@ -125,8 +125,8 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
               Detailný audit pre rozhodnutia majiteľa
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-ink-200">
-              Keď Level 1 ukáže smer, Level 2 rozloží straty na konkrétne páky —
-              bez dohadov na porade.
+              Rozpis po otázkach, prioritizácia podľa finančného dopadu, podklad
+              na poradu majiteľov.
             </p>
           </div>
           <Lock className="h-7 w-7 shrink-0 text-[#c0c7d4]" aria-hidden />

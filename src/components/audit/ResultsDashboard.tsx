@@ -41,11 +41,14 @@ import type {
   PreAuditInput,
   ProcessId,
 } from "@/lib/audit/types";
+import type { BreakdownQuestion } from "@/lib/audit/question-breakdown";
 import DtoSimulator from "./DtoSimulator";
+import ExactInputBlocks from "./ExactInputBlocks";
 import LeadForm from "./LeadForm";
 import KpiReferenceTable from "./KpiReferenceTable";
 import Level4OnsiteCard from "./Level4OnsiteCard";
 import MetricExplainer, { domainExplainerId } from "./MetricExplainer";
+import QuestionBreakdown from "./QuestionBreakdown";
 import RadarChart from "./RadarChart";
 
 interface Props {
@@ -54,6 +57,8 @@ interface Props {
   preAudit: PreAuditInput;
   answerDetails?: AnswerDetailsMap;
   recalculate?: ResultViewRaw["recalculate"];
+  /** L2/L3 question bank for per-question breakdown (omit on Level 1). */
+  levelQuestions?: BreakdownQuestion[];
 }
 
 function useGembaTrigger(result: AuditResult) {
@@ -78,6 +83,7 @@ export default function ResultsDashboard({
   preAudit,
   answerDetails,
   recalculate,
+  levelQuestions,
 }: Props) {
   const cp = result.criticalProcess;
   const gemba = useGembaTrigger(result);
@@ -319,6 +325,21 @@ export default function ResultsDashboard({
       ) : null}
 
       <KpiReferenceTable rows={kpiRows} />
+
+      {result.auditLevel >= 2 ? (
+        <ExactInputBlocks
+          answerDetails={answerDetails}
+          preAudit={preAudit}
+        />
+      ) : null}
+
+      {result.auditLevel >= 2 && levelQuestions && levelQuestions.length > 0 ? (
+        <QuestionBreakdown
+          questions={levelQuestions}
+          answers={answers}
+          answerDetails={answerDetails}
+        />
+      ) : null}
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="steel-panel overflow-x-auto p-5 sm:p-6">
