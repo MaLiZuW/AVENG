@@ -5,7 +5,7 @@
 
 import { ChevronRight } from "lucide-react";
 import { company } from "@/config/company";
-import { retentionPeriodClaimSk } from "@/config/retention";
+import { retentionFaqClaimSk } from "@/config/retention";
 import { LEVEL2_PRICE_EUR } from "@/lib/audit/questions";
 
 const CONSULTATION_ANSWER_SK =
@@ -44,7 +44,7 @@ const FAQ = [
   },
   {
     q: "Ako dlho uchovávate údaje z auditu?",
-    a: `${retentionPeriodClaimSk()} Detail nájdete v Zásadách ochrany osobných údajov.`,
+    a: `${retentionFaqClaimSk()} Detail nájdete v Zásadách ochrany osobných údajov.`,
   },
   {
     q: "Sú výsledky auditu zárukou úspor?",

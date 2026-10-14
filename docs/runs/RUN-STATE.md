@@ -15,8 +15,15 @@
 - Status: done
 
 ## STEP 17
-- Commit: `126f2fddb161503c8ec1701462b5c7812bbca98e`
+- Commit: `b253c303b79595ca2c0e02b5e4025298adcca43f`
 - Checks: lint OK, tsc OK, build OK, check:meta OK (13 pages)
 - TODO(owner): —
 - Odchýlky: implementácia už v histórii (`862fe5b`); tento commit len verifikácia + RUN-STATE; žiadna zmena kódu
+- Status: done
+
+## STEP 18
+- Commit: `33e8fe6cd3ff8c0492387a7d2af22801d9c19553`
+- Checks: lint OK, tsc OK, build OK, check:copy OK
+- TODO(owner): —
+- Odchýlky: väčšina W5–W12 už v histórii; doplnené `retentionFaqClaimSk` (FAQ bez auto-delete vety zo STEP 16)
 - Status: done

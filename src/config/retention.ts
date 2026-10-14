@@ -35,9 +35,18 @@ export const UNLOCK_CODE_RETENTION_DAYS: number | null = null;
 export const RETENTION_NEUTRAL_SK =
   "Údaje uchovávame len po dobu nevyhnutnú na vyhodnotenie auditu a spracovanie dopytu";
 
+/** Policy retention section (STEP 16). */
 export function retentionPeriodClaimSk(): string {
   if (RETENTION_JOB_VERIFIED) {
     return `Údaje auditu uchovávame najviac ${RETENTION_DAYS} dní, potom sa automaticky mažú.`;
+  }
+  return `${RETENTION_NEUTRAL_SK}.`;
+}
+
+/** FAQ retention answer (STEP 18) — no auto-delete clause. */
+export function retentionFaqClaimSk(): string {
+  if (RETENTION_JOB_VERIFIED) {
+    return `Údaje auditu uchovávame najviac ${RETENTION_DAYS} dní.`;
   }
   return `${RETENTION_NEUTRAL_SK}.`;
 }
