@@ -1,0 +1,32 @@
+---
+description: AVENG wave 2 rules (always apply, on top of aveng-core)
+alwaysApply: true
+---
+# Wave 2 additions
+
+## Environment
+- Windows + PowerShell. Use `Select-String` or `rg`, never `grep`; use `;` or separate commands instead of `&&` in PowerShell 5.
+- Deployment model unchanged: static export (`out/`) via FTP, server logic only in Supabase Edge Functions.
+
+## Processors and data
+- No third-party form relays (Web3Forms, FormSubmit or similar). Delivery only through the project's own Supabase Edge Functions and the existing e-mail provider (Resend). Adding or changing a processor needs owner approval.
+- Public wording about data location or safeguards must be true and verifiable. Never claim "EU only" or name safeguards (SCC, DPF) unless `docs/INFRA_FACTS.md` or the owner confirms them.
+
+## Number and text formatting
+- All numbers shown to users go through `src/lib/format.ts` (shared with Edge Functions): Slovak decimal comma, non-breaking space before `%` and `€`, euro amounts rounded to 2 significant digits ("61 tis. €", "8,3 tis. €", "1,2 mil. €"), ranges as "560 – 860 tis. €". No `toFixed`, `toLocaleString` or `Intl.NumberFormat` outside that helper.
+- Any text that mentions an audit level (disclaimers, hints, footers, CTAs) comes from `src/config/audit-copy.ts` by level. Never reuse Level 1 wording on Level 2/3.
+- Level names come from `src/config/levels.ts` only.
+
+## Public copy guard
+Public output (`out/`, PDF, e-mails) must not contain: "TODO", "[[", "Návrh textu", "v konfigurácii", "ak je na webe nastavené", "skutočne používa", "odvetvový benchmark", "odvetvový štandard", "odvetvovému štandardu", "Web3Forms", "FormSubmit", "aveng.sk", "Ing.". Provide `npm run check:copy` (scans `out/`) and keep it green.
+
+## Content rules
+- Facts only from the repo, the existing site, or owner answers. Unknown -> `[[TODO(owner): ...]]` in drafts only; never publish a marker.
+- No invented clients, case studies, numbers, certifications or testimonials.
+- Write answer-first: the direct answer in the first 2-3 sentences of every page, short paragraphs, specific wording, no keyword stuffing.
+
+## Dev dependencies allowed (dev only)
+`tsx`, `cheerio`, `serve`, `pdf-parse`. Lighthouse and axe via `npx`.
+
+## Traceability
+Steps reference finding IDs from `docs/findings/FINDINGS-2026-10-13.md`. Put the IDs in the commit body.
