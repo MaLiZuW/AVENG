@@ -31,6 +31,7 @@ import {
   wcCeilingDisplay,
   type ResultViewRaw,
 } from "@/lib/audit/presentation";
+import { presentRecommendations } from "@/lib/audit/recommendations";
 import { formatPercent } from "@/lib/format";
 import { formatEur } from "@/lib/audit/scoring";
 import type {
@@ -38,12 +39,13 @@ import type {
   AuditAnswers,
   AuditResult,
   PreAuditInput,
+  ProcessId,
 } from "@/lib/audit/types";
 import DtoSimulator from "./DtoSimulator";
 import LeadForm from "./LeadForm";
 import KpiReferenceTable from "./KpiReferenceTable";
 import Level4OnsiteCard from "./Level4OnsiteCard";
-import MetricExplainer from "./MetricExplainer";
+import MetricExplainer, { domainExplainerId } from "./MetricExplainer";
 import RadarChart from "./RadarChart";
 
 interface Props {
@@ -94,7 +96,19 @@ export default function ResultsDashboard({
   const wc = useMemo(() => wcCeilingDisplay(result), [result]);
   const showWc = SHOW_WORLD_CLASS_CEILING && wc.visible;
   const [methodOpen, setMethodOpen] = useState(false);
+  const [openExplainers, setOpenExplainers] = useState<
+    Partial<Record<ProcessId, boolean>>
+  >({});
   const methodPanelId = useId();
+  const recommendations = useMemo(
+    () => presentRecommendations(result, answers, answerDetails),
+    [result, answers, answerDetails],
+  );
+  function showDomainMetrics(processId: ProcessId) {
+    setOpenExplainers((prev) => ({ ...prev, [processId]: true }));
+    const el = document.getElementById(domainExplainerId(processId));
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
   const kpiRows = useMemo(
     () => buildKpiComparisonRows(answerDetails),
     [answerDetails],
@@ -408,6 +422,14 @@ export default function ResultsDashboard({
             </dd>
           </div>
         </dl>
+        <button
+          type="button"
+          className="mt-4 text-sm font-medium text-signal-bright underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
+          aria-expanded={!!openExplainers[cp.processId]}
+          onClick={() => showDomainMetrics(cp.processId)}
+        >
+          Zobraziť metriky domény
+        </button>
       </div>
 
       <div className="steel-panel p-5 sm:p-6">
@@ -415,7 +437,7 @@ export default function ResultsDashboard({
           3 prioritné odporúčania pre konateľa
         </h4>
         <ol className="mt-4 space-y-4">
-          {result.recommendations.map((r, i) => (
+          {recommendations.map((r, i) => (
             <li key={r.processId} className="flex gap-4">
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-signal/20 font-display text-sm font-semibold text-signal-bright">
                 {i + 1}
@@ -428,6 +450,14 @@ export default function ResultsDashboard({
                   </span>
                 </p>
                 <p className="mt-1 text-sm text-ink-200">{r.description}</p>
+                <button
+                  type="button"
+                  className="mt-2 text-sm font-medium text-signal-bright underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
+                  aria-expanded={!!openExplainers[r.processId]}
+                  onClick={() => showDomainMetrics(r.processId)}
+                >
+                  Zobraziť metriky domény
+                </button>
               </div>
             </li>
           ))}
@@ -476,7 +506,16 @@ export default function ResultsDashboard({
                     }}
                   />
                 </div>
-                <MetricExplainer processId={p.processId} />
+                <MetricExplainer
+                  processId={p.processId}
+                  open={!!openExplainers[p.processId]}
+                  onOpenChange={(next) =>
+                    setOpenExplainers((prev) => ({
+                      ...prev,
+                      [p.processId]: next,
+                    }))
+                  }
+                />
               </li>
             );
           })}

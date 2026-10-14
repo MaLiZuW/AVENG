@@ -26,6 +26,13 @@ Pri tržbách 5 M€ / COGS 65 % majú realistické profily (average_C, weak_B, 
 
 Zdroje `k_Pi` / `S_SME` / `S_WC` / `M_WC`: interné hodnoty v `benchmarks.ts` / `PROCESSES` — TODO(owner) doložiť alebo ponechať ako expert estimate.
 
+## Platba a odomknutie Level 2 / 3
+
+| Položka | Stav | Otázka |
+|---|---|---|
+| Spôsob úhrady Level 2 / 3 | **Otvorené** | Faktúra / prevod, Stripe, iné? CTA „Objednať Level N“ vedie na `/kontakt/?predmet=level-N`; kód sa pošle e-mailom po objednaní. |
+| `IMPACT_THRESHOLDS` (35 % / 15 %) | Predvolené v `src/config/impact.ts` | Potvrdiť prahy pre labely „dopad vysoký / stredný / nižší“? |
+
 ## Obsah / SEO
 
 | Položka | Otázka |

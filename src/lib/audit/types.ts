@@ -188,7 +188,7 @@ export interface Recommendation {
   processId: ProcessId;
   title: string;
   description: string;
-  impact: "vysoký" | "stredný" | "nízky";
+  impact: "vysoký" | "stredný" | "nižší";
 }
 
 export interface CriticalProcess {

@@ -1,4 +1,4 @@
-# RUN-STATE — beh A (kroky 15–21)
+# RUN-STATE — beh A (15–21) + beh B (22–25)
 
 ## STEP 15
 - Commit: `dc1024c09f3539d91b583fcbdecf2473f8b9cfda`
@@ -47,4 +47,11 @@
 - Checks: lint OK, tsc OK, build OK; odvetvov v src/supabase — 0 hits; metodika-review.md existuje
 - TODO(owner): —
 - Odchýlky: implementácia už v histórii (`0e78584`); tento commit len verifikácia + RUN-STATE
+- Status: done
+
+## STEP 22
+- Commit: `c381f13c90459712f3a6433e19c834a7a1be6d61`
+- Checks: lint OK (warning Header img), tsc OK, build OK, impact-recommendations OK
+- TODO(owner): IMPACT_THRESHOLDS 35 %/15 %; spôsob úhrady L2/L3; per-question texty v recommendations-gap.md
+- Odchýlky: impact/prefix v presentation (`recommendations.ts`), scoring-core nemený; plán docs/runs/plan-22.md
 - Status: done

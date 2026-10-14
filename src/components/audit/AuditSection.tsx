@@ -28,7 +28,12 @@ import type {
   QualitativeOption,
 } from "@/lib/audit/types";
 import AuditQuestionCard from "./AuditQuestionCard";
-import { Level2Gate, Level3Gate } from "./Level2Gate";
+import {
+  Level2Gate,
+  Level2UnlockedNotice,
+  Level3Gate,
+} from "./Level2Gate";
+import { readUnlockSession } from "@/lib/unlock/session";
 import PreAuditForm from "./PreAuditForm";
 import QuestionContextPanel from "./QuestionContextPanel";
 import QuestionGuidance from "./QuestionGuidance";
@@ -63,10 +68,14 @@ export default function AuditSection() {
     | ((a: AuditAnswers, i: PreAuditInput) => AuditResult)
     | null
   >(null);
+  /** Highest verified unlock from session (2 | 3); null when locked. */
+  const [unlockedLevel, setUnlockedLevel] = useState<2 | 3 | null>(null);
 
   useEffect(() => {
     const saved = loadAuditProgress();
     if (hasResumableProgress(saved)) setResumeOffer(saved);
+    const session = readUnlockSession();
+    setUnlockedLevel(session?.level ?? null);
     setHydrated(true);
   }, []);
 
@@ -573,8 +582,26 @@ export default function AuditSection() {
             (phase === "setup" && level === 1)) &&
             !resumeOffer && (
               <div className="grid gap-6 lg:grid-cols-2">
-                <Level2Gate onUnlocked={() => startLevel(2)} />
-                <Level3Gate onUnlocked={() => startLevel(3)} />
+                {(unlockedLevel != null && unlockedLevel >= 2) ||
+                level >= 2 ? (
+                  <Level2UnlockedNotice />
+                ) : (
+                  <Level2Gate
+                    onUnlocked={() => {
+                      setUnlockedLevel(2);
+                      startLevel(2);
+                    }}
+                  />
+                )}
+                {(unlockedLevel != null && unlockedLevel >= 3) ||
+                level >= 3 ? null : (
+                  <Level3Gate
+                    onUnlocked={() => {
+                      setUnlockedLevel(3);
+                      startLevel(3);
+                    }}
+                  />
+                )}
               </div>
             )}
         </div>

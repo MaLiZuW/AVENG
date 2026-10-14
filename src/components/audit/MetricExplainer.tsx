@@ -8,21 +8,40 @@ import { domainLabel } from "@/config/audit-display";
 
 interface Props {
   processId: ProcessId;
+  /** Controlled open state (scroll-to-expand from critical / recommendations). */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export default function MetricExplainer({ processId }: Props) {
-  const [open, setOpen] = useState(false);
+export function domainExplainerId(processId: ProcessId): string {
+  return `domain-explainer-${processId}`;
+}
+
+export default function MetricExplainer({
+  processId,
+  open: openProp,
+  onOpenChange,
+}: Props) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const open = openProp ?? uncontrolledOpen;
+  const setOpen = (next: boolean) => {
+    onOpenChange?.(next);
+    if (openProp === undefined) setUncontrolledOpen(next);
+  };
   const panelId = useId();
   const metrics = LEVEL1_QUESTIONS.filter((q) => q.processId === processId);
 
   return (
-    <div className="mt-3 rounded-md border border-white/10 bg-ink-950/40">
+    <div
+      id={domainExplainerId(processId)}
+      className="mt-3 scroll-mt-28 rounded-md border border-white/10 bg-ink-950/40"
+    >
       <button
         type="button"
         className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-xs font-medium text-ink-200 hover:text-ink-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen(!open)}
       >
         <span>
           Vysvetlenie metrík · {domainLabel(processId)}

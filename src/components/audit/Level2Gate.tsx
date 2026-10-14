@@ -68,6 +68,24 @@ function UnlockCodeForm({
   );
 }
 
+/** Shown on Level 2 results when Level 2 is already unlocked. */
+export function Level2UnlockedNotice() {
+  return (
+    <article
+      id="level-2"
+      className="relative scroll-mt-28 rounded-xl border border-[#c0c7d4]/40 bg-ink-900/80 p-5 sm:p-6"
+    >
+      <p className="inline-flex items-center gap-1.5 rounded-md border border-[#c0c7d4]/40 bg-[#c0c7d4]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#e8edf5]">
+        <Shield className="h-3.5 w-3.5" aria-hidden />
+        {levelBadge(2)}
+      </p>
+      <p className="mt-3 font-display text-lg font-semibold text-ink-50">
+        Level 2 je odomknutý
+      </p>
+    </article>
+  );
+}
+
 export function Level2Gate({ onUnlocked }: UnlockGateProps) {
   const [code, setCode] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
@@ -124,7 +142,7 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
             </p>
           </div>
           <p className="max-w-[14rem] text-right text-xs text-ink-300">
-            Po úhrade dostanete prístupový kód e-mailom
+            Prístupový kód vám zašleme e-mailom po objednaní.
           </p>
         </div>
 
@@ -140,20 +158,20 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
 
         <div className="relative mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
           <a
-            href={meeting.href}
+            href={accessCodeHref(2)}
             className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-[#c0c7d4]/50 bg-[#c0c7d4]/10 px-4 py-2.5 text-sm font-semibold text-ink-50 transition hover:bg-[#c0c7d4]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c0c7d4]"
+          >
+            Objednať Level 2
+          </a>
+          <a
+            href={meeting.href}
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
             {...(meeting.external
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
           >
             <Calendar className="h-4 w-4" aria-hidden />
             Dohodnúť osobnú schôdzku
-          </a>
-          <a
-            href={accessCodeHref(2)}
-            className="text-center text-xs text-ink-300 underline-offset-2 hover:text-[#e8edf5] hover:underline sm:text-left"
-          >
-            Požiadať o prístupový kód
           </a>
         </div>
       </article>
@@ -217,7 +235,7 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
             </p>
           </div>
           <p className="max-w-[14rem] text-right text-xs text-ink-300">
-            Expertný režim — kód po úhrade alebo osobnej dohode
+            Prístupový kód vám zašleme e-mailom po objednaní.
           </p>
         </div>
 
@@ -233,20 +251,20 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
 
         <div className="relative mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
           <a
-            href={meeting.href}
+            href={accessCodeHref(3)}
             className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-[#d4af37]/55 bg-[#d4af37]/15 px-4 py-2.5 text-sm font-semibold text-[#f5e6b8] transition hover:bg-[#d4af37]/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4af37]"
+          >
+            Objednať Level 3
+          </a>
+          <a
+            href={meeting.href}
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
             {...(meeting.external
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
           >
             <Calendar className="h-4 w-4" aria-hidden />
             Dohodnúť osobnú schôdzku
-          </a>
-          <a
-            href={accessCodeHref(3)}
-            className="text-center text-xs text-ink-300 underline-offset-2 hover:text-[#f0d78c] hover:underline sm:text-left"
-          >
-            Požiadať o prístupový kód
           </a>
         </div>
       </article>
