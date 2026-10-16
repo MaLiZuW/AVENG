@@ -1,10 +1,10 @@
 # Služby — prehľad
 
-**Stav:** návrh pre vlastníka (STEP 25). Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka.
 
 ## Priama odpoveď
 
-AddValueEngineering (AVENG) pomáha výrobným MSP na Slovensku a Morave stabilizovať techniku a procesy štyrmi piliermi: Fractional Technical Leadership, zavádzanie procesov & PLM/PDM, riadenie zmien & ECO a rozvoj lídrov & koučing. Cieľom je menej hasenia a viac predvídateľnosti — nie ďalšie prezentácie.
+AddValueEngineering (AVENG) pomáha výrobným MSP v regiónoch Trenčín, Žilina a Trnava stabilizovať techniku a procesy. Ponuka má štyri piliere, Optimalizáciu a AI a self-audit. Cieľom je menej hasenia a viac predvídateľnosti — nie ďalšie prezentácie.
 
 ## Štyri piliere
 
@@ -17,22 +17,26 @@ AddValueEngineering (AVENG) pomáha výrobným MSP na Slovensku a Morave stabili
 3. **Riadenie zmien & ECO** — sledovateľné zmeny, jasné role, komunikácia do výroby.  
    → `/sluzby/riadenie-zmien-eco/`
 
-4. **Rozvoj lídrov & Koučing** — BCTC coaching majstrov a team-leaderov, aby zmeny prežili.  
+4. **Rozvoj lídrov & Koučing** — koučing majstrov a team-leaderov. BCTC certifikovaný business coach.  
    → `/sluzby/rozvoj-liderov-koucing/`
+
+## Ďalšie súčasti
+
+5. **Optimalizácia a AI** — návrhy riešení. Implementácia až po samostatnej dohode.  
+   → `/optimalizacia-a-ai/`
+
+6. **Self-audit**  
+   → `/self-audit/`
 
 ## Kedy to dáva zmysel
 
-Keď firma rastie, majiteľ denne hasí operatívu, chýba systém v technike alebo zmeny na dielni neprežijú. Orientačne výrobné MSP s 20–250 zamestnancami — automotive, EMS, strojárstvo, plasty, kovovýroba.
-
-[[TODO(owner): Potvrdiť sektory a pásmo 20–250 zam. ako verejný claim.]]
+Keď firma rastie, majiteľ denne hasí operatívu, chýba systém v technike alebo zmeny na dielni neprežijú. Orientačne výrobné MSP s 20 – 250 zamestnancami — automotive, EMS, strojárstvo, plasty, kovovýroba.
 
 ## Čo dostanete (spoločný rámec)
 
 - Diagnostiku (self-audit alebo osobný rozhovor).
 - Konkrétny rozsah spolupráce podľa dohody.
 - Dôraz na implementáciu na shopfloori, nie len dokumenty.
-
-[[TODO(owner): Spoločný „starter“ balík (self-audit + 1 workshop) — áno/nie a obsah?]]
 
 ## Ako to prebieha
 
@@ -43,9 +47,7 @@ Keď firma rastie, majiteľ denne hasí operatívu, chýba systém v technike al
 
 ## Model spolupráce
 
-Fractional / projekt / koučing podľa piliera. Level 2 self-auditu stojí 290 €; Level 3 po dohode.
-
-[[TODO(owner): Verejné cenové pásma služieb mimo auditu?]]
+Fractional / projekt / koučing podľa piliera. Cena vychádza z hodinovej sadzby, prípadne z odmeny viazanej na vopred dohodnuté ciele. Presný rozsah a cena sú v ponuke.
 
 ## FAQ
 

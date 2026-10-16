@@ -1,10 +1,10 @@
 # Rozvoj lídrov & Koučing
 
-**Stav:** návrh pre vlastníka (STEP 25). Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka.
 
 ## Priama odpoveď
 
-Rozvíjame majstrov a team-leaderov, aby systémové zmeny prežili aj bez permanentnej prítomnosti konzultanta. Ide o BCTC coaching v kombinácii s praktickými rituálmi (denný/týždenný rytmus, vizuálne riadenie, spätná väzba) — pre výrobné MSP na Slovensku a Morave.
+Rozvíjame majstrov a team-leaderov, aby systémové zmeny prežili aj bez permanentnej prítomnosti konzultanta. Vladimir je BCTC certifikovaný business coach. Súčasťou sú praktické rituály (denný/týždenný rytmus, vizuálne riadenie, spätná väzba) — pre výrobné MSP v regiónoch Trenčín, Žilina a Trnava.
 
 ## Kedy to dáva zmysel
 
@@ -18,7 +18,7 @@ Rozvíjame majstrov a team-leaderov, aby systémové zmeny prežili aj bez perma
 - Koučing zameraný na prijatie zmien na dielni a v tímoch.
 - Praktické rituály: denný/týždenný rytmus, vizuálne riadenie, spätná väzba.
 - Lídrov, ktorí udržia nastavené procesy.
-- [[TODO(owner): Formát (individuálny / skupinový), frekvencia sedení, trvanie programu?]]
+- Formát je individuálny aj skupinový. Program má 5 – 6 stretnutí, 1 – 2-krát mesačne, inak podľa dohody.
 
 ## Ako to prebieha
 
@@ -28,20 +28,16 @@ Rozvíjame majstrov a team-leaderov, aby systémové zmeny prežili aj bez perma
 4. Spoločné riešenie odporu voči konkrétnym zmenám.
 5. Vyhodnotenie a odovzdanie návykov tímu.
 
-[[TODO(owner): Typický počet sedení / mesiacov?]]
-
 ## Model spolupráce
 
 Samostatný program alebo doplnok k Fractional Technical Leadership a ECO/PLM zásahom.
 
-[[TODO(owner): Cenník alebo balíky?]]  
-[[TODO(owner): Potvrďte oficiálny názov a rozsah BCTC certifikácie, ktorý smieme uvádzať verejne.]]
+Cena vychádza z hodinovej sadzby, prípadne z odmeny viazanej na vopred dohodnuté ciele. Presný rozsah a cena sú v ponuke.
 
 ## FAQ
 
 **Čo je BCTC coaching?**  
-Business Coaching zameraný na prekonanie odporu voči zmenám na dielni a v tímoch.  
-[[TODO(owner): Doplňte overenú vetu o certifikácii (inéštúcia, rok) bez vymýšľania.]]
+BCTC certifikovaný business coach.
 
 **Pre koho sedenia sú?**  
 Najmä majstri a team-leaderi; podľa dohody aj stredný manažment.

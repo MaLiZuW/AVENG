@@ -1,6 +1,6 @@
 # Optimalizácia a AI
 
-**Stav:** návrh pre vlastníka (STEP 25). Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka.
 
 ## Priama odpoveď
 
@@ -21,8 +21,7 @@ Podľa existujúceho webu tri oblasti:
 2. **Digitálna transformácia** — OEE meranie, prepojenie s ERP a shopfloor dátami; digitálna zrelosť, ktorá prináša rozhodnutia.
 3. **Využitie AI v sektore MSP** — automatizácia administratívy, asistenti pre dokumentáciu, zníženie nákladov bez big-tech komplexity.
 
-[[TODO(owner): Konkrétne deliverables / nástroje / stack, ktorý smiete menovať?]]  
-[[TODO(owner): Čo AI výslovne nerobíte (hranice ponuky)?]]
+Navrhujeme riešenia. Implementácia nasleduje až po samostatnej dohode.
 
 ## Ako to prebieha
 
@@ -32,11 +31,9 @@ Podľa existujúceho webu tri oblasti:
 4. Vyhodnotenie a rozšírenie.
 5. Odovzdanie vlastníctva interne.
 
-[[TODO(owner): Typická dĺžka a či ide o samostatnú službu, alebo súčasť fractional vedenia?]]
+## Príklad z praxe
 
-## Model spolupráce
-
-[[TODO(owner): Samostatný produkt vs. doplnok k pilierom? Cenník?]]
+Automatizácia správy dokumentácie, schvaľovacie slučky a nahrávanie dokumentácie do ERP pomocou robota.
 
 ## FAQ
 
@@ -50,12 +47,10 @@ Nie. Žiadne absolútne sľuby; najprv diagnostika a pilot.
 Áno. Self-audit ukáže indikatívne medzery; optimalizácia a AI riešia vybrané páky.
 
 **Pre koho?**  
-Výrobné MSP na Slovensku a Morave.
+Výrobné MSP v regiónoch Trenčín, Žilina a Trnava.
 
 **Ako začať?**  
 vladimir@addvalueengineering.sk alebo /kontakt/; prípadne /self-audit/.
-
-[[TODO(owner): Príklad reálneho (anonymizovaného) zásahu bez vymýšľania čísel?]]
 
 ## Záverečné CTA
 

@@ -1,6 +1,6 @@
 # FAQ — globálny návrh
 
-**Stav:** návrh pre vlastníka (STEP 25). Vychádza z `FaqSection.tsx`. Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka. Vychádza z `FaqSection.tsx`.
 
 ## Priama odpoveď
 
@@ -18,9 +18,7 @@ Keď firma rastie, chýba systém v technike alebo majiteľ denne hasí operatí
 
 ### 3. Pre koho je AddValueEngineering určené?
 
-Pre majiteľov, CEO, COO a technických riaditeľov výrobných MSP (orientačne 20–250 zamestnancov) na Slovensku a Morave — najmä automotive, EMS, strojárstvo, plasty a kovovýroba.
-
-[[TODO(owner): Potvrdiť pásmo 20–250 a zoznam sektorov.]]
+Pre majiteľov, CEO, COO a technických riaditeľov výrobných MSP (orientačne 20 – 250 zamestnancov) v regiónoch Trenčín, Žilina a Trnava — najmä automotive, EMS, strojárstvo, plasty a kovovýroba.
 
 ### 4. Čo obsahuje Level 1 self-audit?
 
@@ -28,9 +26,7 @@ Orientačný skríning 20 otázok naprieč piatimi procesnými doménami. Hodnot
 
 ### 5. Čo obsahuje Level 2 a Level 3?
 
-Level 2 pridá rozpis po otázkach a prioritizáciu podľa finančného dopadu (60 otázok); prístup stojí 290 €. Level 3 ide do príčinovej analýzy a simulačného režimu investícií. Prístup k L2/L3 je po objednaní / úhrade alebo dohode.
-
-[[TODO(owner): Schváliť toto znenie namiesto starého „rozklad OEE, COPQ…“, kým nie sú exact vstupy A×P×Q.]]
+Level 2 je rozpis po otázkach a prioritizácia podľa finančného dopadu. Je to podklad na poradu majiteľov. Level 3 ide do príčinovej analýzy a simulačného režimu investícií. Prístupový kód vám zašleme e-mailom spolu s údajmi na úhradu (prevodom na základe faktúry).
 
 ### 6. Ako spracúvate osobné údaje z auditu a kontaktov?
 
@@ -38,8 +34,7 @@ Level 2 pridá rozpis po otázkach a prioritizáciu podľa finančného dopadu (
 
 ### 7. Ako dlho uchovávate údaje z auditu?
 
-[[TODO(owner): Ponechať text z `retentionFaqClaimSk()` po schválení retencie — skopírovať finálne znenie sem pred publikáciou.]]  
-Detail nájdete v Zásadách ochrany osobných údajov.
+Údaje uchovávame len po dobu nevyhnutnú na vyhodnotenie auditu a spracovanie dopytu. Detail nájdete v Zásadách ochrany osobných údajov.
 
 ### 8. Sú výsledky auditu zárukou úspor?
 
@@ -52,8 +47,6 @@ Ide o interné referencie AVENG založené na expertnom odhade a indikatívnych 
 ### 10. Ako sa objedná konzultácia alebo cenová ponuka?
 
 Napíšte cez kontaktný formulár alebo na vladimir@addvalueengineering.sk. Ozveme sa s návrhom termínu.
-
-[[TODO(owner): Ak nastavíte NEXT_PUBLIC_BOOKING_URL, doplní sa veta o priamej rezervácii.]]
 
 ---
 

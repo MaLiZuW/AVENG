@@ -1,10 +1,10 @@
 # O nás
 
-**Stav:** návrh pre vlastníka (STEP 25). Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka.
 
 ## Priama odpoveď
 
-AddValueEngineering (AVENG) vedie Vladimir — Fractional Engineering Manager s koučingom na dielni. Po viac ako 15 rokoch v EMS priemyselnom inžinierstve (NPI/ECO, PLM/PDM, vedenie inžinierskych tímov) pomáha výrobným MSP na Slovensku a Morave nastaviť systém v technike a ľuďoch. Právnická osoba: AV – Agency, s. r. o.
+AddValueEngineering (AVENG) vedie Vladimir, Fractional Engineering Manager s koučingom. Má 15+ rokov praxe v EMS inžinierstve a viedol tím až 35 inžinierov. Je BCTC certifikovaný business coach. Pracuje s majiteľmi výrobných MSP v regiónoch Trenčín, Žilina a Trnava. Právnická osoba: AV – Agency, s. r. o. Sídlo: Zliechovská ulica 1117/110, 018 64 Košeca.
 
 ## Kedy dáva zmysel nás osloviť
 
@@ -14,23 +14,17 @@ AddValueEngineering (AVENG) vedie Vladimir — Fractional Engineering Manager s 
 
 ## Čo prinášame (z existujúceho webu)
 
-- **15+ rokov praxe** — EMS: NPI/ECO, PLM/PDM, vedenie inžinierskych tímov (až 35 inžinierov).
-- **BCTC certifikácia** — Business Coaching zameraný na odpor voči zmenám.
-- **Lokálny partner** — implementácia na shopfloor: Trenčín, Žilina, Trnava a Morava.
-
-[[TODO(owner): Potvrdiť „až 35 inžinierov“ a regióny ako verejný text.]]  
-[[TODO(owner): Fotografia / bio odsek — schválený text a súbor?]]  
-[[TODO(owner): Ulica a číslo sídla pre register (dnes: Košeca 01864).]]
+- **15+ rokov praxe** — EMS inžinierstvo a vedenie tímu až 35 inžinierov.
+- **BCTC certifikovaný business coach.**
+- **Lokálny partner** — Trenčín, Žilina, Trnava.
 
 ## Ako spolupracujeme
 
-Štyri piliere služieb + self-audit (Level 1 zdarma; Level 2 za 290 €; Level 3 po dohode). Detail v návrhoch služieb.
+Štyri piliere služieb, Optimalizácia a AI a self-audit (Level 1 zdarma; Level 2 za 290 €; Level 3 po dohode). Detail v návrhoch služieb.
 
 ## Model spolupráce
 
 Fractional / projekt / koučing podľa dohody. Kontakt: vladimir@addvalueengineering.sk, +421 948 007 304.
-
-[[TODO(owner): LinkedIn / ďalšie sociálne URL na zverejnenie?]]
 
 ## FAQ
 
@@ -38,12 +32,10 @@ Fractional / projekt / koučing podľa dohody. Kontakt: vladimir@addvalueenginee
 Vladimir · AddValueEngineering · Powered by AV – Agency, s. r. o. (IČO 47054328).
 
 **Kde pôsobíte?**  
-Slovensko a Morava; v texte webu sú uvedené Trenčín, Žilina, Trnava a Morava.
-
-[[TODO(owner): Rozšíriť / zúžiť zoznam regiónov?]]
+V regiónoch Trenčín, Žilina a Trnava.
 
 **Aké sektory?**  
-Najmä automotive, EMS, strojárstvo, plasty a kovovýroba (orientačne 20–250 zam.).
+Najmä automotive, EMS, strojárstvo, plasty a kovovýroba (orientačne 20 – 250 zam.).
 
 **Ako overíte fit?**  
 Self-audit alebo krátky rozhovor — bez sľubu garantovaných úspor.

@@ -1,10 +1,10 @@
 # Zavádzanie procesov & PLM/PDM
 
-**Stav:** návrh pre vlastníka (STEP 25). Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka.
 
 ## Priama odpoveď
 
-Pomáhame výrobným MSP zaviesť jednu pravdu o produkte: štruktúru kusovníkov, verzie výkresov, TPV a uvoľnenia do výroby. Služba je pre firmy, ktoré majú chaos v dokumentácii, ťažké NPI nábehy alebo rozptýlené zdroje pravdy medzi Excelom, e-mailom a dielňou.
+Pomáhame výrobným MSP zaviesť jednu pravdu o produkte: štruktúru kusovníkov, verzie výkresov, TPV a uvoľnenia do výroby. Služba je pre firmy, ktoré majú chaos v dokumentácii, ťažké NPI nábehy alebo rozptýlené zdroje pravdy medzi Excelom, e-mailom a dielňou. Zameranie je len na procesy.
 
 ## Kedy to dáva zmysel
 
@@ -13,13 +13,10 @@ Pomáhame výrobným MSP zaviesť jednu pravdu o produkte: štruktúru kusovník
 - Chýba jasný proces uvoľnenia do výroby a TPV.
 - Plánujete alebo už máte PLM/PDM, ale procesy okolo neho nie sú nastavené.
 
-[[TODO(owner): Ktoré PLM/PDM platformy reálne podporujete (názvy)?]]
-
 ## Čo dostanete
 
 - Poriadok v dokumentácii a TPV — jedna pravda o produkte od výkresu po shopfloor.
 - Predvídateľnejší NPI nábeh a menej chýb z rozptýlenej dokumentácie.
-- [[TODO(owner): Konkrétne deliverables (procesná mapa, RACI, šablóny uvoľnenia, školenie…)?]]
 
 ## Ako to prebieha
 
@@ -29,13 +26,13 @@ Pomáhame výrobným MSP zaviesť jednu pravdu o produkte: štruktúru kusovník
 4. Rozšírenie a zaškolenie tímu.
 5. Odovzdanie vlastníctva procesu interne.
 
-[[TODO(owner): Typická dĺžka projektu (týždne/mesiace)?]]
+Rozsah a dĺžka sa riadia požiadavkou.
 
 ## Model spolupráce
 
 Projektová alebo fractional podpora podľa rozsahu. Môže nadväzovať na Fractional Technical Leadership.
 
-[[TODO(owner): Cenové pásmo alebo spôsob nacenenia?]]
+Cena vychádza z hodinovej sadzby, prípadne z odmeny viazanej na vopred dohodnuté ciele. Presný rozsah a cena sú v ponuke.
 
 ## FAQ
 
@@ -43,12 +40,10 @@ Projektová alebo fractional podpora podľa rozsahu. Môže nadväzovať na Frac
 Že kusovník, výkres, TPV a uvoľnenie do výroby majú jednu riadenú verziu — nie niekoľko súborov v e-mailoch.
 
 **Je to implementácia softvéru PLM?**  
-Zameranie je na procesy a poriadok v dátach. Softvér môže byť súčasťou, ale nie je cieľ sám osebe.
-
-[[TODO(owner): Robíte aj dodávku/konfiguráciu konkrétneho PLM, alebo len procesy?]]
+Nie. Softvér nedodávame ani nekonfigurujeme. Zameranie je len na procesy.
 
 **Pre koho?**  
-Výrobné MSP na Slovensku a Morave, najmä s NPI a zmenovým konaním.
+Výrobné MSP v regiónoch Trenčín, Žilina a Trnava, najmä s NPI a zmenovým konaním.
 
 **Ako overíte prínos?**  
 Najprv self-audit alebo osobný rozhovor; následne dohoda rozsahu. Bez sľubu „garantovaných úspor“.

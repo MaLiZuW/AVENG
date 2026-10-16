@@ -1,10 +1,10 @@
 # Fractional Technical Leadership
 
-**Stav:** návrh pre vlastníka (STEP 25). Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka.
 
 ## Priama odpoveď
 
-Fractional Technical Leadership je seniorné technické vedenie na čiastkový úväzok — externý Head of Engineering pre výrobné MSP, ktoré potrebujú stabilitu priorít, roadmapu techniky a prepojenie vývoja s výrobou bez nákladov na full-time manažéra. Služba je určená majiteľom, CEO, COO a technickým riaditeľom výrobných MSP (orientačne 20–250 zamestnancov) na Slovensku a Morave.
+Fractional Technical Leadership je seniorné technické vedenie na čiastkový úväzok — externý Head of Engineering pre výrobné MSP, ktoré potrebujú stabilitu priorít, roadmapu techniky a prepojenie vývoja s výrobou bez nákladov na full-time manažéra. Služba je určená majiteľom, CEO, COO a technickým riaditeľom výrobných MSP (orientačne 20 – 250 zamestnancov) v regiónoch Trenčín, Žilina a Trnava.
 
 ## Kedy to dáva zmysel
 
@@ -13,31 +13,28 @@ Fractional Technical Leadership je seniorné technické vedenie na čiastkový �
 - Full-time Head of Engineering zatiaľ nie je úmerný veľkosti tímu.
 - Treba dočasne stabilizovať NPI, ECO alebo prepojenie vývoja s výrobou.
 
-[[TODO(owner): Aké typické dni v mesiaci / FTE rozsah ponúkate (napr. 2–8 dní/mesiac)?]]
+## Ako spolupráca prebieha
 
-## Čo dostanete
-
-- Roadmapa techniky a jasné priority.
-- Podpora pri rozhodovaní o investíciách (ROI rámec podľa dohody).
-- Nastavenie rytmu tímu a prepojenie vývoja s výrobou.
-- [[TODO(owner): Doplňte pevný zoznam deliverables (dokumenty, rituály, reporty) — čo je vždy v cene.]]
-
-## Ako to prebieha
-
-1. Úvodný rozhovor / self-audit — kde unikajú peniaze a kapacita.
-2. Dohoda rozsahu a rytmu spolupráce.
-3. Stabilizácia priorít a nastavenie operačného rytmu.
-4. Spoločná práca na vybraných pákach (NPI, ECO, PLM podľa potreby).
-5. Odovzdanie systému tímu — aby zmeny prežili bez permanentnej prítomnosti konzultanta.
-
-[[TODO(owner): Potvrďte / upravte počet krokov a typickú dĺžku prvého cyklu.]]
+1. Konverzácia s majiteľom.
+2. Analýza stavu.
+3. Diskusia o ďalších krokoch.
 
 ## Model spolupráce
 
-Čiastkové seniorné vedenie bez plného úväzku. Rozsah a frekvencia podľa dohody.
+Čiastkové seniorné vedenie bez plného úväzku. Typicky 4 stretnutia po 2 hodiny mesačne (spolu približne 8 hodín mesačne), upraviteľné dohodou.
 
-[[TODO(owner): Cenové pásmo alebo model fakturácie (denná sadzba / balík / retainer)?]]  
-[[TODO(owner): Minimálny záväzok (mesiace) a výpovedná lehota?]]
+Cena vychádza z hodinovej sadzby, prípadne z odmeny viazanej na vopred dohodnuté ciele. Presný rozsah a cena sú v ponuke.
+
+Žiadny minimálny záväzok. Podmienky vrátane výpovednej lehoty sa dohodnú v ponuke.
+
+## Vybrané skúsenosti z praxe
+
+Ide o skúsenosti z predchádzajúcej praxe, nie o zákazky AVENG.
+
+1. Zavedenie procesu zmenového konania (ECO) a podporného nástroja v elektronickej zákazkovej výrobe (EMS).
+2. Zriadenie interného tooling laboratória v EMS výrobe.
+3. Zavedenie systému správy dokumentácie v EMS výrobe.
+4. Automatizácia schvaľovacích tokov a nahrávania dokumentácie do ERP pomocou robota.
 
 ## FAQ
 
@@ -48,15 +45,13 @@ Fractional engineering manager (alebo Fractional Technical Leadership) je senior
 Keď firma rastie, chýba systém v technike alebo majiteľ denne hasí operatívu — a full-time Head of Engineering zatiaľ nie je úmerný veľkosti tímu.
 
 **Pre koho je služba?**  
-Pre majiteľov, CEO, COO a technických riaditeľov výrobných MSP (orientačne 20–250 zamestnancov) na Slovensku a Morave — najmä automotive, EMS, strojárstvo, plasty a kovovýroba.
+Pre majiteľov, CEO, COO a technických riaditeľov výrobných MSP (orientačne 20 – 250 zamestnancov) v regiónoch Trenčín, Žilina a Trnava — najmä automotive, EMS, strojárstvo, plasty a kovovýroba.
 
 **Ako začať?**  
 Napíšte cez kontaktný formulár alebo na vladimir@addvalueengineering.sk. Ozveme sa s návrhom termínu. Prvý krok môže byť aj bezplatný self-audit na webe.
 
 **Je self-audit zárukou úspor?**  
 Nie. Level 1 je rýchla orientačná diagnostika založená na vašich odpovediach.
-
-[[TODO(owner): Chcete sem doplniť FAQ o referenciách / prípadových štúdiách? Ak áno, uveďte overené fakty.]]
 
 ## Záverečné CTA
 

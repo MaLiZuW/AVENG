@@ -1,6 +1,6 @@
 # Riadenie zmien & ECO
 
-**Stav:** návrh pre vlastníka (STEP 25). Nezverejňovať s `[[TODO(owner): …]]`.
+**Stav:** návrh doplnený odpoveďami vlastníka.
 
 ## Priama odpoveď
 
@@ -18,7 +18,7 @@ Nastavujeme zmenové konanie (ECO) tak, aby zmeny boli sledovateľné, komunikov
 - Jasná stopa verzií, uvoľnení a komunikácie do výroby.
 - Definované role a rytmus zmenového konania.
 - Rýchlejšia spätná väzba z výroby do rozhodovania.
-- [[TODO(owner): Šablóny ECO / checklisty / KPI, ktoré odovzdávate?]]
+- Šablóny, checklisty a KPI sa pripravujú podľa požiadavky, na projekt. Pevný zoznam nie je.
 
 ## Ako to prebieha
 
@@ -28,13 +28,11 @@ Nastavujeme zmenové konanie (ECO) tak, aby zmeny boli sledovateľné, komunikov
 4. Doladenie s majstrami a kvalitou.
 5. Stabilizácia rituálov a odovzdanie vlastníkovi procesu.
 
-[[TODO(owner): Typická dĺžka zásahu?]]
+Dĺžka zásahu sa riadi požiadavkou a rieši sa na projekt.
 
 ## Model spolupráce
 
-Projektová stabilizácia ECO alebo súčasť fractional vedenia.
-
-[[TODO(owner): Cenový model?]]
+Projektová stabilizácia ECO alebo súčasť fractional vedenia. Cena sa určuje podľa požiadavky, na projekt.
 
 ## FAQ
 
@@ -42,9 +40,7 @@ Projektová stabilizácia ECO alebo súčasť fractional vedenia.
 Zmenové konanie — riadená cesta od návrhu zmeny po uvoľnenie do výroby so stopou verzií.
 
 **Riešite aj softvér na zmeny?**  
-Primárne procesy, role a komunikáciu. Nástroje podľa toho, čo už firma používa.
-
-[[TODO(owner): Ktoré nástroje / ERP / PLM ste reálne napájali na ECO?]]
+Nie. Zameranie je na proces, role a komunikáciu.
 
 **Prečo zmeny zlyhávajú na dielni?**  
 Často nie pre techniku, ale pre nejasnú komunikáciu a odpor — preto spájame proces s prácou s ľuďmi (pozri aj pilier Rozvoj lídrov).
