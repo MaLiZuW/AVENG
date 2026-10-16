@@ -9,6 +9,8 @@
  * TODO(owner/legal): review processor list and DPAs with a lawyer
  */
 
+import { analyticsProcessorOrNull } from "@/config/analytics";
+
 export type Processor = {
   name: string;
   purpose: string;
@@ -17,9 +19,9 @@ export type Processor = {
 };
 
 /** Last policy text update shown on /ochrana-osobnych-udajov/. */
-export const POLICY_UPDATED = "13. 10. 2026";
+export const POLICY_UPDATED = "16. 10. 2026";
 
-export const processors: readonly Processor[] = [
+const BASE_PROCESSORS: readonly Processor[] = [
   {
     name: "WebSupport",
     purpose: "hosting statickej webovej prezentácie",
@@ -38,4 +40,13 @@ export const processors: readonly Processor[] = [
     // (stated only in policy section "Prenos údajov mimo EÚ")
     locationNote: "e-mailová doručovacia služba",
   },
-] as const;
+];
+
+/** Processors for the public policy page (analytics only when configured). */
+export function getProcessors(): readonly Processor[] {
+  const analytics = analyticsProcessorOrNull();
+  return analytics ? [...BASE_PROCESSORS, analytics] : BASE_PROCESSORS;
+}
+
+/** Base list without optional analytics (tests / static references). */
+export const processors: readonly Processor[] = BASE_PROCESSORS;

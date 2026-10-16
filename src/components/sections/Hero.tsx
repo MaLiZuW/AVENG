@@ -1,3 +1,5 @@
+import TrackBookingLink from "@/components/TrackBookingLink";
+
 export default function Hero() {
   const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
 
@@ -32,14 +34,14 @@ export default function Hero() {
               Spustiť bezplatný self-audit
             </a>
             {bookingUrl ? (
-              <a
+              <TrackBookingLink
                 href={bookingUrl}
                 className="btn-secondary"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Dohodnúť 30-min konzultáciu
-              </a>
+              </TrackBookingLink>
             ) : (
               <a href="/sluzby/" className="btn-secondary">
                 Preskúmať 4 piliere

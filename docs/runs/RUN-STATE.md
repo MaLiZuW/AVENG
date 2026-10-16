@@ -78,8 +78,15 @@
 - Status: done — STOP (čaká na odpovede vlastníka)
 
 ## STEP 26
-- Commit: `5713553ae1c99e28eac0f83a1d14344c097ed534`
+- Commit: `8a880f03cf297ba8f2f353215d374622c4551ac5`
 - Checks: lint OK (warning Header img), tsc OK, build OK, check:copy OK, check:meta OK (13), check:shared OK; GLOBAL Select-String bez Morava/80€/global leader v src+public (hits „10 000“/„50 000“ len v predexistujúcich pásmach `questions.ts`)
 - TODO(owner): Q5 sociálne; Q6 BCTC názov/rok/logo; Q24 Optimalizácia cenník; Q30 booking URL; tooling lab význam; zverejnenie 80 €/hod
 - Odchýlky: check:copy kontroluje `[[TODO` + viditeľné TODO/`[[` v HTML (nie bare `[[` v RSC/JS); L2 priceLabel „Podľa faktúry“ namiesto 290 €; plán docs/runs/plan-26.md
+- Status: done
+
+## STEP 27
+- Commit: `0aa4a0fd4a8e51c8423ee5ee21879642b92139cc`
+- Checks: lint OK, tsc OK, build OK, check:copy OK; out/ bez plausible/umami skriptu (provider none); llms.txt + indexnow key v out/
+- TODO(owner): výber analytics providera/regiónu; Search Console / Bing / GBP / adresáre (OWNER_ACTIONS_VISIBILITY.md); spustiť `npm run indexnow` po deployi
+- Odchýlky: IndexNow kľúč v `public/aveng-indexnow-key.txt` (nie UUID hostname); llms.txt voliteľný (Google nepoužíva)
 - Status: done

@@ -7,6 +7,7 @@ import {
   Gauge,
   Shield,
 } from "lucide-react";
+import TrackBookingLink from "@/components/TrackBookingLink";
 import {
   AUDIT_LEVELS,
   levelBadge,
@@ -163,16 +164,25 @@ export default function AuditTeaser() {
             Spustiť bezplatný self-audit
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
-          <a
-            href={meeting.href}
-            className="btn-secondary !px-6 !py-3.5 inline-flex items-center gap-2"
-            {...(meeting.external
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
-          >
-            <Calendar className="h-4 w-4" aria-hidden />
-            Dohodnúť osobnú schôdzku
-          </a>
+          {meeting.external ? (
+            <TrackBookingLink
+              href={meeting.href}
+              className="btn-secondary !px-6 !py-3.5 inline-flex items-center gap-2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Calendar className="h-4 w-4" aria-hidden />
+              Dohodnúť osobnú schôdzku
+            </TrackBookingLink>
+          ) : (
+            <Link
+              href={meeting.href}
+              className="btn-secondary !px-6 !py-3.5 inline-flex items-center gap-2"
+            >
+              <Calendar className="h-4 w-4" aria-hidden />
+              Dohodnúť osobnú schôdzku
+            </Link>
+          )}
         </div>
         <p className="mt-4 text-center text-xs text-ink-300">
           Level 1 je online a zdarma. Level 2/3 odomknete prístupovým kódom —

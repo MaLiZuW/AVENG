@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import GdprLink from "@/components/GdprModal";
+import TrackBookingLink from "@/components/TrackBookingLink";
 import { company } from "@/config/company";
 import { getPublicSocialLinks, type SocialKey } from "@/config/social";
 
@@ -125,14 +126,14 @@ export default function Footer({
               {bookingUrl ? (
                 <>
                   {" · "}
-                  <a
+                  <TrackBookingLink
                     href={bookingUrl}
                     className="text-signal-bright underline-offset-2 hover:underline"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
                     Dohodnúť 30-minútovú konzultáciu
-                  </a>
+                  </TrackBookingLink>
                 </>
               ) : null}
             </p>

@@ -14,6 +14,7 @@ import {
   leadPayloadToReportMail,
   sendAuditReportEmail,
 } from "@/lib/sendAuditReport";
+import { track } from "@/lib/analytics";
 import { submitAuditLead } from "@/lib/supabase";
 
 interface Props {
@@ -94,6 +95,7 @@ export default function LeadForm({
     }
 
     if (isAuditReportApiConfigured()) {
+      track("report_requested");
       const mail = await sendAuditReportEmail(
         leadPayloadToReportMail(leadPayload, result, res.id, presentation),
       );

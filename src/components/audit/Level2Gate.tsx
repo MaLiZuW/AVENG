@@ -9,6 +9,8 @@ import {
   levelBadge,
   personalMeetingHref,
 } from "@/config/levels";
+import TrackBookingLink from "@/components/TrackBookingLink";
+import { track } from "@/lib/analytics";
 import { requestUnlock } from "@/lib/unlock/session";
 
 interface UnlockGateProps {
@@ -97,9 +99,11 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
     e.preventDefault();
     setMsg(null);
     setPending(true);
+    track("unlock_attempt", { level: 2 });
     const res = await requestUnlock(code, 2);
     setPending(false);
     if (res.ok) {
+      track("unlock_success", { level: 2 });
       onUnlocked();
       return;
     }
@@ -164,16 +168,25 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
           >
             Objednať Level 2
           </a>
-          <a
-            href={meeting.href}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-            {...(meeting.external
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
-          >
-            <Calendar className="h-4 w-4" aria-hidden />
-            Dohodnúť osobnú schôdzku
-          </a>
+          {meeting.external ? (
+            <TrackBookingLink
+              href={meeting.href}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Calendar className="h-4 w-4" aria-hidden />
+              Dohodnúť osobnú schôdzku
+            </TrackBookingLink>
+          ) : (
+            <a
+              href={meeting.href}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+            >
+              <Calendar className="h-4 w-4" aria-hidden />
+              Dohodnúť osobnú schôdzku
+            </a>
+          )}
         </div>
       </article>
     </>
@@ -190,9 +203,11 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
     e.preventDefault();
     setMsg(null);
     setPending(true);
+    track("unlock_attempt", { level: 3 });
     const res = await requestUnlock(code, 3);
     setPending(false);
     if (res.ok) {
+      track("unlock_success", { level: 3 });
       onUnlocked();
       return;
     }
@@ -257,16 +272,25 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
           >
             Objednať Level 3
           </a>
-          <a
-            href={meeting.href}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-            {...(meeting.external
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
-          >
-            <Calendar className="h-4 w-4" aria-hidden />
-            Dohodnúť osobnú schôdzku
-          </a>
+          {meeting.external ? (
+            <TrackBookingLink
+              href={meeting.href}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Calendar className="h-4 w-4" aria-hidden />
+              Dohodnúť osobnú schôdzku
+            </TrackBookingLink>
+          ) : (
+            <a
+              href={meeting.href}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink-100 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+            >
+              <Calendar className="h-4 w-4" aria-hidden />
+              Dohodnúť osobnú schôdzku
+            </a>
+          )}
         </div>
       </article>
     </>

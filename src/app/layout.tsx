@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Manrope } from "next/font/google";
+import AnalyticsScript from "@/components/AnalyticsScript";
 import JsonLd from "@/components/JsonLd";
 import { company } from "@/config/company";
 import { buildProfessionalServiceLd } from "@/lib/jsonld";
@@ -62,6 +63,7 @@ export default function RootLayout({
   return (
     <html lang="sk" className={`${display.variable} ${sans.variable}`}>
       <body className="font-sans antialiased">
+        <AnalyticsScript />
         <JsonLd data={buildProfessionalServiceLd()} />
         {children}
       </body>

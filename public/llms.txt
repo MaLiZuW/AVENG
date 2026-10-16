@@ -1,0 +1,24 @@
+# AddValueEngineering (AVENG)
+
+> Procesný self-audit a Fractional Technical Leadership pre výrobné MSP na Slovensku (Trenčín, Žilina, Trnava).
+
+Poznámka: súbor je voliteľný. Google uvádza, že takéto súbory nepoužíva; merateľný prínos pre citácie v AI vyhľadávaní nie je dokázaný.
+
+## Hlavné stránky
+
+- [Domov](https://www.addvalueengineering.sk/): self-audit a prehľad štyroch pilierov
+- [O nás](https://www.addvalueengineering.sk/o-nas/): Vladimir — Fractional Engineering Manager s koučingom
+- [Služby](https://www.addvalueengineering.sk/sluzby/): prehľad pilierov a modelu spolupráce
+- [Fractional Technical Leadership](https://www.addvalueengineering.sk/sluzby/fractional-technical-leadership/): čiastkové technické vedenie
+- [Zavádzanie procesov & PLM/PDM](https://www.addvalueengineering.sk/sluzby/zavadzanie-procesov-plm-pdm/): jedna pravda o produkte (procesy, nie softvér)
+- [Riadenie zmien & ECO](https://www.addvalueengineering.sk/sluzby/riadenie-zmien-eco/): sledovateľné zmenové konanie
+- [Rozvoj lídrov & Koučing](https://www.addvalueengineering.sk/sluzby/rozvoj-liderov-koucing/): BCTC certifikovaný business coach
+- [Optimalizácia a AI](https://www.addvalueengineering.sk/optimalizacia-a-ai/): procesy, dáta a praktické nástroje
+- [Self-audit](https://www.addvalueengineering.sk/self-audit/): bezplatný Level 1 skríning výrobných procesov
+- [Kontakt](https://www.addvalueengineering.sk/kontakt/): formulár a e-mail
+- [Ochrana osobných údajov](https://www.addvalueengineering.sk/ochrana-osobnych-udajov/): zásady spracovania údajov
+
+## Kontakt
+
+- E-mail: vladimir@addvalueengineering.sk
+- Právnická osoba: AV – Agency, s. r. o., Zliechovská ulica 1117/110, 018 64 Košeca

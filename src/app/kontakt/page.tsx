@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
 import { contactIntentPrefill } from "@/config/levels";
+import TrackBookingLink from "@/components/TrackBookingLink";
+import { track } from "@/lib/analytics";
 import { submitSiteContact } from "@/lib/submitSiteContact";
 
 const schema = z.object({
@@ -93,6 +95,7 @@ export default function KontaktPage() {
       );
       return;
     }
+    track("contact_submit");
     setDone(true);
   }
 
@@ -114,14 +117,14 @@ export default function KontaktPage() {
           </p>
 
           {bookingUrl ? (
-            <a
+            <TrackBookingLink
               href={bookingUrl}
               className="btn-primary mt-6 inline-flex"
               target="_blank"
               rel="noopener noreferrer"
             >
               Dohodnúť 30-minútovú konzultáciu
-            </a>
+            </TrackBookingLink>
           ) : null}
 
           {done ? (

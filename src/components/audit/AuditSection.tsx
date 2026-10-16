@@ -33,6 +33,7 @@ import {
   Level2UnlockedNotice,
   Level3Gate,
 } from "./Level2Gate";
+import { track } from "@/lib/analytics";
 import { readUnlockSession } from "@/lib/unlock/session";
 import PreAuditForm from "./PreAuditForm";
 import QuestionContextPanel from "./QuestionContextPanel";
@@ -191,6 +192,7 @@ export default function AuditSection() {
   }
 
   function startLevel(next: AuditLevel) {
+    if (next === 1) track("audit_start");
     setLevel(next);
     setAnswers({});
     setAnswerDetails({});
@@ -207,7 +209,10 @@ export default function AuditSection() {
     }));
     if (!advance) return;
     if (step < questions.length - 1) setStep((s) => s + 1);
-    else setPhase("results");
+    else {
+      track("audit_level_complete", { level });
+      setPhase("results");
+    }
   }
 
   function selectOption(opt: QualitativeOption) {

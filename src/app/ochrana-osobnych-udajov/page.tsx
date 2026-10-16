@@ -3,7 +3,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
-import { POLICY_UPDATED, processors } from "@/config/processors";
+import { POLICY_UPDATED, getProcessors } from "@/config/processors";
 import { retentionPeriodClaimSk } from "@/config/retention";
 import { buildMetadata } from "@/lib/seo";
 
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
                 e-mailového doručenia:
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-5">
-                {processors.map((p) => (
+                {getProcessors().map((p) => (
                   <li key={p.name}>
                     {p.name} — {p.purpose} ({p.locationNote}).
                   </li>
