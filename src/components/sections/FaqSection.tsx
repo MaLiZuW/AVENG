@@ -1,64 +1,9 @@
 /**
- * Visible FAQ — must match JSON-LD FAQPage content.
- * TODO(owner): schváliť finálne znenie otázok a odpovedí.
+ * Homepage FAQ — visible markup must match JSON-LD FAQPage.
  */
 
 import { ChevronRight } from "lucide-react";
-import { company } from "@/config/company";
-import { retentionFaqClaimSk } from "@/config/retention";
-import { LEVEL2_PRICE_EUR } from "@/lib/audit/questions";
-
-const CONSULTATION_ANSWER_SK =
-  "Napíšte cez kontaktný formulár alebo na vladimir@addvalueengineering.sk. Ozveme sa s návrhom termínu.";
-
-const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL?.trim() ?? "";
-
-const consultationAnswer = BOOKING_URL
-  ? `${CONSULTATION_ANSWER_SK} Termín si môžete vybrať aj priamo cez rezerváciu.`
-  : CONSULTATION_ANSWER_SK;
-
-const FAQ = [
-  {
-    q: "Čo je fractional engineering manager?",
-    a: "Fractional engineering manager (alebo Fractional Technical Leadership) je seniorné technické vedenie na čiastkový úväzok. Pomáha nastaviť procesy, priority a lídrov bez nutnosti plného úväzku manažéra vo firme.",
-  },
-  {
-    q: "Kedy sa fractional technické vedenie oplatí?",
-    a: "Keď firma rastie, chýba systém v technike alebo majiteľ denne hasí operatívu — a full-time Head of Engineering zatiaľ nie je úmerný veľkosti tímu. Čiastkové vedenie dáva zmysel aj pri dočasnej stabilizácii priorít a NPI/ECO.",
-  },
-  {
-    q: "Pre koho je AddValueEngineering určené?",
-    a: "Pre majiteľov, CEO, COO a technických riaditeľov výrobných MSP (orientačne 20–250 zamestnancov) na Slovensku a Morave — najmä automotive, EMS, strojárstvo, plasty a kovovýroba.",
-  },
-  {
-    q: "Čo obsahuje Level 1 self-audit?",
-    a: "Orientačný skríning 20 otázok naprieč piatimi procesnými doménami. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE). Výstupom je indikatívny potenciál úspor a tri prioritné odporúčania — nie záruka výsledku.",
-  },
-  {
-    q: "Čo obsahuje Level 2 a Level 3?",
-    a: `Level 2 rozkladá kľúčové metriky do väčšieho detailu (60 otázok); prístup stojí ${LEVEL2_PRICE_EUR} €. Level 3 ide do príčinovej analýzy a simulačného režimu investícií. Prístup k L2/L3 je po úhrade alebo dohode.`,
-  },
-  {
-    q: "Ako spracúvate osobné údaje z auditu a kontaktov?",
-    a: `Údaje používame na vyhodnotenie auditu a vybavenie dopytu. Údaje spracúvajú naši poskytovatelia hostingu, databázy a e-mailového doručenia. Detail nájdete v Zásadách ochrany osobných údajov. Kontakt: ${company.email}.`,
-  },
-  {
-    q: "Ako dlho uchovávate údaje z auditu?",
-    a: `${retentionFaqClaimSk()} Detail nájdete v Zásadách ochrany osobných údajov.`,
-  },
-  {
-    q: "Sú výsledky auditu zárukou úspor?",
-    a: "Nie. Level 1 je rýchla orientačná diagnostika založená na vašich odpovediach. Pre overenie dát odporúčame Level 2/3 alebo obchôdzku vo výrobe.",
-  },
-  {
-    q: "Odkiaľ pochádzajú referenčné hodnoty?",
-    a: "Ide o interné referencie AVENG založené na expertnom odhade a indikatívnych medzinárodných podkladoch — nie oficiálnu štatistiku ani priemer slovenských MSP.",
-  },
-  {
-    q: "Ako sa objedná konzultácia alebo cenová ponuka?",
-    a: consultationAnswer,
-  },
-] as const;
+import { HOME_FAQ } from "@/content/home-faq";
 
 export default function FaqSection() {
   return (
@@ -73,7 +18,7 @@ export default function FaqSection() {
           Časté otázky
         </h2>
         <ul className="mt-10 space-y-4">
-          {FAQ.map((item) => (
+          {HOME_FAQ.map((item) => (
             <li key={item.q}>
               <details className="group rounded-md border border-white/10 bg-ink-900/40 px-4 py-3">
                 <summary className="cursor-pointer list-none font-semibold text-ink-50 marker:content-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright [&::-webkit-details-marker]:hidden">
@@ -97,4 +42,4 @@ export default function FaqSection() {
   );
 }
 
-export { FAQ };
+export { HOME_FAQ as FAQ };

@@ -19,19 +19,24 @@ export const company = {
   legalNameAscii: "AV - Agency, s. r. o.",
   ico: "47054328",
   dic: "2023729796",
-  /** Street unknown — locality + postal only. TODO(owner): verify street/number against commercial register. */
+  streetAddress: "Zliechovská ulica 1117/110",
   addressLocality: "Košeca",
   postalCode: "01864",
   addressCountry: "SK",
   addressCountryName: "Slovenská republika",
-  addressDisplay: "Košeca 01864, Slovenská republika",
-  /** Legal seat for policy / footer; street/number not yet verified. */
-  registeredSeat: "Košeca 01864, Slovenská republika",
+  /** Human-readable seat with spaced postal code. */
+  addressDisplay: "Zliechovská ulica 1117/110, 018 64 Košeca",
+  /** Legal seat for policy / footer. */
+  registeredSeat: "Zliechovská ulica 1117/110, 018 64 Košeca, Slovenská republika",
   phoneDisplay: "+421 948 007 304",
   phoneTel: "+421948007304",
   email: "vladimir@addvalueengineering.sk",
   founderName: "Vladimir",
   siteUrl: resolveSiteUrl(),
+  /** Public service regions (SK: TN · ZA · TT). */
+  regionsDisplay: "Trenčín, Žilina, Trnava",
+  regionsHeroTag: "Regióny: TN · ZA · TT",
+  areaServed: ["Slovensko", "Trenčín", "Žilina", "Trnava"] as const,
 } as const;
 
 export type CompanyConfig = typeof company;

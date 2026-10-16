@@ -76,3 +76,10 @@
 - TODO(owner): všetky otázky v docs/content-drafts/QUESTIONS_FOR_OWNER.md — pred STEP 26 odstrániť každý [[TODO
 - Odchýlky: —
 - Status: done — STOP (čaká na odpovede vlastníka)
+
+## STEP 26
+- Commit: `5713553ae1c99e28eac0f83a1d14344c097ed534`
+- Checks: lint OK (warning Header img), tsc OK, build OK, check:copy OK, check:meta OK (13), check:shared OK; GLOBAL Select-String bez Morava/80€/global leader v src+public (hits „10 000“/„50 000“ len v predexistujúcich pásmach `questions.ts`)
+- TODO(owner): Q5 sociálne; Q6 BCTC názov/rok/logo; Q24 Optimalizácia cenník; Q30 booking URL; tooling lab význam; zverejnenie 80 €/hod
+- Odchýlky: check:copy kontroluje `[[TODO` + viditeľné TODO/`[[` v HTML (nie bare `[[` v RSC/JS); L2 priceLabel „Podľa faktúry“ namiesto 290 €; plán docs/runs/plan-26.md
+- Status: done

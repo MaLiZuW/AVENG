@@ -18,9 +18,13 @@ export type AuditLevelCopy = {
 
 export const AUDIT_LEVELS: Record<AuditLevelId, AuditLevelCopy> = {
   1: { id: 1, name: "Skríning", priceLabel: "Zdarma" },
-  2: { id: 2, name: "Detail", priceLabel: "290 €" },
+  2: { id: 2, name: "Detail", priceLabel: "Podľa faktúry" },
   3: { id: 3, name: "Expert & DTO", priceLabel: "Po dohode" },
 };
+
+/** Verbatim SK on Level 2/3 unlock cards (OWNER 2.7 / GLOBAL_CHANGES). */
+export const LEVEL_ACCESS_CODE_HINT_SK =
+  "Prístupový kód vám zašleme e-mailom spolu s údajmi na úhradu (prevodom na základe faktúry).";
 
 export const SELF_AUDIT_HEADER_SK =
   "L1 (20) → L2 (60) → L3 (180 / 6M + DTO) — hodnotenie bez viditeľných bodov, porovnanie s referenciou MSP a indikatívny potenciál úspor.";

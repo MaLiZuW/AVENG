@@ -6,6 +6,7 @@ import Footer from "@/components/sections/Footer";
 import Hero from "@/components/sections/Hero";
 import Services from "@/components/sections/Services";
 import FaqSection from "@/components/sections/FaqSection";
+import { HOME_FAQ } from "@/content/home-faq";
 import { buildFaqPageLd } from "@/lib/jsonld";
 import { HOME_TITLE, buildMetadata } from "@/lib/seo";
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
   path: "/",
   title: HOME_TITLE,
   description:
-    "Procesný self-audit a Fractional Technical Leadership pre výrobné MSP na Slovensku a Morave. Inšpirované princípmi procesného auditu (VDA 6.3, Lean, TPM/OEE).",
+    "Procesný self-audit a Fractional Technical Leadership pre výrobné MSP na Slovensku. Inšpirované princípmi procesného auditu (VDA 6.3, Lean, TPM/OEE).",
 });
 
 export default function HomePage() {
@@ -27,7 +28,7 @@ export default function HomePage() {
         <FaqSection />
       </main>
       <Footer variant="full" />
-      <JsonLd data={buildFaqPageLd()} />
+      <JsonLd data={buildFaqPageLd(HOME_FAQ)} />
     </>
   );
 }

@@ -18,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
  * Processors are listed from src/config/processors.ts (code-backed only).
  * TODO(owner/legal): review with a lawyer
  * TODO(owner): database backup expiry is not in config
- * TODO(owner): verify registeredSeat street/number against commercial register
+ * Seat street/number set from owner answers (STEP 26).
  */
 export default function PrivacyPage() {
   return (

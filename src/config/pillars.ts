@@ -41,7 +41,7 @@ export const PILLARS = [
     num: "04",
     title: "Rozvoj lídrov & Koučing",
     short:
-      "BCTC coaching pre majstrov a team-leaderov — aby zmeny prežili aj po odchode konzultanta.",
+      "BCTC certifikovaný business coach pre majstrov a team-leaderov — aby zmeny prežili aj po odchode konzultanta.",
     body: [
       "Rozvoj majstrov a team-leaderov, aby systémové zmeny prežili aj bez permanentnej prítomnosti konzultanta.",
       "Kombinácia koučingu a praktických rituálov (denný/týždenný rytmus, vizuálne riadenie, spätná väzba).",

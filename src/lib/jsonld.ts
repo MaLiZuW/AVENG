@@ -1,11 +1,21 @@
 import { company } from "@/config/company";
 import { getSameAsUrls } from "@/config/social";
-import { FAQ } from "@/components/sections/FaqSection";
+import type { FaqItem } from "@/content/types";
 
 const SITE = company.siteUrl;
 
 /** Schema.org JSON-LD object (serializable). */
 export type JsonLdObject = Record<string, unknown>;
+
+function postalAddress(): JsonLdObject {
+  return {
+    "@type": "PostalAddress",
+    streetAddress: company.streetAddress,
+    addressLocality: company.addressLocality,
+    postalCode: company.postalCode,
+    addressCountry: company.addressCountry,
+  };
+}
 
 export function buildProfessionalServiceLd(): JsonLdObject {
   const sameAs = getSameAsUrls();
@@ -18,17 +28,12 @@ export function buildProfessionalServiceLd(): JsonLdObject {
     logo: `${SITE}/aveng-icon.svg`,
     image: `${SITE}/og-image.png`,
     description:
-      "Procesný audit a seniorné technické vedenie pre výrobné MSP na Slovensku a Morave. Inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: company.addressLocality,
-      postalCode: company.postalCode,
-      addressCountry: company.addressCountry,
-    },
+      "Procesný audit a seniorné technické vedenie pre výrobné MSP na Slovensku. Inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).",
+    address: postalAddress(),
     telephone: company.phoneTel,
     email: company.email,
     priceRange: "€€",
-    areaServed: ["Slovensko", "Morava"],
+    areaServed: [...company.areaServed],
     founder: {
       "@type": "Person",
       name: company.founderName,
@@ -47,11 +52,11 @@ export function buildProfessionalServiceLd(): JsonLdObject {
   };
 }
 
-export function buildFaqPageLd(): JsonLdObject {
+export function buildFaqPageLd(items: readonly FaqItem[]): JsonLdObject {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQ.map((item) => ({
+    mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.q,
       acceptedAnswer: {
@@ -93,7 +98,8 @@ export function buildServiceLd(input: {
       "@type": "ProfessionalService",
       name: company.brandName,
       url: SITE,
+      address: postalAddress(),
     },
-    areaServed: ["Slovensko", "Morava"],
+    areaServed: [...company.areaServed],
   };
 }

@@ -55,7 +55,7 @@ export default function Hero() {
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-ink-300 animate-fade-in [animation-delay:200ms]">
           <span>Automotive · EMS · Strojárstvo · Plasty · Kovovýroba</span>
           <span className="hidden h-3 w-px bg-white/20 sm:block" aria-hidden />
-          <span>Regióny: TN · ZA · TT · Morava</span>
+          <span>Regióny: TN · ZA · TT</span>
         </div>
       </div>
     </section>

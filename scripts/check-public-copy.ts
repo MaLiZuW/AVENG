@@ -3,10 +3,12 @@
  * Run after `npm run build`: npm run check:copy
  *
  * The denylist is the wave-2 set named in STEP 18 and findings W5/W6/W8.
- * `.cursor/rules/aveng-wave2.mdc` is not in this repo, so the phrases live here.
+ * Draft markers from STEP 26: visible `TODO` / `[[TODO` (bare `[[` is skipped in
+ * Next RSC payloads and minified JS, which use `[[` as syntax).
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, join, relative } from "node:path";
+import { load } from "cheerio";
 
 const OUT_DIR = "out";
 
@@ -35,6 +37,9 @@ const FORBIDDEN_PHRASES = [
   "Ochrana dát &amp; Transparentnosť",
 ];
 
+/** Draft / unpublished markers (STEP 26). */
+const DRAFT_MARKERS = ["[[TODO", "TODO(owner)", "Návrh textu"];
+
 function walk(dir: string): string[] {
   const files: string[] = [];
   for (const entry of readdirSync(dir)) {
@@ -46,6 +51,12 @@ function walk(dir: string): string[] {
     }
   }
   return files;
+}
+
+function visibleHtmlText(html: string): string {
+  const $ = load(html);
+  $("script, style, noscript").remove();
+  return $.root().text();
 }
 
 function fail(errors: string[]): never {
@@ -68,6 +79,8 @@ function main(): void {
   for (const file of files) {
     const rel = relative(".", file).replaceAll("\\", "/");
     const text = readFileSync(file, "utf8");
+    const ext = extname(file).toLowerCase();
+
     for (const pattern of FORBIDDEN_WORDS) {
       pattern.lastIndex = 0;
       if (pattern.test(text)) {
@@ -77,6 +90,22 @@ function main(): void {
     for (const phrase of FORBIDDEN_PHRASES) {
       if (text.includes(phrase)) {
         errors.push(`${rel}: contains ${JSON.stringify(phrase)}`);
+      }
+    }
+    for (const marker of DRAFT_MARKERS) {
+      if (text.includes(marker)) {
+        errors.push(`${rel}: contains draft marker ${JSON.stringify(marker)}`);
+      }
+    }
+
+    // Visible HTML only: bare TODO / [[ (draft brackets) without Next RSC false positives.
+    if (ext === ".html") {
+      const visible = visibleHtmlText(text);
+      if (/\bTODO\b/.test(visible)) {
+        errors.push(`${rel}: visible text contains TODO`);
+      }
+      if (visible.includes("[[")) {
+        errors.push(`${rel}: visible text contains [[`);
       }
     }
   }

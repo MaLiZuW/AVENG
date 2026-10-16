@@ -5,6 +5,7 @@ import { Calendar, Crown, Lock, Shield } from "lucide-react";
 import {
   accessCodeHref,
   AUDIT_LEVELS,
+  LEVEL_ACCESS_CODE_HINT_SK,
   levelBadge,
   personalMeetingHref,
 } from "@/config/levels";
@@ -141,8 +142,8 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
               {AUDIT_LEVELS[2].priceLabel}
             </p>
           </div>
-          <p className="max-w-[14rem] text-right text-xs text-ink-300">
-            Prístupový kód vám zašleme e-mailom po objednaní.
+          <p className="max-w-[16rem] text-right text-xs text-ink-300">
+            {LEVEL_ACCESS_CODE_HINT_SK}
           </p>
         </div>
 
@@ -234,8 +235,8 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
               {AUDIT_LEVELS[3].priceLabel}
             </p>
           </div>
-          <p className="max-w-[14rem] text-right text-xs text-ink-300">
-            Prístupový kód vám zašleme e-mailom po objednaní.
+          <p className="max-w-[16rem] text-right text-xs text-ink-300">
+            {LEVEL_ACCESS_CODE_HINT_SK}
           </p>
         </div>
 

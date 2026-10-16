@@ -175,8 +175,9 @@ export default function AuditTeaser() {
           </a>
         </div>
         <p className="mt-4 text-center text-xs text-ink-300">
-          Level 1 je online a zdarma. Level 2/3 odomknete kódom alebo po
-          dohode — schôdzku môžete dohodnúť kedykoľvek.
+          Level 1 je online a zdarma. Level 2/3 odomknete prístupovým kódom —
+          kód vám zašleme e-mailom spolu s údajmi na úhradu (prevodom na
+          základe faktúry).
         </p>
       </div>
     </section>

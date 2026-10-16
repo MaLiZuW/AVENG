@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
+import JsonLd from "@/components/JsonLd";
 import About from "@/components/sections/About";
 import Footer from "@/components/sections/Footer";
+import { ABOUT, ABOUT_META } from "@/content/about";
+import { buildBreadcrumbLd, buildFaqPageLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   path: "/o-nas/",
-  title: "O nás | AVENG",
-  description:
-    "Vladimir, Fractional Engineering Manager s koučingom: technické vedenie a procesný audit pre výrobné MSP na Slovensku a Morave.",
+  title: ABOUT_META.title,
+  description: ABOUT_META.description,
 });
 
 export default function AboutPage() {
+  const breadcrumb = buildBreadcrumbLd([
+    { name: "Domov", path: "/" },
+    { name: "O nás", path: "/o-nas/" },
+  ]);
+
   return (
     <>
       <Header />
@@ -19,6 +26,7 @@ export default function AboutPage() {
         <About />
       </main>
       <Footer />
+      <JsonLd data={[breadcrumb, buildFaqPageLd(ABOUT.faq)]} />
     </>
   );
 }

@@ -336,7 +336,8 @@ export default function AuditSection() {
               </button>
               <p className="text-xs text-ink-300">
                 Odvetvie + tržby · karty A–E (presné čísla preferované) ·
-                výsledok s kritickým procesom. Level 2/3 po úhrade alebo dohode.
+                výsledok s kritickým procesom. Level 2/3 po dohode (kód e-mailom
+                s údajmi na úhradu).
               </p>
             </div>
           )}

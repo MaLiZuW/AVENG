@@ -20,7 +20,7 @@ AddValueEngineering (AVENG) vedie Vladimir, Fractional Engineering Manager s kou
 
 ## Ako spolupracujeme
 
-Štyri piliere služieb, Optimalizácia a AI a self-audit (Level 1 zdarma; Level 2 za 290 €; Level 3 po dohode). Detail v návrhoch služieb.
+Štyri piliere služieb, Optimalizácia a AI a self-audit (Level 1 zdarma; Level 2/3 podľa faktúry). Detail v návrhoch služieb.
 
 ## Model spolupráce
 
