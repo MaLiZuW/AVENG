@@ -60,7 +60,7 @@ export default function PillarPage({ params }: Props) {
   return (
     <>
       <Header />
-      <main className="section-pad">
+      <main id="main-content" className="site-main section-pad">
         <div className="container-aveng max-w-3xl">
           <p className="eyebrow mb-4">Pilier {pillar.num}</p>
           <h1 className="heading-display">{pillar.title}</h1>

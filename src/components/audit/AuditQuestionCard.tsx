@@ -191,8 +191,9 @@ export default function AuditQuestionCard({
       >
         <button
           type="button"
-          className="flex w-full items-center gap-3 px-4 py-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
+          className="flex min-h-11 w-full items-center gap-3 px-4 py-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
           aria-expanded={overrideOpen}
+          aria-controls={`exact-input-${question.id}`}
           onClick={() => setOverrideOpen((v) => !v)}
         >
           <span
@@ -230,7 +231,8 @@ export default function AuditQuestionCard({
         </button>
 
         <div
-          className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+          id={`exact-input-${question.id}`}
+          className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${
             overrideOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           }`}
         >

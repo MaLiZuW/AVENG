@@ -22,7 +22,7 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content" className="site-main">
         <About />
       </main>
       <Footer />

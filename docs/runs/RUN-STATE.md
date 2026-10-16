@@ -85,8 +85,15 @@
 - Status: done
 
 ## STEP 27
-- Commit: `0aa4a0fd4a8e51c8423ee5ee21879642b92139cc`
+- Commit: `ac24b141ed679b0334df5a42a1131501dad337dc`
 - Checks: lint OK, tsc OK, build OK, check:copy OK; out/ bez plausible/umami skriptu (provider none); llms.txt + indexnow key v out/
 - TODO(owner): výber analytics providera/regiónu; Search Console / Bing / GBP / adresáre (OWNER_ACTIONS_VISIBILITY.md); spustiť `npm run indexnow` po deployi
 - Odchýlky: IndexNow kľúč v `public/aveng-indexnow-key.txt` (nie UUID hostname); llms.txt voliteľný (Google nepoužíva)
+- Status: done
+
+## STEP 28
+- Commit: `c2294ea063ec32a3f3446d9dd8169e3e8f2bc98e`
+- Checks: lint OK, tsc OK, build OK, check:copy OK; Lighthouse mobile (po): home 97/100/100 LCP 2.5s; self-audit 95/100/100 LCP 2.9s CLS 0; pillar 97; kontakt 93; axe 0 violations na 4 stránkach
+- TODO(owner): field INP/CrUX po deployi; manuálny kontrast muted textu
+- Odchýlky: lab LCP self-audit/kontakt tesne nad 2,5 s; report docs/PERF_A11Y_REPORT.md; axe vyžadoval ChromeDriver 155
 - Status: done

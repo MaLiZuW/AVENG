@@ -177,6 +177,44 @@ export default function RadarChart({
           </li>
         ) : null}
       </ul>
+
+      <table className="mt-4 w-full max-w-md text-left text-xs text-ink-200">
+        <caption className="sr-only">
+          Percentá zrelosti po doménach — textová alternatíva k radarovému grafu
+        </caption>
+        <thead>
+          <tr className="border-b border-white/10 text-ink-300">
+            <th scope="col" className="py-1.5 pr-2 font-medium">
+              Doména
+            </th>
+            <th scope="col" className="py-1.5 pr-2 font-medium">
+              Firma
+            </th>
+            <th scope="col" className="py-1.5 pr-2 font-medium">
+              Ref. MSP
+            </th>
+            {showWorldClass ? (
+              <th scope="col" className="py-1.5 font-medium">
+                WC
+              </th>
+            ) : null}
+          </tr>
+        </thead>
+        <tbody>
+          {scores.map((s) => (
+            <tr key={s.processId} className="border-b border-white/5">
+              <th scope="row" className="py-1.5 pr-2 font-normal text-ink-100">
+                {domainLabel(s.processId)}
+              </th>
+              <td className="py-1.5 pr-2">{Math.round(s.percent)}&nbsp;%</td>
+              <td className="py-1.5 pr-2">{Math.round(s.smePercent)}&nbsp;%</td>
+              {showWorldClass ? (
+                <td className="py-1.5">{Math.round(s.wcPercent)}&nbsp;%</td>
+              ) : null}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

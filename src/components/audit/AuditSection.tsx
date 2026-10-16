@@ -325,7 +325,7 @@ export default function AuditSection() {
                   {auditStartNoticeSk()} Podrobnosti nájdete v{" "}
                   <Link
                     href="/ochrana-osobnych-udajov/"
-                    className="text-signal-bright underline-offset-2 hover:underline"
+                    className="text-signal-bright underline underline-offset-2"
                   >
                     Zásadách ochrany osobných údajov
                   </Link>
@@ -426,9 +426,9 @@ export default function AuditSection() {
                   </span>
                 )}
               </div>
-              <h3 className="font-display text-xl font-semibold text-ink-50 sm:text-2xl">
+              <h2 className="font-display text-xl font-semibold text-ink-50 sm:text-2xl">
                 {question.text}
-              </h3>
+              </h2>
 
               {l1q && (
                 <QuestionContextPanel

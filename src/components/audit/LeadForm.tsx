@@ -183,7 +183,7 @@ export default function LeadForm({
           Súhlasím so spracovaním osobných údajov. {retentionPeriodClaimSk()}{" "}
           <Link
             href="/ochrana-osobnych-udajov/"
-            className="text-signal-bright underline-offset-2 hover:underline"
+            className="text-signal-bright underline underline-offset-2"
           >
             Zásady ochrany osobných údajov
           </Link>

@@ -22,7 +22,7 @@ export default function ServicesPage() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content" className="site-main">
         <Services headingAs="h1" full />
       </main>
       <Footer />

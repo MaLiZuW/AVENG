@@ -24,7 +24,7 @@ export default function PrivacyPage() {
   return (
     <>
       <Header />
-      <main className="section-pad">
+      <main id="main-content" className="site-main section-pad">
         <div className="container-aveng max-w-3xl">
           <p className="eyebrow mb-4">GDPR</p>
           <h1 className="heading-display">

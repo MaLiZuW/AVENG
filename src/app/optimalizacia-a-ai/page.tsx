@@ -30,7 +30,7 @@ export default function OptimizationPage() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content" className="site-main">
         <Optimization />
       </main>
       <Footer />

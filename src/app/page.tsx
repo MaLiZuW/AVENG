@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main className="site-main">
+      <main id="main-content" className="site-main">
         <Hero />
         <Services />
         <AuditTeaser />

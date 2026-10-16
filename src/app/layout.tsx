@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import AnalyticsScript from "@/components/AnalyticsScript";
 import JsonLd from "@/components/JsonLd";
+import SkipLink from "@/components/SkipLink";
 import { company } from "@/config/company";
 import { buildProfessionalServiceLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
@@ -12,6 +13,7 @@ const display = Fraunces({
   variable: "--font-display",
   display: "swap",
   weight: ["500", "600", "700"],
+  preload: true,
 });
 
 const sans = Manrope({
@@ -19,6 +21,7 @@ const sans = Manrope({
   variable: "--font-sans",
   display: "swap",
   weight: ["400", "500", "600", "700"],
+  preload: true,
 });
 
 const SITE = company.siteUrl;
@@ -63,6 +66,7 @@ export default function RootLayout({
   return (
     <html lang="sk" className={`${display.variable} ${sans.variable}`}>
       <body className="font-sans antialiased">
+        <SkipLink />
         <AnalyticsScript />
         <JsonLd data={buildProfessionalServiceLd()} />
         {children}

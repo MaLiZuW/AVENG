@@ -14,6 +14,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Fixed header (~4.5rem) — keep focused targets visible (WCAG 2.4.11). */
+  scroll-padding-top: 5.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -57,13 +59,13 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-signal px-5 py-3 text-sm font-semibold text-white transition
+    @apply inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-md bg-signal px-5 py-3 text-sm font-semibold text-white transition
       hover:bg-signal-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright
-      active:scale-[0.98];
+      active:scale-[0.98] motion-reduce:active:scale-100;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/20 bg-transparent px-5 py-3 text-sm font-semibold text-ink-50 transition
+    @apply inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-md border border-white/20 bg-transparent px-5 py-3 text-sm font-semibold text-ink-50 transition
       hover:border-signal-bright/60 hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright;
   }
 
@@ -81,6 +83,16 @@ body {
 
   .steel-panel {
     @apply rounded-lg border border-white/10 bg-steel-dark/80;
+  }
+
+  /* Inline links in body copy: underline so color is not the only cue (1.4.1). */
+  .prose-muted a,
+  p a.text-signal-bright,
+  li a.text-signal-bright,
+  dd a.text-signal-bright,
+  label a.text-signal-bright,
+  span a.text-signal-bright {
+    @apply underline underline-offset-2;
   }
 }
 

@@ -126,9 +126,9 @@ export function Level2Gate({ onUnlocked }: UnlockGateProps) {
               <Shield className="h-3.5 w-3.5" aria-hidden />
               {levelBadge(2)}
             </p>
-            <h3 className="mt-3 font-display text-xl font-semibold text-ink-50 sm:text-2xl">
+            <h2 className="mt-3 font-display text-xl font-semibold text-ink-50 sm:text-2xl">
               Detailný audit pre rozhodnutia majiteľa
-            </h3>
+            </h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-200">
               Rozpis po otázkach, prioritizácia podľa finančného dopadu, podklad
               na poradu majiteľov.
@@ -230,9 +230,9 @@ export function Level3Gate({ onUnlocked }: UnlockGateProps) {
               <Crown className="h-3.5 w-3.5" aria-hidden />
               {levelBadge(3)}
             </p>
-            <h3 className="mt-3 font-display text-xl font-semibold text-ink-50 sm:text-2xl">
+            <h2 className="mt-3 font-display text-xl font-semibold text-ink-50 sm:text-2xl">
               Expertná diagnostika &amp; DTO simulátor
-            </h3>
+            </h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-200">
               Keď potrebujete vedieť nielen kde unikajú peniaze, ale čo sa stane
               po konkrétnej investícii — pred podpisom rozpočtu.

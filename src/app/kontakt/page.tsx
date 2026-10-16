@@ -102,7 +102,7 @@ export default function KontaktPage() {
   return (
     <>
       <Header />
-      <main className="section-pad">
+      <main id="main-content" className="site-main section-pad">
         <div className="container-aveng max-w-2xl">
           <p className="eyebrow mb-4">Kontakt</p>
           <h1 className="heading-display">Napíšte nám</h1>
@@ -110,7 +110,7 @@ export default function KontaktPage() {
             {company.brandName} · {company.addressDisplay} ·{" "}
             <a
               href={`mailto:${company.email}`}
-              className="text-signal-bright hover:underline"
+              className="text-signal-bright underline underline-offset-2"
             >
               {company.email}
             </a>
