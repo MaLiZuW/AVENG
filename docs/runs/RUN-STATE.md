@@ -92,8 +92,15 @@
 - Status: done
 
 ## STEP 28
-- Commit: `c2294ea063ec32a3f3446d9dd8169e3e8f2bc98e`
+- Commit: `bd7b6180d3f42d432993f194c9fdbb130869b41a`
 - Checks: lint OK, tsc OK, build OK, check:copy OK; Lighthouse mobile (po): home 97/100/100 LCP 2.5s; self-audit 95/100/100 LCP 2.9s CLS 0; pillar 97; kontakt 93; axe 0 violations na 4 stránkach
 - TODO(owner): field INP/CrUX po deployi; manuálny kontrast muted textu
 - Odchýlky: lab LCP self-audit/kontakt tesne nad 2,5 s; report docs/PERF_A11Y_REPORT.md; axe vyžadoval ChromeDriver 155
+- Status: done
+
+## STEP 29
+- Commit: `dcdb538aa124edefe7a69c55278bffcb9b094d33`
+- Checks: check:meta OK, check:copy OK, check:shared OK, lint OK, tsc OK, build OK, pdf-fixtures OK, presentation-ranges OK, format-and-copy OK; audit:invariants NIE (Missing script); grep Web3Forms/FormSubmit/aveng.sk/Ing./odvetvov/toFixed mimo format — OK
+- TODO(owner): deploy checklist v WAVE2_REPORT; INFRA regióny; RETENTION_JOB_VERIFIED; DPA; analytics; GSC; Q5/Q6/Q24
+- Odchýlky: chýba `npm run audit:invariants` (STEP 07); report docs/WAVE2_REPORT.md
 - Status: done
