@@ -30,7 +30,7 @@ export const LABEL_COST_BASE_SHARE_SK =
   "% z modelovej nákladovej bázy procesov";
 export const LABEL_MSP_REF_SK = "Referencia MSP";
 export const LABEL_GEMBA_KICKER_SK =
-  "Odporúčaný ďalší krok: obchôdzka vo výrobe (Gemba Walk)";
+  "Odporúčaný ďalší krok: obhliadka prevádzky";
 export const LABEL_MATURITY_TABLE_SK =
   "Porovnanie voči referencii MSP (úroveň zrelosti, %)";
 export const LABEL_MATURITY_TABLE_WC_SK =
@@ -41,7 +41,7 @@ export const ZERO_GAP_SK = "bez výraznej medzery voči referencii";
 export const RELIABILITY_HINT_SK =
   "Spoľahlivosť zvýšite zadaním presných čísel alebo prechodom na Level 2.";
 export const LEVEL1_DISCLAIMER_SK =
-  "Výsledky Level 1 sú rýchla orientačná diagnostika založená na vašich odpovediach. Nepredstavujú záruku úspor. Pre presné priority a overenie dát odporúčame Level 2/3 alebo obchôdzku vo výrobe.";
+  "Výsledky Level 1 sú rýchla orientačná diagnostika založená na vašich odpovediach. Nepredstavujú záruku úspor. Pre presné priority a overenie dát odporúčame Level 2/3 alebo obhliadku prevádzky.";
 
 /** MSP reference provenance — web, PDF and e-mail must show the same sentence. */
 export const EXPERT_ESTIMATE_SOURCE_SK =

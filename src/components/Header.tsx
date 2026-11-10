@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Lock, Menu, Shield, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const NAV = [
   { href: "/", label: "Domov" },
@@ -68,20 +68,6 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 xl:flex">
-          <span
-            className="inline-flex items-center gap-1 text-[11px] text-ink-200"
-            title="Šifrované spojenie"
-          >
-            <Lock className="h-3 w-3" aria-hidden />
-            HTTPS
-          </span>
-          <span
-            className="inline-flex items-center gap-1 text-[11px] text-ink-200"
-            title="GDPR"
-          >
-            <Shield className="h-3 w-3" aria-hidden />
-            GDPR
-          </span>
           <Link
             href="/self-audit/"
             className="btn-primary !h-9 !px-4 !py-0 !text-xs leading-none"

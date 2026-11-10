@@ -3,67 +3,76 @@ import type { FaqItem, PageCta } from "@/content/types";
 export const SERVICES_META = {
   title: "Služby",
   description:
-    "Štyri piliere AVENG, Optimalizácia a AI a self-audit pre výrobné MSP v regiónoch Trenčín, Žilina a Trnava.",
+    "Projektové služby pre výrobné MSP: identifikácia problému, návrh riešení a projektový plán. Realizuje váš tím.",
 } as const;
 
 export const SERVICES_OVERVIEW = {
-  eyebrow: "4 piliere efektivity",
-  heading: "Systém, ktorý drží — od stratégie po dielňu",
-  lead: "AddValueEngineering (AVENG) pomáha výrobným MSP v regiónoch Trenčín, Žilina a Trnava stabilizovať techniku a procesy. Ponuka má štyri piliere, Optimalizáciu a AI a self-audit. Cieľom je menej hasenia a viac predvídateľnosti — nie ďalšie prezentácie.",
-  whenHeading: "Kedy to dáva zmysel",
+  eyebrow: "Projektové služby",
+  heading: "Riešime jeden problém vo vašej firme. Projektovo.",
+  lead:
+    "Pre malé a stredné výrobné podniky s 20 – 250 zamestnancami. Najprv spolu nájdeme problém, ktorý vás stojí najviac. Potom navrhneme možné riešenia, vyberieme jedno a zostavíme projektový plán. Realizujú vaši ľudia, my ich vedieme, kontrolujeme postup a odstraňujeme prekážky na pravidelných stretnutiach.",
+  whenHeading: "Čo od vás potrebujeme",
   when: [
-    "Firma rastie, majiteľ denne hasí operatívu, chýba systém v technike alebo zmeny na dielni neprežijú.",
-    "Orientačne výrobné MSP s 20 – 250 zamestnancami — automotive, EMS, strojárstvo, plasty, kovovýroba.",
+    "Sponzora s rozhodovacou právomocou.",
+    "Pridelených ľudí s vyhradeným časom.",
+    "Prístup k potrebným dátam.",
   ],
-  frameworkHeading: "Čo dostanete",
+  frameworkHeading: "Čo robíme a čo nie",
   framework: [
-    "Diagnostiku (self-audit alebo osobný rozhovor).",
-    "Konkrétny rozsah spolupráce podľa dohody.",
-    "Dôraz na implementáciu na shopfloori, nie len dokumenty.",
+    "Identifikujeme problém, navrhujeme varianty riešenia a zostavujeme projektový plán.",
+    "Vedieme projektové stretnutia raz až dvakrát týždenne a kontrolujeme postup.",
+    "Nenahrádzame vaše vedenie, nevykonávame realizáciu za vás a nedodávame softvér.",
   ],
-  processHeading: "Ako to prebieha",
+  processHeading: "Ako to funguje",
   processSteps: [
-    "Self-audit alebo kontakt.",
-    "Dohoda priorít.",
-    "Zásah v jednom alebo viacerých pilieroch.",
-    "Odovzdanie systému tímu.",
+    "Úvodný rozhovor bez poplatku, trvá 30 minút a overí, či má zmysel začať.",
+    "Projektový sprint v trvaní dva až tri týždne za pevnú cenu.",
+    "Voliteľné vedenie projektu: jedno až dve stretnutia týždenne, kontrola plnenia a eskalácie.",
   ],
   model:
-    "Fractional / projekt / koučing podľa piliera. Cena vychádza z hodinovej sadzby, prípadne z odmeny viazanej na vopred dohodnuté ciele. Presný rozsah a cena sú v ponuke.",
+    "Projektový sprint a ostatné služby: cenová ponuka podľa rozsahu. Level 2 samoobslužného auditu stojí 290 €.",
   extras: [
     {
       title: "Optimalizácia a AI",
       href: "/optimalizacia-a-ai/",
-      text: "Návrhy riešení. Implementácia až po samostatnej dohode.",
+      text: "Projektový návrh riešení; implementácia po samostatnej dohode.",
     },
     {
-      title: "Self-audit",
+      title: "Samoobslužný audit",
       href: "/self-audit/",
-      text: "Bezplatný Level 1 skríning a cesta k Level 2/3.",
+      text: "Level 1 zdarma; Level 2 za 290 €.",
     },
   ],
   faq: [
     {
-      q: "Aké služby ponúkate?",
-      a: "Štyri piliere (Fractional Technical Leadership, PLM/PDM procesy, ECO, rozvoj lídrov), Optimalizáciu a AI a self-audit.",
+      q: "Robíte aj realizáciu?",
+      a: "Nie. Realizuje váš tím; my plánujeme, vedieme projektové stretnutia a kontrolujeme postup.",
     },
     {
-      q: "Kde pôsobíte?",
-      a: "V regiónoch Trenčín, Žilina a Trnava.",
+      q: "Čo ak firma nemá voľných ľudí?",
+      a: "Projekt odložíme. Bez vyhradeného času ľudí určených sponzorom nemá zmysel začínať.",
     },
     {
-      q: "Ako sa určuje cena?",
-      a: "Cena vychádza z hodinovej sadzby, prípadne z odmeny viazanej na vopred dohodnuté ciele. Presný rozsah a cena sú v ponuke.",
+      q: "Koľko to stojí?",
+      a: "Level 2 samoobslužného auditu stojí 290 €. Projekty sú cenová ponuka podľa rozsahu.",
     },
     {
-      q: "Ako začať?",
-      a: "Spustite bezplatný self-audit alebo napíšte cez kontaktný formulár.",
+      q: "Aký je záväzok?",
+      a: "Pri cenovej ponuke nemáte žiadny záväzok.",
+    },
+    {
+      q: "Ako sa platí?",
+      a: "Platba prebieha prevodom; údaje dostanete spolu s prístupovým kódom alebo faktúrou.",
+    },
+    {
+      q: "Ako často sa stretávame?",
+      a: "Počas projektu sa stretávame raz až dvakrát týždenne.",
     },
   ] satisfies FaqItem[],
   cta: {
-    primaryHref: "/self-audit/",
-    primaryLabel: "Spustiť bezplatný self-audit",
-    secondaryHref: "/kontakt/?predmet=sluzby",
-    secondaryLabel: "Kontakt",
+    primaryHref: "/kontakt/?predmet=sluzby",
+    primaryLabel: "Popíšte problém",
+    secondaryHref: "/self-audit/",
+    secondaryLabel: "Spustiť self-audit",
   } satisfies PageCta,
 } as const;

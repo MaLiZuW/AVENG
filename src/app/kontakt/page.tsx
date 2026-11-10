@@ -105,9 +105,11 @@ export default function KontaktPage() {
       <main id="main-content" className="site-main section-pad">
         <div className="container-aveng max-w-2xl">
           <p className="eyebrow mb-4">Kontakt</p>
-          <h1 className="heading-display">Napíšte nám</h1>
+          <h1 className="heading-display">
+            Popíšte problém. Ozveme sa s návrhom ďalšieho kroku.
+          </h1>
           <p className="prose-muted mt-4">
-            {company.brandName} · {company.addressDisplay} ·{" "}
+            Bez povinnosti. {company.brandName} · {company.addressDisplay} ·{" "}
             <a
               href={`mailto:${company.email}`}
               className="text-signal-bright underline underline-offset-2"
@@ -123,7 +125,7 @@ export default function KontaktPage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Dohodnúť 30-minútovú konzultáciu
+              Dohodnúť úvodný rozhovor
             </TrackBookingLink>
           ) : null}
 

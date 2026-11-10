@@ -4,47 +4,39 @@
 
 export const PILLARS = [
   {
-    slug: "fractional-technical-leadership",
+    slug: "procesny-audit-identifikacia-problemu",
     num: "01",
-    title: "Fractional Technical Leadership",
-    short:
-      "Externý Head of Engineering — strategické riadenie techniky, ROI investičné plánovanie a stabilizácia priorít bez full-time nákladov.",
+    title: "Procesný audit a identifikácia problému",
+    short: "Projektový sprint na pomenovanie problému, návrh riešení a projektový plán.",
     body: [
-      "Dočasné alebo čiastkové seniorné vedenie technickej oblasti pre výrobné MSP, ktoré potrebujú stabilitu priorít bez plného úväzku manažéra.",
-      "Typický rozsah: roadmapa techniky, rozhodovanie o investíciách, nastavenie rytmu tímu a prepojenie vývoja s výrobou.",
+      "Projekt s jedným definovaným problémom, cieľom, rozsahom a kritériom prijatia.",
     ],
   },
   {
-    slug: "zavadzanie-procesov-plm-pdm",
+    slug: "projekt-zmeny-eco",
     num: "02",
-    title: "Zavádzanie procesov & PLM/PDM",
-    short:
-      "NPI nábehy, poriadok v dokumentácii a TPV. Jedna pravda o produkte — od výkresu po shopfloor.",
+    title: "Projekt zmeny a ECO",
+    short: "Zavedenie riadeného procesu zmien s jasnými rolami a plánom.",
     body: [
-      "Pomáhame zaviesť jednu pravdu o produkte: štruktúra kusovníkov, verzie výkresov, TPV a uvoľnenia do výroby.",
-      "Cieľom je predvídateľný NPI nábeh a menej chýb spôsobených rozptýlenou dokumentáciou.",
+      "Výstupom je popis cieľového procesu, role, checklist a plán zavedenia s termínmi a zodpovednými.",
     ],
   },
   {
-    slug: "riadenie-zmien-eco",
+    slug: "sprava-dokumentacie-a-schvalovanie",
     num: "03",
-    title: "Riadenie zmien & ECO",
-    short:
-      "Zmenové konanie bez chýb a odporu tímu. Jasná stopa verzií, uvoľnení a komunikácie do výroby.",
+    title: "Projekt správy dokumentácie a schvaľovania",
+    short: "Zjednodušenie dokumentácie, schvaľovacích tokov a návrh automatizácie.",
     body: [
-      "Nastavenie zmenového konania (ECO) tak, aby zmeny boli sledovateľné, komunikované a riešiteľné bez chaosu na dielni.",
-      "Dôraz na jasné role, stopy verzií a rýchlu spätnú väzbu z výroby.",
+      "Návrh procesu a plánu automatizácie schvaľovacích slučiek a nahrávania dokumentácie do ERP.",
     ],
   },
   {
     slug: "rozvoj-liderov-koucing",
     num: "04",
-    title: "Rozvoj lídrov & Koučing",
-    short:
-      "BCTC certifikovaný business coach pre majstrov a team-leaderov — aby zmeny prežili aj po odchode konzultanta.",
+    title: "Projekt rozvoja lídrov",
+    short: "Individuálny alebo skupinový rozvojový program pre vedúcich.",
     body: [
-      "Rozvoj majstrov a team-leaderov, aby systémové zmeny prežili aj bez permanentnej prítomnosti konzultanta.",
-      "Kombinácia koučingu a praktických rituálov (denný/týždenný rytmus, vizuálne riadenie, spätná väzba).",
+      "Cieľ a spôsob merania sa dohodnú so sponzorom pred začiatkom projektu.",
     ],
   },
 ] as const;

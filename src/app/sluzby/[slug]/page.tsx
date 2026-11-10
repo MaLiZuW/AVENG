@@ -106,22 +106,6 @@ export default function PillarPage({ params }: Props) {
             ))}
           </div>
 
-          {page.experiences && page.experiencesHeading ? (
-            <>
-              <h2 className="mt-10 font-display text-xl font-semibold text-ink-50">
-                {page.experiencesHeading}
-              </h2>
-              {page.experiencesIntro ? (
-                <p className="mt-3 text-sm text-ink-300">{page.experiencesIntro}</p>
-              ) : null}
-              <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-ink-200">
-                {page.experiences.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ol>
-            </>
-          ) : null}
-
           <h2 className="mt-10 font-display text-xl font-semibold text-ink-50">
             Súvisiace piliere
           </h2>

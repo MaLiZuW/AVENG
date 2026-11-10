@@ -15,19 +15,18 @@ export default function Hero() {
       />
       <div className="container-aveng relative section-pad !pt-16 lg:!pt-24">
         <div className="max-w-3xl animate-fade-up">
-          <p className="eyebrow mb-6">SENIORNÉ TECHNICKÉ VEDENIE PRE MSP</p>
+          <p className="eyebrow mb-6">PROJEKTOVÉ SLUŽBY PRE VÝROBNÉ MSP</p>
           <h1
             id="hero-heading"
             className="font-display text-4xl font-semibold leading-[1.12] tracking-tight text-ink-50 sm:text-5xl lg:text-6xl"
           >
-            Zmeňte technický chaos na{" "}
-            <span className="text-signal-bright">ziskový a predvídateľný</span>{" "}
-            systém
+            Riešime jeden problém vo vašej firme.{" "}
+            <span className="text-signal-bright">Projektovo.</span>
           </h1>
           <p className="prose-muted mt-6 max-w-2xl">
-            Pomáhame malým a stredným podnikom rásť cez systémové procesy,
-            digitálnu transformáciu a rozvoj technických lídrov. Inžinierska
-            presnosť spojená s psychológiou biznisu. Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).
+            Najprv spolu nájdeme problém, navrhneme možné riešenia a zostavíme
+            projektový plán. Realizujú vaši ľudia; my ich vedieme, kontrolujeme
+            postup a pomáhame odstraňovať prekážky.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a href="/self-audit/" className="btn-primary">
@@ -40,11 +39,11 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Dohodnúť 30-min konzultáciu
+                Dohodnúť úvodný rozhovor
               </TrackBookingLink>
             ) : (
               <a href="/sluzby/" className="btn-secondary">
-                Preskúmať 4 piliere
+                Popísať problém
               </a>
             )}
           </div>
@@ -57,7 +56,7 @@ export default function Hero() {
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-ink-300 animate-fade-in [animation-delay:200ms]">
           <span>Automotive · EMS · Strojárstvo · Plasty · Kovovýroba</span>
           <span className="hidden h-3 w-px bg-white/20 sm:block" aria-hidden />
-          <span>Regióny: TN · ZA · TT</span>
+          <span>Projektový sprint · Vedenie projektu</span>
         </div>
       </div>
     </section>
