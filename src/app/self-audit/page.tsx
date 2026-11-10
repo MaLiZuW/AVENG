@@ -18,7 +18,7 @@ const AuditSection = dynamic(() => import("@/components/audit/AuditSection"), {
 
 export const metadata: Metadata = buildMetadata({
   path: "/self-audit/",
-  title: "Self-audit výrobných procesov | AVENG",
+  title: "Self-audit výrobných procesov",
   description:
     "Bezplatný Level 1 self-audit pre výrobné MSP: indikatívny potenciál úspor, kritická doména a tri prioritné odporúčania.",
 });

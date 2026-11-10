@@ -5,7 +5,7 @@ export const metadata: Metadata = buildMetadata({
   path: "/kontakt/",
   title: "Kontakt",
   description:
-    "Napíšte AddValueEngineering — kontaktný formulár, e-mail a konzultácia pre výrobné MSP.",
+    "Popíšte problém. Ozveme sa s návrhom ďalšieho kroku, bez povinnosti.",
 });
 
 export default function KontaktLayout({

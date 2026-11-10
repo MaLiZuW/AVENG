@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
   path: "/",
   title: HOME_TITLE,
   description:
-    "Procesný self-audit a Fractional Technical Leadership pre výrobné MSP na Slovensku. Inšpirované princípmi procesného auditu (VDA 6.3, Lean, TPM/OEE).",
+    "Nájdeme jeden problém vo vašej firme, navrhneme riešenia a projektový plán. Realizuje váš tím.",
 });
 
 export default function HomePage() {
