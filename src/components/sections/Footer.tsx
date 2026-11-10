@@ -1,14 +1,7 @@
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
 import GdprLink from "@/components/GdprModal";
 import TrackBookingLink from "@/components/TrackBookingLink";
 import { company } from "@/config/company";
-import { getPublicSocialLinks, type SocialKey } from "@/config/social";
-
-const SOCIAL_LABEL: Record<SocialKey, string> = {
-  linkedin: "LinkedIn",
-  facebook: "Facebook",
-};
 
 const FOOTER_NAV = [
   { href: "/", label: "Domov" },
@@ -60,7 +53,6 @@ export default function Footer({
   if (variant === "compact") return <CompactFooter />;
 
   const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
-  const socialLinks = getPublicSocialLinks();
 
   return (
     <footer
@@ -71,8 +63,11 @@ export default function Footer({
       <div className="container-aveng">
         <p className="eyebrow mb-4">Kontakt</p>
         <h2 id="contact-heading" className="heading-display">
-          Poďme nastaviť systém
+          Popíšte problém
         </h2>
+        <p className="prose-muted mt-4">
+          Ozveme sa s návrhom ďalšieho kroku. Bez povinnosti.
+        </p>
         <div className="mt-10 grid gap-10 md:grid-cols-2">
           <div className="space-y-3 text-sm text-ink-200">
             <p>
@@ -99,29 +94,12 @@ export default function Footer({
                 {company.email}
               </a>
             </p>
-            {socialLinks.length > 0 ? (
-              <ul className="flex flex-wrap gap-3 pt-1">
-                {socialLinks.map(({ key, url }) => (
-                  <li key={key}>
-                    <a
-                      href={url}
-                      className="inline-flex items-center gap-1.5 text-signal-bright hover:underline"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <ExternalLink className="h-4 w-4" aria-hidden />
-                      {SOCIAL_LABEL[key]}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
             <p className="pt-2">
               <Link
                 href="/kontakt/"
                 className="text-signal-bright underline-offset-2 hover:underline"
               >
-                Kontaktný formulár
+                Popísať problém
               </Link>
               {bookingUrl ? (
                 <>
@@ -132,7 +110,7 @@ export default function Footer({
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    Dohodnúť 30-minútovú konzultáciu
+                    Dohodnúť úvodný rozhovor
                   </TrackBookingLink>
                 </>
               ) : null}
@@ -161,9 +139,6 @@ export default function Footer({
                 <dd>{company.addressDisplay}</dd>
               </div>
             </dl>
-            <p className="pt-2 text-ink-200">
-              Prenos údajov je šifrovaný (HTTPS)
-            </p>
             <GdprLink />
           </div>
         </div>

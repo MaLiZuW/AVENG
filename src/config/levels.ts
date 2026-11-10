@@ -16,10 +16,11 @@ export type AuditLevelCopy = {
   priceLabel: string;
 };
 
+// TODO(owner): confirm the VAT wording for the public Level 2 price.
 export const AUDIT_LEVELS: Record<AuditLevelId, AuditLevelCopy> = {
   1: { id: 1, name: "Skríning", priceLabel: "Zdarma" },
-  2: { id: 2, name: "Detail", priceLabel: "Podľa faktúry" },
-  3: { id: 3, name: "Expert & DTO", priceLabel: "Po dohode" },
+  2: { id: 2, name: "Detail", priceLabel: "290 €" },
+  3: { id: 3, name: "Expert & DTO", priceLabel: "Cenová ponuka podľa rozsahu" },
 };
 
 /** Verbatim SK on Level 2/3 unlock cards (OWNER 2.7 / GLOBAL_CHANGES). */
@@ -54,9 +55,9 @@ export function levelUpsellEyebrow(id: 2 | 3): string {
 
 export function completedLevel3Body(): string {
   if (TIER_NAMES_ENABLED) {
-    return "Premium audit máte hotový. Ďalší skok je obchôdzka vo výrobe — overenie predpokladov a 90-dňový akčný plán.";
+    return "Premium audit máte hotový. Ďalší skok je obhliadka prevádzky — overenie predpokladov a plán ďalšieho postupu.";
   }
-  return "Level 3 máte hotový. Ďalší skok je obchôdzka vo výrobe — overenie predpokladov a 90-dňový akčný plán.";
+  return "Level 3 máte hotový. Ďalší skok je obhliadka prevádzky — overenie predpokladov a plán ďalšieho postupu.";
 }
 
 export function personalMeetingHref(): { href: string; external: boolean } {
@@ -73,6 +74,13 @@ export function contactIntentPrefill(predmet: string | null): {
   subject: string;
   message: string;
 } | null {
+  if (predmet === "sluzby") {
+    return {
+      subject: "Projektová služba",
+      message:
+        "Dobrý deň, chcem popísať problém vo firme a dohodnúť návrh ďalšieho kroku.",
+    };
+  }
   if (predmet === "schodzka") {
     return {
       subject: "Osobná schôdzka",

@@ -24,7 +24,9 @@ export default function Services({
           {copy.heading}
         </Heading>
         <p className="prose-muted mt-4 max-w-2xl">
-          {full ? copy.lead : "Štyri piliere, jeden cieľ: predvídateľná výroba a silní technickí lídri."}
+          {full
+            ? copy.lead
+            : "Projektovo riešime jeden problém: navrhneme riešenie a plán, realizuje váš tím."}
         </p>
         <ol className="mt-14 grid gap-10 sm:grid-cols-2">
           {PILLARS.map((p) => (

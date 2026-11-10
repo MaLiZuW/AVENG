@@ -2,6 +2,11 @@
 
 RewriteEngine On
 
+# Retired service URLs (301) to their project-based destinations
+RewriteRule ^sluzby/fractional-technical-leadership/?$ https://www.addvalueengineering.sk/sluzby/ [R=301,L]
+RewriteRule ^sluzby/zavadzanie-procesov-plm-pdm/?$ https://www.addvalueengineering.sk/sluzby/sprava-dokumentacie-a-schvalovanie/ [R=301,L]
+RewriteRule ^sluzby/riadenie-zmien-eco/?$ https://www.addvalueengineering.sk/sluzby/projekt-zmeny-eco/ [R=301,L]
+
 # Legacy WordPress paths (301) to the canonical host
 RewriteRule ^zadarmo-pre-vas/?$ https://www.addvalueengineering.sk/self-audit/ [R=301,L]
 RewriteRule ^category/category-1/?$ https://www.addvalueengineering.sk/ [R=301,L]

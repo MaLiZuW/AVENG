@@ -18,7 +18,8 @@ export const metadata: Metadata = buildMetadata({
  * Processors are listed from src/config/processors.ts (code-backed only).
  * TODO(owner/legal): review with a lawyer
  * TODO(owner): database backup expiry is not in config
- * Seat street/number set from owner answers (STEP 26).
+ * TODO(owner): add the verified commercial-register entry and IČ DPH, if applicable.
+ * TODO(owner): confirm retention periods for invoice and unlock-code data.
  */
 export default function PrivacyPage() {
   return (
@@ -52,7 +53,8 @@ export default function PrivacyPage() {
               <p className="mt-2">
                 Vybavenie dopytu z kontaktného formulára a zaslanie správy z
                 online procesného auditu, vrátane komunikácie potrebnej na
-                tieto dve činnosti.
+                tieto činnosti. Ďalšími účelmi sú fakturácia a vydanie a správa
+                odomykacích kódov.
               </p>
             </section>
 
@@ -61,10 +63,13 @@ export default function PrivacyPage() {
                 3. Právny základ
               </h2>
               <p className="mt-2">
-                Súhlas dotknutej osoby podľa čl. 6 ods. 1 písm. a) nariadenia
-                (EÚ) 2016/679. Súhlas udeľujete zaškrtnutím políčka pred
-                odoslaním formulára. Súhlas môžete odvolať e-mailom na adresu
-                prevádzkovateľa.
+                Pri kontaktnom formulári a spracovaní auditu je právnym
+                základom súhlas podľa čl. 6 ods. 1 písm. a) nariadenia (EÚ)
+                2016/679. Súhlas udeľujete zaškrtnutím políčka pred odoslaním
+                formulára a môžete ho odvolať e-mailom. Fakturačné údaje
+                spracúvame na splnenie zákonných povinností podľa čl. 6 ods. 1
+                písm. c); údaje potrebné na vydanie odomykacieho kódu na
+                vybavenie požiadavky podľa čl. 6 ods. 1 písm. b).
               </p>
             </section>
 
@@ -77,7 +82,9 @@ export default function PrivacyPage() {
                 údaj o udelenom súhlase. Procesný audit: meno, pracovný
                 e-mail, názov firmy, telefón (ak ho uvediete), odvetvie,
                 tržby, podiel COGS, odpovede na otázky a z nich vypočítané
-                výsledky.
+                výsledky. Fakturácia: údaje potrebné na vystavenie faktúry.
+                Odomykacie kódy: e-mailová adresa a údaje potrebné na ich
+                vydanie a správu.
               </p>
             </section>
 
@@ -88,6 +95,9 @@ export default function PrivacyPage() {
               <p className="mt-2">
                 {retentionPeriodClaimSk()} Správu z kontaktného formulára
                 doručíme e-mailom a uchovávame ju po dobu vybavenia dopytu.
+                Údaje súvisiace s fakturáciou uchovávame podľa príslušných
+                právnych povinností; údaje o odomykacích kódoch po dobu
+                potrebnú na ich vydanie a správu.
               </p>
             </section>
 
@@ -108,7 +118,7 @@ export default function PrivacyPage() {
               </ul>
               <p className="mt-2">
                 Prenos medzi prehliadačom a týmito službami prebieha cez
-                šifrované spojenie (HTTPS).
+                šifrované spojenie.
               </p>
             </section>
 
@@ -117,8 +127,10 @@ export default function PrivacyPage() {
                 7. Prenos údajov mimo EÚ
               </h2>
               <p className="mt-2">
-                Niektorí poskytovatelia služieb môžu údaje spracúvať aj mimo
-                Európskej únie.
+                Pri doručovaní e-mailov cez Resend sa údaje prenášajú do USA.
+                Ďalší poskytovatelia môžu údaje spracúvať aj mimo Európskej
+                únie. Podrobnosti o použitých právnych zárukách treba overiť
+                podľa aktuálnych podmienok poskytovateľov.
               </p>
             </section>
 

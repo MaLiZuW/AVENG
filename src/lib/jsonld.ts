@@ -23,16 +23,14 @@ export function buildProfessionalServiceLd(): JsonLdObject {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: company.brandName,
-    alternateName: company.brandShort,
     url: SITE,
     logo: `${SITE}/aveng-icon.svg`,
     image: `${SITE}/og-image.png`,
     description:
-      "Procesný audit a seniorné technické vedenie pre výrobné MSP na Slovensku. Inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).",
+      "Projektové riešenie problémov vo výrobe. Navrhneme riešenia a projektový plán; realizuje tím klienta.",
     address: postalAddress(),
     telephone: company.phoneTel,
     email: company.email,
-    priceRange: "€€",
     areaServed: [...company.areaServed],
     founder: {
       "@type": "Person",

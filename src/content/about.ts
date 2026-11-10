@@ -2,57 +2,44 @@ import type { FaqItem, PageCta } from "@/content/types";
 import { company } from "@/config/company";
 
 export const ABOUT_META = {
-  title: "O nás | AVENG",
+  title: "O nás",
   description:
-    "Vladimir, Fractional Engineering Manager s koučingom: technické vedenie a procesný audit pre výrobné MSP na Slovensku.",
+    "AddValueEngineering pomáha výrobným MSP riešiť konkrétne problémy projektovo. Realizáciu vykonáva tím klienta.",
 } as const;
 
 export const ABOUT = {
   eyebrow: "O nás",
-  heading: "Fractional Engineering Manager s koučingom na dielni",
-  lead: `${company.brandName} (${company.brandShort}) vedie ${company.founderName}, Fractional Engineering Manager s koučingom. Má 15+ rokov praxe v EMS inžinierstve a viedol tím až 35 inžinierov. Je BCTC certifikovaný business coach. Pracuje s majiteľmi výrobných MSP v regiónoch Trenčín, Žilina a Trnava.`,
+  heading: "Projektové riešenia pre výrobné firmy",
+  lead:
+    `${company.brandName} pomáha výrobným MSP nájsť jeden konkrétny problém, navrhnúť riešenia a pripraviť projektový plán. Projekty vedie Vladimir; realizáciu vykonáva tím klienta.`,
   paragraphs: [
-    "Majiteľ je často na všetko sám a denne hasí operatívu. Chýba systém, nie snaha. Potrebujete technickú disciplínu spojenú s prijatím zmien na dielni.",
+    "Spolupráca sa začína úvodným rozhovorom a pokračuje projektovým sprintom. Ďalšie vedenie projektu je voliteľné; stretnutia prebiehajú pravidelne podľa dohodnutého rozsahu.",
+    "Pri rozvoji lídrov sa uplatňujú aj skúsenosti s BCTC.",
     `Právnická osoba: ${company.legalName} (IČO ${company.ico}). Sídlo: ${company.addressDisplay}.`,
   ],
-  bullets: [
-    {
-      title: "15+ rokov praxe",
-      text: "EMS inžinierstvo a vedenie tímu až 35 inžinierov.",
-    },
-    {
-      title: "BCTC certifikovaný business coach",
-      text: "Spojenie technickej disciplíny s prácou s ľuďmi — procesy bez prijatia na dielni neprežijú.",
-    },
-    {
-      title: "Lokálny partner",
-      text: "Trenčín, Žilina, Trnava.",
-    },
+  experienceHeading: "Vybrané skúsenosti z praxe",
+  experiences: [
+    "Zavedenie procesu zmien a podporného nástroja v globálnej EMS skupine.",
+    "Interný nástrojový lab v EMS – úspora nákladov.",
+    "Správa dokumentácie v EMS – úspora nákladov.",
+    "Automatizácia administratívy: schvaľovacie toky a nahrávanie dokumentácie do ERP robotom.",
   ],
   model:
-    "Fractional / projekt / koučing podľa dohody. Cena vychádza z hodinovej sadzby, prípadne z odmeny viazanej na vopred dohodnuté ciele. Presný rozsah a cena sú v ponuke.",
+    "Každá služba má dohodnutý problém, cieľ, rozsah a kritérium prijatia. Cena je cenová ponuka podľa rozsahu.",
   faq: [
     {
-      q: "Kto stojí za AVENG?",
-      a: `${company.founderName} · ${company.brandName} · Powered by ${company.legalName} (IČO ${company.ico}).`,
+      q: "Kto realizuje projekt?",
+      a: "Realizáciu vykonáva tím klienta. AddValueEngineering identifikuje problém, navrhne riešenia, pripraví plán a podľa dohody vedie projekt.",
     },
     {
-      q: "Kde pôsobíte?",
-      a: "V regiónoch Trenčín, Žilina a Trnava.",
-    },
-    {
-      q: "Aké sektory?",
-      a: "Najmä automotive, EMS, strojárstvo, plasty a kovovýroba (orientačne 20 – 250 zam.).",
-    },
-    {
-      q: "Ako overíte fit?",
-      a: "Self-audit alebo krátky rozhovor — bez sľubu garantovaných úspor.",
+      q: "Čo je potrebné na začatie?",
+      a: "Sponzor s rozhodovacou právomocou, pridelení ľudia s vyhradeným časom a prístup k potrebným dátam.",
     },
   ] satisfies FaqItem[],
   cta: {
-    primaryHref: "/self-audit/",
-    primaryLabel: "Spustiť bezplatný self-audit",
-    secondaryHref: "/kontakt/?predmet=o-nas",
-    secondaryLabel: "Napísať",
+    primaryHref: "/kontakt/?predmet=o-nas",
+    primaryLabel: "Popíšte problém",
+    secondaryHref: "/sluzby/",
+    secondaryLabel: "Pozrieť projektové služby",
   } satisfies PageCta,
 } as const;

@@ -90,7 +90,7 @@ export default function Level4OnsiteCard({
       email,
       message,
       meta: {
-        source: "Gemba Walk (L1 dashboard)",
+        source: "Obhliadka prevádzky (L1 dashboard)",
         gapLabelSk,
         totalCostBaseEur,
         lossRatioPercent: pct,
@@ -136,7 +136,7 @@ export default function Level4OnsiteCard({
           </div>
         </dl>
         <button type="button" className="btn-primary mt-5" onClick={openModal}>
-          Dohodnúť termín obchôdzky vo výrobe
+          Dohodnúť obhliadku prevádzky
         </button>
       </div>
 

@@ -8,7 +8,7 @@ export type AuditLevelId = 1 | 2 | 3;
 const DISCLAIMER: Record<AuditLevelId, string> = {
   1: "Výsledky Level 1 sú rýchla orientačná diagnostika založená na vašich odpovediach. Nepredstavujú záruku úspor. Pre presné priority a overenie dát odporúčame Level 2/3 alebo obchôdzku vo výrobe.",
   2: "Výsledky Level 2 sú detailnejší, no stále orientačný odhad založený na vašich odpovediach. Nepredstavujú záruku úspor. Pre overenie dát a príčin odporúčame Level 3 alebo obchôdzku vo výrobe.",
-  3: "Výsledky Level 3 sú expertná diagnostika založená na vašich odpovediach a vstupných dátach. Nepredstavujú záruku úspor. Pre overenie priamo vo výrobe odporúčame obchôdzku (Gemba Walk).",
+  3: "Výsledky Level 3 sú expertná diagnostika založená na vašich odpovediach a vstupných dátach. Nepredstavujú záruku úspor. Pre overenie priamo vo výrobe odporúčame obhliadku prevádzky.",
 };
 
 const RELIABILITY_HINT: Record<AuditLevelId, string> = {

@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = {
   ...buildMetadata({
     path: "/admin/",
-    title: "Admin — prístupové kódy",
+    title: "Správa prístupových kódov",
     description:
       "Prihláste sa, vygenerujte jednorazový kód a odošlite ho klientovi e-mailom.",
   }),
@@ -17,7 +17,7 @@ export default function AdminPage() {
     <main className="relative min-h-[70vh] px-4 py-16 sm:px-6">
       <div className="mx-auto w-full max-w-lg">
         <p className="text-xs uppercase tracking-[0.16em] text-signal-bright">
-          AVENG Admin
+          AddValueEngineering
         </p>
         <h1 className="mt-2 font-display text-3xl font-semibold text-ink-50">
           Prístupové kódy L2 / L3

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { company } from "@/config/company";
 
-const BRAND_SUFFIX = " | AVENG";
+const BRAND_SUFFIX = " | AddValueEngineering";
 
 /** Homepage `<title>`. The brand suffix is not applied a second time. */
-export const HOME_TITLE = "AVENG | Procesný audit a technické vedenie pre MSP";
+export const HOME_TITLE =
+  "Projektové riešenie problémov vo výrobe | AddValueEngineering";
 
 const OG_IMAGE_PATH = "/og-image.png";
 
@@ -19,7 +20,7 @@ type BuildMetadataInput = {
   /** Canonical path. A trailing slash is added when missing. `"/"` is the homepage. */
   path: string;
   /**
-   * Page name, or a full title that already ends with " | AVENG".
+   * Page name, or a full title that already ends with " | AddValueEngineering".
    * The homepage always uses `HOME_TITLE`.
    */
   title: string;
@@ -51,7 +52,7 @@ function documentTitle(path: string, title: string): string {
 
 /**
  * Per-route metadata for the static export.
- * `<title>` is "{Page} | AVENG" (homepage keeps `HOME_TITLE`).
+ * `<title>` is "{Page} | AddValueEngineering" (homepage keeps `HOME_TITLE`).
  * Open Graph and Twitter repeat that title, the meta description, and the
  * absolute canonical URL (trailing slash).
  */
