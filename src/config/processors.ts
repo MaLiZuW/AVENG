@@ -19,7 +19,7 @@ export type Processor = {
 };
 
 /** Last policy text update shown on /ochrana-osobnych-udajov/. */
-export const POLICY_UPDATED = "16. 10. 2026";
+export const POLICY_UPDATED = "10. 11. 2026";
 
 const BASE_PROCESSORS: readonly Processor[] = [
   {
@@ -36,9 +36,7 @@ const BASE_PROCESSORS: readonly Processor[] = [
   {
     name: "Resend",
     purpose: "doručenie e-mailov (správa z auditu, kontakt, odomykacie kódy)",
-    // Sending region: neznáme — overí vlastník; account data may be outside EU
-    // (stated only in policy section "Prenos údajov mimo EÚ")
-    locationNote: "e-mailová doručovacia služba",
+    locationNote: "e-mailová služba so spracúvaním údajov v USA",
   },
 ];
 
