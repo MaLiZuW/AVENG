@@ -8,21 +8,25 @@ export const SERVICES_META = {
 
 export const HOME_PROJECTS = [
   {
+    label: "Východisko",
     title: "Procesný audit a identifikácia problému",
     href: "/sluzby/procesny-audit-identifikacia-problemu/",
     text: "Nájdeme, čo vás stojí najviac, a navrhneme riešenie.",
   },
   {
+    label: "Zmeny",
     title: "Riadený proces technických zmien (ECO)",
     href: "/sluzby/projekt-zmeny-eco/",
     text: "Zmena prejde firmou bez straty a bez zbytočného čakania.",
   },
   {
+    label: "Dokumenty",
     title: "Dokumentácia a schvaľovanie",
     href: "/sluzby/sprava-dokumentacie-a-schvalovanie/",
     text: "Menej papiera, kratšie schvaľovacie slučky, plán automatizácie.",
   },
   {
+    label: "Ľudia",
     title: "Rozvoj vedúcich a koučing",
     href: "/sluzby/rozvoj-liderov-koucing/",
     text: "Aby zlepšenie prežilo aj bez konzultanta.",
@@ -30,7 +34,26 @@ export const HOME_PROJECTS = [
 ] as const;
 
 export const SERVICES_PROJECTS = [
-  ...HOME_PROJECTS,
+  {
+    title: "Procesný audit a identifikácia problému",
+    href: "/sluzby/procesny-audit-identifikacia-problemu/",
+    text: "Pre firmy, ktoré cítia, že niečo nefunguje, ale nevedia presne čo. Výstup: pomenovaný problém, varianty riešenia, plán.",
+  },
+  {
+    title: "Riadený proces technických zmien (ECO)",
+    href: "/sluzby/projekt-zmeny-eco/",
+    text: "Pre firmy, kde sa zmeny strácajú alebo trvajú príliš dlho. Výstup: cieľový proces, role, checklist, plán zavedenia.",
+  },
+  {
+    title: "Dokumentácia a schvaľovanie",
+    href: "/sluzby/sprava-dokumentacie-a-schvalovanie/",
+    text: "Pre firmy, kde dokumenty čakajú na podpisy. Výstup: cieľový tok, plán automatizácie.",
+  },
+  {
+    title: "Rozvoj vedúcich a koučing",
+    href: "/sluzby/rozvoj-liderov-koucing/",
+    text: "Pre firmy, kde zlepšenia po čase vyprchajú. Výstup: 5 až 6 koučovacích sedení podľa dohody.",
+  },
   {
     title: "Optimalizácia a AI",
     href: "/optimalizacia-a-ai/",

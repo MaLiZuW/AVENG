@@ -11,7 +11,7 @@ export const HOME_FAQ: FaqItem[] = [
   },
   {
     q: "Koľko to stojí?",
-    a: "Level 2 self-auditu stojí 290 €. Projektový sprint a vedenie projektu ocenime podľa rozsahu v písomnej ponuke. Úvodný rozhovor je zadarmo a bez záväzku.",
+    a: "Level 2 self-auditu stojí 290\u00a0€. Projektový sprint a vedenie projektu ocenime podľa rozsahu v písomnej ponuke. Úvodný rozhovor je zadarmo a bez záväzku.",
   },
   {
     q: "Čo ak nemáme voľných ľudí?",

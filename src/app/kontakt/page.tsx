@@ -248,7 +248,8 @@ export default function KontaktPage() {
               >
                 {company.phoneDisplay}
               </a>{" "}
-              {company.legalName}, {company.addressDisplay}
+              {company.legalName.replace("s. r. o.", "s.\u00a0r.\u00a0o.")},{" "}
+              {company.addressDisplay}
             </p>
           </section>
         </div>

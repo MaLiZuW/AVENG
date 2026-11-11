@@ -103,7 +103,7 @@ export const PILLAR_PAGES: Record<PillarSlug, PillarPageContent> = {
               "Pevná cena projektového sprintu podľa rozsahu v písomnej ponuke. Ak chcete lacnejší začiatok, vyskúšajte ",
             linkText: "self-audit",
             href: "/self-audit/",
-            after: " (Level 1 zdarma, Level 2 za 290 €).",
+            after: " (Level 1 zdarma, Level 2 za 290\u00a0€).",
           },
         ],
       },

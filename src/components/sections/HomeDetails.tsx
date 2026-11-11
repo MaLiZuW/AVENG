@@ -81,7 +81,7 @@ export function HomeBeforeProjects() {
           <h2 className="mt-16 font-display text-2xl font-semibold text-ink-50">
             Ako to funguje
           </h2>
-          <ol className="mt-6 grid gap-5 lg:grid-cols-3">
+          <ol className="mt-6 grid list-decimal gap-5 pl-5 lg:grid-cols-3">
             {PROCESS_STEPS.map((step) => (
               <li
                 key={step}

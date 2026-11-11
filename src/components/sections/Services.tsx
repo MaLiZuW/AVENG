@@ -40,6 +40,9 @@ export default function Services({
                 href={project.href}
                 className="block border-t border-signal/40 pt-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
               >
+                {"label" in project && (
+                  <p className="eyebrow mb-3">{project.label}</p>
+                )}
                 <h3 className="font-display text-xl font-semibold text-ink-50 group-hover:text-signal-bright">
                   {project.title}
                 </h3>

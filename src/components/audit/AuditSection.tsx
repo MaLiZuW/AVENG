@@ -275,30 +275,37 @@ export default function AuditSection() {
               lvl: "Level 1",
               tag: AUDIT_LEVELS[1].priceLabel,
               desc: "20 otázok. Výsledok: kritická oblasť a tri priority.",
-              href: "#level-1",
+              href: "/self-audit/#level-1",
+              cta: "Spustiť audit",
             },
             {
               lvl: "Level 2",
               tag: AUDIT_LEVELS[2].priceLabel,
               desc: "60 otázok. Rozpis po otázkach a poradie podľa finančného dopadu. Prístupový kód po platbe na faktúru.",
-              href: "#level-2",
+              href: "/kontakt/?predmet=level-2",
+              cta: "Objednať Level 2",
             },
             {
               lvl: "Level 3",
-              tag: AUDIT_LEVELS[3].priceLabel,
+              tag: "Podľa dohody",
               desc: "180 otázok a simulácia investície pred schválením rozpočtu.",
-              href: "#level-3",
+              href: "/kontakt/?predmet=level-3",
+              cta: "Dohodnúť Level 3",
             },
           ].map((l) => (
-            <a
+            <div
               key={l.lvl}
-              href={l.href}
-              className="rounded-md border border-white/10 bg-steel-dark/50 px-4 py-3 transition hover:border-signal/40 hover:bg-steel-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
+              className="rounded-md border border-white/10 bg-steel-dark/50 px-4 py-3"
             >
-              <p className="text-xs text-signal-bright">{l.tag}</p>
               <p className="font-display font-semibold text-ink-50">{l.lvl}</p>
+              <p className="text-xs text-signal-bright">
+                {l.tag.replace(" €", "\u00a0€")}
+              </p>
               <p className="text-xs text-ink-300">{l.desc}</p>
-            </a>
+              <Link href={l.href} className="btn-secondary mt-4">
+                {l.cta}
+              </Link>
+            </div>
           ))}
         </div>
 

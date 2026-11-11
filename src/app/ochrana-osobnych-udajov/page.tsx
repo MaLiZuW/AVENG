@@ -44,7 +44,8 @@ export default function PrivacyPage() {
                 1. Prevádzkovateľ
               </h2>
               <p className="mt-2">
-                {company.legalName}, IČO {company.ico}, DIČ {company.dic},{" "}
+                {company.legalName.replace("s. r. o.", "s.\u00a0r.\u00a0o.")},{" "}
+                IČO {company.ico}, DIČ {company.dic},{" "}
                 {company.registeredSeat}.
               </p>
             </section>
@@ -130,9 +131,9 @@ export default function PrivacyPage() {
               {optionalProcessors.length > 0 ? (
                 <ul className="mt-2 list-disc space-y-1 pl-5">
                   {optionalProcessors.map((p) => (
-                  <li key={p.name}>
-                    {p.name} — {p.purpose} ({p.locationNote}).
-                  </li>
+                    <li key={p.name}>
+                      {p.name} — {p.purpose} ({p.locationNote}).
+                    </li>
                   ))}
                 </ul>
               ) : null}

@@ -32,7 +32,7 @@ export const ABOUT = {
   faq: [
     {
       q: "Kto za AddValueEngineering stojí?",
-      a: "Vladimir, inžinier s dlhoročnou praxou vo výrobe. Spoločnosť je AV – Agency, s. r. o.",
+      a: "Vladimir, inžinier s dlhoročnou praxou vo výrobe. Spoločnosť je AV – Agency, s.\u00a0r.\u00a0o.",
     },
     {
       q: "Ako zistíme, či si sadneme?",
