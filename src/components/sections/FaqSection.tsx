@@ -3,6 +3,7 @@
  */
 
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { HOME_FAQ } from "@/content/home-faq";
 
 export default function FaqSection() {
@@ -37,6 +38,11 @@ export default function FaqSection() {
             </li>
           ))}
         </ul>
+        <div className="mt-10">
+          <Link href="/kontakt/" className="btn-primary">
+            Popíšte nám problém
+          </Link>
+        </div>
       </div>
     </section>
   );

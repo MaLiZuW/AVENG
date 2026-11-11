@@ -37,6 +37,9 @@ function CompactFooter() {
       <div className="container-aveng">
         <FooterNav />
         <p className="mt-6 text-xs leading-relaxed text-ink-300">
+          Pôsobíme najmä v Trenčianskom, Žilinskom a Trnavskom kraji.
+        </p>
+        <p className="mt-6 text-xs leading-relaxed text-ink-300">
           {company.legalName} · IČO {company.ico} · {company.registeredSeat} ·{" "}
           <GdprLink className="text-signal-bright underline-offset-2 hover:underline" />
         </p>
@@ -145,6 +148,9 @@ export default function Footer({
         <div className="mt-10">
           <FooterNav />
         </div>
+        <p className="mt-12 text-xs text-ink-300">
+          Pôsobíme najmä v Trenčianskom, Žilinskom a Trnavskom kraji.
+        </p>
         <p className="mt-12 border-t border-white/10 pt-6 text-xs text-ink-300">
           © {new Date().getFullYear()} {company.brandName} · {company.legalName}{" "}
           · IČO {company.ico} · Všetky práva vyhradené.

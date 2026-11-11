@@ -1,78 +1,51 @@
 import type { FaqItem, PageCta } from "@/content/types";
 
 export const OPTIMIZATION_META = {
-  title: "Optimalizácia a AI",
+  title: "AI a automatizácia vo výrobe | AddValueEngineering",
   description:
-    "Projektový návrh zlepšenia procesov s využitím AI pre výrobné MSP. Riešenia navrhujeme; implementáciu vykoná váš tím alebo dodávateľ po samostatnej dohode.",
+    "Návrh využitia AI a automatizácie pre jeden problém vo výrobe alebo administratíve. Bez predaja softvéru. Implementácia samostatne.",
 } as const;
 
 export const OPTIMIZATION = {
-  eyebrow: "Projektové služby",
-  heading: "Návrh zlepšenia s využitím AI",
+  eyebrow: "Projekt",
+  heading: "AI a automatizácia vo výrobe: návrh pre jeden konkrétny problém",
   lead:
-    "Projekt sa zameria na jeden definovaný problém vo výrobe alebo administratíve. Navrhneme možné riešenia a projektový plán; implementáciu po samostatnej dohode vykoná váš tím alebo dodávateľ.",
-  whenHeading: "Kedy projekt pomôže",
+    "Nepredávame softvér ani nesľubujeme zázraky. Pomenujeme jeden problém vo výrobe alebo administratíve, posúdime, či tu AI alebo automatizácia dáva zmysel, a navrhneme plán.",
+  whenHeading: "Kedy to dáva zmysel",
   when: [
-    "Máte konkrétny problém v procese alebo informačnom toku.",
-    "Chcete posúdiť, či môže AI pomôcť s daným problémom.",
-    "Potrebujete plán riešenia, nie dodávku softvéru.",
+    "Ľudia ručne prepisujú to isté z jedného systému do druhého.",
+    "Schvaľovanie a evidencia dokumentov zaberá hodiny týždenne.",
+    "Chcete vedieť, či sa AI vo vašej firme vôbec oplatí.",
   ],
-  features: [
-    {
-      title: "Jeden definovaný problém",
-      text: "Rozsah a cieľ projektu sa dohodnú so sponzorom pred začiatkom.",
-    },
-    {
-      title: "Varianty riešenia",
-      text: "Posúdime možnosti zlepšenia procesu vrátane využitia AI, ak je to vhodné.",
-    },
-    {
-      title: "Projektový plán",
-      text: "Výstup určí kroky, zodpovednosti a kritérium prijatia.",
-    },
+  deliverHeading: "Čo dostanete",
+  deliver: [
+    "Jeden vymedzený problém a jeho súčasný stav.",
+    "Posúdenie možností vrátane odpovede „AI tu nepotrebujete“, ak je pravda.",
+    "Projektový plán: kroky, zodpovední, kritérium prijatia.",
   ],
-  boundary:
-    "Navrhujeme riešenia. Nedodávame softvér; implementácia sa dohodne samostatne a realizuje ju váš tím alebo dodávateľ.",
-  processHeading: "Ako projekt prebieha",
-  processSteps: [
-    "Úvodným rozhovorom overíme, či má zmysel začať.",
-    "Projektový sprint vymedzí problém, varianty riešenia a plán.",
-    "Váš tím alebo dodávateľ realizuje schválené riešenie po samostatnej dohode.",
+  boundariesHeading: "Hranice",
+  boundaries: [
+    "Len navrhujeme riešenia. Implementácia až po samostatnej dohode.",
+    "Nedodávame softvér.",
   ],
-  exampleHeading: "Skúsenosť z praxe",
-  example:
-    "Automatizácia administratívy vrátane schvaľovacích tokov a nahrávania dokumentácie do ERP robotom.",
-  relatedPillars: [
-    {
-      title: "Procesný audit a identifikácia problému",
-      href: "/sluzby/procesny-audit-identifikacia-problemu/",
-    },
-    {
-      title: "Projekt správy dokumentácie a schvaľovania",
-      href: "/sluzby/sprava-dokumentacie-a-schvalovanie/",
-    },
-  ],
+  experienceHeading: "Z praxe",
+  experience:
+    "Zavedenie robota do správy dokumentácie a schvaľovacích slučiek v EMS prostredí.",
+  priceHeading: "Cena",
+  price: "Podľa rozsahu v písomnej ponuke.",
   faq: [
     {
-      q: "Dodávate AI softvér?",
-      a: "Nie. Navrhujeme riešenie a projektový plán; implementáciu po samostatnej dohode vykoná váš tím alebo dodávateľ.",
+      q: "Predávate AI softvér?",
+      a: "Nie. Navrhujeme riešenie a plán. Implementáciu robí váš tím alebo dodávateľ.",
     },
     {
-      q: "Musí projekt použiť AI?",
-      a: "Nie. AI posudzujeme ako jednu z možností riešenia konkrétneho problému.",
-    },
-    {
-      q: "Koľko stojí projekt optimalizácie a AI?",
-      a: "Cena je cenová ponuka podľa rozsahu.",
-    },
-    {
-      q: "Kto realizuje schválené riešenie?",
-      a: "Váš tím alebo dodávateľ po samostatnej dohode.",
+      q: "Musí byť v riešení AI?",
+      a: "Nie. Ak postačí jednoduchšia automatizácia alebo zmena procesu, odporučíme ju.",
     },
   ] satisfies FaqItem[],
   cta: {
-    primaryHref: "/kontakt/?predmet=optimalizacia-a-ai",
-    primaryLabel: "Popíšte problém",
+    primaryHref: "/kontakt/",
+    primaryLabel: "Popíšte nám problém",
     secondaryHref: "/sluzby/",
     secondaryLabel: "Všetky služby",
   } satisfies PageCta,

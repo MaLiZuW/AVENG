@@ -1,18 +1,12 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Calendar,
   Check,
   Crown,
   Gauge,
   Shield,
 } from "lucide-react";
-import TrackBookingLink from "@/components/TrackBookingLink";
-import {
-  AUDIT_LEVELS,
-  levelBadge,
-  personalMeetingHref,
-} from "@/config/levels";
+import { AUDIT_LEVELS, levelBadge } from "@/config/levels";
 
 const LEVELS = [
   {
@@ -20,9 +14,9 @@ const LEVELS = [
     href: "/self-audit/#level-1",
     badge: levelBadge(1),
     Icon: Gauge,
-    title: "Orientačný skríning",
+    title: "Level 1",
     price: AUDIT_LEVELS[1].priceLabel,
-    priceNote: "20 otázok · 15–20 min",
+    priceNote: "20 otázok, výsledok hneď.",
     border: "border-signal/50 hover:border-signal",
     glow: "shadow-[0_0_0_1px_rgba(47,111,237,0.35),0_16px_48px_rgba(47,111,237,0.12)]",
     badgeClass:
@@ -30,9 +24,7 @@ const LEVELS = [
     iconClass: "text-signal-bright",
     checkClass: "text-signal-bright",
     points: [
-      "Kde unikajú peniaze — v jednom pohľade",
-      "Indikatívny potenciál úspor voči referencii MSP",
-      "3 prioritné odporúčania pre konateľa",
+      "Výsledok hneď",
     ],
   },
   {
@@ -40,16 +32,16 @@ const LEVELS = [
     href: "/self-audit/#level-2",
     badge: levelBadge(2),
     Icon: Shield,
-    title: "Detailný audit",
+    title: "Level 2",
     price: AUDIT_LEVELS[2].priceLabel,
-    priceNote: "60 otázok · rozhodovací podklad",
+    priceNote: "60 otázok, rozpis po otázkach a poradie podľa dopadu.",
     border: "border-[#c0c7d4]/70 hover:border-[#e8edf5]",
     glow: "shadow-[0_0_0_1px_rgba(192,199,212,0.35),0_16px_48px_rgba(0,0,0,0.35)]",
     badgeClass: "border-[#c0c7d4]/45 bg-[#c0c7d4]/10 text-[#e8edf5]",
     iconClass: "text-[#c0c7d4]",
     checkClass: "text-[#c0c7d4]",
     points: [
-      "Rozpis po otázkach, prioritizácia podľa finančného dopadu, podklad na poradu majiteľov.",
+      "Rozpis po otázkach a poradie podľa finančného dopadu.",
     ],
   },
   {
@@ -57,25 +49,21 @@ const LEVELS = [
     href: "/self-audit/#level-3",
     badge: levelBadge(3),
     Icon: Crown,
-    title: "Expert & DTO",
+    title: "Level 3",
     price: AUDIT_LEVELS[3].priceLabel,
-    priceNote: "180 otázok · 6M + simulátor",
+    priceNote: "180 otázok a simulácia investície.",
     border: "border-[#d4af37]/75 hover:border-[#f0d78c]",
     glow: "shadow-[0_0_0_1px_rgba(212,175,55,0.4),0_16px_48px_rgba(0,0,0,0.4)]",
     badgeClass: "border-[#d4af37]/45 bg-[#d4af37]/10 text-[#f0d78c]",
     iconClass: "text-[#d4af37]",
     checkClass: "text-[#d4af37]",
     points: [
-      "Príčiny strát naprieč 6M dimenziami",
-      "What-If simulácia investície a ROI",
-      "Pred podpisom rozpočtu — nie po ňom",
+      "Simulácia investície",
     ],
   },
 ] as const;
 
 export default function AuditTeaser() {
-  const meeting = personalMeetingHref();
-
   return (
     <section
       id="audit"
@@ -93,19 +81,16 @@ export default function AuditTeaser() {
 
       <div className="container-aveng relative">
         <div className="mx-auto max-w-3xl text-center animate-fade-up">
-          <p className="eyebrow mb-5">Self-Audit · Zrkadlo podniku</p>
+          <p className="eyebrow mb-5">Self-Audit</p>
           <h2
             id="audit-teaser-heading"
             className="font-display text-3xl font-semibold leading-tight tracking-tight text-ink-50 sm:text-4xl lg:text-5xl"
           >
-            Koľko peňazí vám{" "}
-            <span className="text-signal-bright">uniká vo výrobe</span> — skôr,
-            než to uvidíte vo výsledovke
+            Najlacnejší začiatok: self-audit
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink-200 sm:text-lg">
-            Tri úrovne diagnostiky pre majiteľov a COO výrobných MSP. Začnite
-            zdarma: 20 otázok, indikatívny potenciál úspor a tri priority —
-            bez záruky konkrétnych čísiel, s jasnou mapou ďalšieho postupu.
+            Odpovedáte na otázky o svojej výrobe a dostanete orientačný rozsah
+            potenciálu a oblasť, ktorú riešiť ako prvú.
           </p>
         </div>
 
@@ -151,7 +136,7 @@ export default function AuditTeaser() {
                   ))}
                 </ul>
                 <p className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-signal-bright">
-                  Prejsť na audit
+                  Detail úrovne
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </p>
               </Link>
@@ -161,34 +146,10 @@ export default function AuditTeaser() {
 
         <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center animate-fade-in">
           <Link href="/self-audit/" className="btn-primary !px-7 !py-3.5 !text-base">
-            Spustiť bezplatný self-audit
+            Spustiť audit zdarma
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
-          {meeting.external ? (
-            <TrackBookingLink
-              href={meeting.href}
-              className="btn-secondary !px-6 !py-3.5 inline-flex items-center gap-2"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Calendar className="h-4 w-4" aria-hidden />
-              Dohodnúť osobnú schôdzku
-            </TrackBookingLink>
-          ) : (
-            <Link
-              href={meeting.href}
-              className="btn-secondary !px-6 !py-3.5 inline-flex items-center gap-2"
-            >
-              <Calendar className="h-4 w-4" aria-hidden />
-              Dohodnúť osobnú schôdzku
-            </Link>
-          )}
         </div>
-        <p className="mt-4 text-center text-xs text-ink-300">
-          Level 1 je online a zdarma. Level 2/3 odomknete prístupovým kódom —
-          kód vám zašleme e-mailom spolu s údajmi na úhradu (prevodom na
-          základe faktúry).
-        </p>
       </div>
     </section>
   );

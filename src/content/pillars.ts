@@ -1,217 +1,332 @@
 import type { FaqItem, PageCta } from "@/content/types";
 import type { PillarSlug } from "@/config/pillars";
 
+type ParagraphBlock = {
+  type: "paragraph";
+  text: string;
+};
+
+type LinkParagraphBlock = {
+  type: "link-paragraph";
+  before: string;
+  linkText: string;
+  href: string;
+  after: string;
+};
+
+type ListBlock = {
+  type: "list" | "ordered";
+  items: string[];
+};
+
+export type ProjectSection = {
+  heading: string;
+  blocks: (ParagraphBlock | LinkParagraphBlock | ListBlock)[];
+};
+
 export type PillarPageContent = {
   slug: PillarSlug;
+  title: string;
   metaDescription: string;
   lead: string;
-  whenHeading: string;
-  when: string[];
-  processHeading: string;
-  processSteps: string[];
-  deliverHeading?: string;
-  deliver?: string[];
-  modelHeading: string;
-  model: string[];
-  related: PillarSlug[];
+  sections: ProjectSection[];
   faq: FaqItem[];
   cta: PageCta;
 };
 
 const CONTACT_CTA = {
-  primaryHref: "/kontakt/?predmet=sluzby",
-  primaryLabel: "Popíšte problém",
-  secondaryHref: "/self-audit/",
-  secondaryLabel: "Spustiť self-audit",
+  primaryHref: "/kontakt/",
+  primaryLabel: "Popíšte nám problém",
+  secondaryHref: "/sluzby/",
+  secondaryLabel: "Všetky služby",
 } as const;
 
 export const PILLAR_PAGES: Record<PillarSlug, PillarPageContent> = {
   "procesny-audit-identifikacia-problemu": {
     slug: "procesny-audit-identifikacia-problemu",
+    title: "Procesný audit výroby: nájdeme problém, ktorý vás stojí najviac",
     metaDescription:
-      "Projektový sprint pre výrobné MSP: identifikácia problému, varianty riešenia a projektový plán.",
+      "Procesný audit výroby formou 2–3-týždňového sprintu: jeden pomenovaný problém, varianty riešenia a projektový plán. Pevná cena.",
     lead:
-      "Projektový sprint pomenuje problém, ktorý vás stojí najviac, navrhne varianty riešenia a pripraví projektový plán. Realizáciu vykoná váš tím; sponzor zabezpečí zdroje a súčinnosť.",
-    whenHeading: "Čo projekt vyrieši",
-    when: [
-      "Vyberie jeden problém s najvyššou prioritou.",
-      "Pomenuje rozsah problému a odhadne jeho dopad v rozsahu.",
-      "Pripraví varianty riešenia a odporúčanie pre sponzora.",
-    ],
-    deliverHeading: "Výstup a kritérium prijatia",
-    deliver: [
-      "Pomenovaný problém, odhad dopadu v rozsahu, dva až tri varianty riešenia a odporúčanie.",
-      "Projektový plán s cieľom, rozsahom a kritériom prijatia.",
-      "Projekt je prijatý, keď sponzor schváli výber riešenia.",
-    ],
-    processHeading: "Ako projekt prebieha",
-    processSteps: [
-      "Úvodný rozhovor na overenie, či má zmysel začať.",
-      "Projektový sprint v trvaní dva až tri týždne.",
-      "Predstavenie variantov a odporúčania sponzorovi.",
-      "Voliteľné vedenie projektu formou pravidelných stretnutí.",
-    ],
-    modelHeading: "Cena a potrebné podmienky",
-    model: [
-      "Cena projektového sprintu je cenová ponuka podľa rozsahu.",
-      "Samoobslužný audit je alternatívny vstup: Level 1 je zdarma a Level 2 stojí 290 €.",
-      "Projekt sa začína po určení sponzora, vyhradení času pridelených ľudí a sprístupnení potrebných dát.",
-    ],
-    related: [
-      "projekt-zmeny-eco",
-      "sprava-dokumentacie-a-schvalovanie",
-      "rozvoj-liderov-koucing",
+      "Viete, že vo výrobe niečo drhne, ale nie ste si istý, čo je príčina a čo je len príznak. Za 2 až 3 týždne dostanete jeden pomenovaný problém a plán, ako ho vyriešiť.",
+    sections: [
+      {
+        heading: "Čo dostanete",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Jeden pomenovaný problém s najväčším dopadom a jasne vymedzeným rozsahom.",
+              "Odhad dopadu v rozsahu, nie vymyslené číslo.",
+              "2 až 3 varianty riešenia s výhodami, rizikami a nárokmi na ľudí.",
+              "Odporúčanie a projektový plán: cieľ, kroky, termíny, zodpovední.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Projekt je prijatý, keď sponzor schváli vybraný variant a plán.",
+          },
+        ],
+      },
+      {
+        heading: "Ako prebieha",
+        blocks: [
+          {
+            type: "ordered",
+            items: [
+              "Úvodný rozhovor — 30 minút zdarma. Rozhodneme, či projekt začať.",
+              "Projektový sprint — 2 až 3 týždne. Rozhovory s ľuďmi, obhliadka prevádzky, pohľad do dát.",
+              "Prezentácia sponzorovi — Varianty, odporúčanie a plán. Rozhodnete vy.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Čo potrebujeme od vás",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Sponzora, ktorý je k dispozícii na úvod a záver.",
+              "2 až 3 kolegov na rozhovory a vysvetlenie súčasného stavu.",
+              "Prístup k základným údajom o výrobe.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Cena",
+        blocks: [
+          {
+            type: "link-paragraph",
+            before:
+              "Pevná cena projektového sprintu podľa rozsahu v písomnej ponuke. Ak chcete lacnejší začiatok, vyskúšajte ",
+            linkText: "self-audit",
+            href: "/self-audit/",
+            after: " (Level 1 zdarma, Level 2 za 290 €).",
+          },
+        ],
+      },
     ],
     faq: [
       {
-        q: "Robíte aj realizáciu?",
-        a: "Nie. Realizuje ju váš tím; my pripravíme plán, vedieme projektové stretnutia a kontrolujeme postup.",
+        q: "Zrealizujete aj riešenie?",
+        a: "Nie. Realizuje váš tím. My plán napíšeme, vedieme stretnutia a kontrolujeme postup, ak si vedenie projektu objednáte.",
       },
       {
-        q: "Čo ak firma nemá voľných ľudí?",
-        a: "Projekt odložíme. Bez vyhradeného času ľudí určených sponzorom nemá zmysel začínať.",
+        q: "Čo ak nemáme voľných ľudí?",
+        a: "Projekt odložíme, kým sponzor ľudí nevyhradí.",
       },
       {
-        q: "Koľko stojí projektový sprint?",
-        a: "Cena je cenová ponuka podľa rozsahu. Level 2 samoobslužného auditu stojí 290 €.",
+        q: "Ako sa líši od self-auditu?",
+        a: "Self-audit je online dotazník, ktorý vám dá orientačný obraz. Projektový sprint je práca s vašimi ľuďmi a dátami na konkrétnom probléme.",
       },
     ],
-    cta: CONTACT_CTA,
+    cta: {
+      ...CONTACT_CTA,
+      secondaryLabel: "Všetky služby",
+    },
   },
   "projekt-zmeny-eco": {
     slug: "projekt-zmeny-eco",
+    title: "Riadenie technických zmien (ECO) vo výrobe",
     metaDescription:
-      "Projekt zavedenia riadeného procesu zmien ECO s rolami, checklistom a plánom zavedenia.",
+      "Zavedenie riadeného procesu technických zmien (ECO) vo výrobe: role, checklist a plán zavedenia. Realizuje váš tím, my vedieme projekt.",
     lead:
-      "Projekt zmeny a ECO pripraví riadený postup pre technické zmeny. Výstupom je popis cieľového procesu, roly, checklist a plán zavedenia; realizáciu vykoná váš tím.",
-    whenHeading: "Kedy projekt pomôže",
-    when: [
-      "Zmeny sa strácajú medzi tímami alebo sa do výroby dostanú neskoro.",
-      "Nie je jasné, kto zmenu posudzuje, schvaľuje a oznamuje.",
-      "Potrebujete dohodnúť zodpovednosti a postup pre technické zmeny.",
-    ],
-    deliverHeading: "Výstup a kritérium prijatia",
-    deliver: [
-      "Popis cieľového procesu zmien a dohodnuté role.",
-      "Checklist a plán zavedenia s termínmi a zodpovednými.",
-      "Kritérium prijatia sa písomne dohodne so sponzorom pred začiatkom.",
-    ],
-    processHeading: "Ako projekt prebieha",
-    processSteps: [
-      "Vymedzenie jedného problému, rozsahu a kritéria prijatia.",
-      "Návrh procesu a variantov riešenia so zapojenými ľuďmi.",
-      "Zostavenie plánu zavedenia a pravidelných projektových stretnutí.",
-    ],
-    modelHeading: "Cena a realizácia",
-    model: [
-      "Cena je cenová ponuka podľa rozsahu.",
-      "Realizáciu vykoná váš tím. Sponzor zabezpečí zdroje a súčinnosť; bez vyhradených ľudí sa projekt nezačína.",
-    ],
-    related: [
-      "procesny-audit-identifikacia-problemu",
-      "sprava-dokumentacie-a-schvalovanie",
-      "rozvoj-liderov-koucing",
+      "ECO (zmenové konanie) je formálna technická zmena: úprava výkresu, zloženia výrobku alebo postupu. Keď neprebieha riadene, výroba pracuje podľa starej verzie a zákazník to zistí ako prvý.",
+    sections: [
+      {
+        heading: "Kedy projekt pomôže",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Nikto nevie, ktorá verzia dokumentu platí.",
+              "Zmeny sa strácajú medzi konštrukciou, nákupom a výrobou.",
+              "Schválenie zmeny trvá týždne a zmenia sa prioritou.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Čo dostanete",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Popis cieľového procesu zmien od podnetu po zavedenie vo výrobe.",
+              "Role a zodpovednosti: kto zmenu podáva, posudzuje, schvaľuje, zavádza.",
+              "Checklist a vzor zmenového listu podľa vašich potrieb.",
+              "Plán zavedenia s termínmi a zodpovednými osobami.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Kritérium prijatia dohodneme písomne pred začiatkom. Napríklad: proces je odsúhlasený sponzorom a prvé tri zmeny prešli podľa neho.",
+          },
+        ],
+      },
+      {
+        heading: "Ako prebieha",
+        blocks: [
+          {
+            type: "ordered",
+            items: [
+              "Vymedzenie — Jeden problém, rozsah, kritérium prijatia.",
+              "Návrh — Navrhneme proces a varianty spolu s ľuďmi, ktorých sa týka.",
+              "Plán a vedenie — Plán zavedenia a stretnutia 1 až 2× týždenne. Zavádza váš tím.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Cena",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Podľa rozsahu v písomnej ponuke.",
+          },
+        ],
+      },
     ],
     faq: [
       {
-        q: "Čo bude výstupom projektu ECO?",
-        a: "Popis cieľového procesu zmien, určené role, checklist a plán zavedenia s termínmi a zodpovednými.",
+        q: "Potrebujeme na to špeciálny softvér?",
+        a: "Nie. Najprv navrhneme proces. Nástroj sa vyberá až potom a môže to byť aj to, čo už máte.",
       },
       {
-        q: "Kto zavádza nový proces?",
-        a: "Váš tím. My navrhneme postup, vedieme projektové stretnutia a kontrolujeme plnenie plánu.",
+        q: "Kto proces zavedie?",
+        a: "Váš tím. My navrhneme, vedieme stretnutia a kontrolujeme plán.",
       },
     ],
     cta: CONTACT_CTA,
   },
   "sprava-dokumentacie-a-schvalovanie": {
     slug: "sprava-dokumentacie-a-schvalovanie",
+    title: "Výrobná dokumentácia a schvaľovanie bez čakania",
     metaDescription:
-      "Projekt správy výrobnej dokumentácie a schvaľovania vrátane návrhu plánu automatizácie.",
+      "Kratšie schvaľovanie a poriadok vo výrobnej dokumentácii. Navrhneme cieľový tok a plán automatizácie. Bez nákupu softvéru.",
     lead:
-      "Projekt zjednodušenia dokumentácie a schvaľovania navrhne cieľový proces a plán automatizácie. Zameriava sa na schvaľovacie slučky a nahrávanie dokumentácie do ERP; implementáciu vykoná váš tím alebo dodávateľ po samostatnej dohode.",
-    whenHeading: "Kedy projekt pomôže",
-    when: [
-      "Dokumenty sa schvaľujú v neprehľadných alebo opakovaných slučkách.",
-      "Nahrávanie dokumentácie do ERP je manuálne alebo nejednotné.",
-      "Potrebujete upratať proces pred výberom alebo implementáciou nástroja.",
-    ],
-    deliverHeading: "Výstup a hranice projektu",
-    deliver: [
-      "Návrh cieľového procesu a plánu automatizácie.",
-      "Procesné riešenie bez preferencie konkrétnej PLM/PDM platformy.",
-      "Implementácia až po samostatnej dohode; vykonáva ju váš tím alebo dodávateľ.",
-    ],
-    processHeading: "Ako projekt prebieha",
-    processSteps: [
-      "Vymedzenie problému a súčasného toku dokumentácie a schvaľovania.",
-      "Návrh variantov cieľového procesu a automatizácie.",
-      "Dohoda plánu, zodpovedností a kritéria prijatia so sponzorom.",
-    ],
-    modelHeading: "Cena a realizácia",
-    model: [
-      "Cena je cenová ponuka podľa rozsahu.",
-      "Váš tím alebo dodávateľ zabezpečí implementáciu po samostatnej dohode. My navrhujeme riešenie a vedieme projekt.",
-    ],
-    related: [
-      "procesny-audit-identifikacia-problemu",
-      "projekt-zmeny-eco",
-      "rozvoj-liderov-koucing",
+      "Výkresy, postupy a protokoly cestujú medzi ľuďmi e-mailom a na papieri. Podpis čaká na dovolenke a výroba stojí. Navrhneme jednoduchší tok a plán, ako ho zautomatizovať.",
+    sections: [
+      {
+        heading: "Čo dostanete",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Mapu súčasného toku dokumentov a miest, kde sa zdržiava.",
+              "Návrh cieľového toku a schvaľovacích krokov.",
+              "Plán automatizácie: čo sa dá robiť robotom, čo prepojením systémov, čo zostane ručne.",
+              "Plán s termínmi a zodpovednými.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Z praxe",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Podobný problém sme riešili v EMS prostredí: schvaľovacie toky a automatické nahrávanie dokumentácie do ERP robotom.",
+          },
+        ],
+      },
+      {
+        heading: "Hranice projektu",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Nedodávame ani nekonfigurujeme PLM/PDM softvér. Riešime proces a plán.",
+              "Implementáciu robí váš tím alebo dodávateľ, na základe samostatnej dohody.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Cena",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Podľa rozsahu v písomnej ponuke.",
+          },
+        ],
+      },
     ],
     faq: [
       {
-        q: "Dodávate alebo implementujete PLM/PDM softvér?",
-        a: "Nie. Riešime procesy a plán automatizácie, nie konkrétnu PLM/PDM platformu. Implementáciu po samostatnej dohode vykoná váš tím alebo dodávateľ.",
+        q: "Musíme mať už vybraný systém?",
+        a: "Nie. Projekt začína procesom a požiadavkami. Nástroj vyberiete na ich základe.",
       },
       {
-        q: "Čo ak zatiaľ nemáme vybraný nástroj?",
-        a: "Projekt sa zameria na cieľový proces a požiadavky. Konkrétny nástroj nie je podmienkou návrhu procesu.",
+        q: "Dodáte aj softvér?",
+        a: "Nie. Navrhneme riešenie a plán. Softvér dodá váš dodávateľ alebo interný tím.",
       },
     ],
     cta: CONTACT_CTA,
   },
   "rozvoj-liderov-koucing": {
     slug: "rozvoj-liderov-koucing",
+    title: "Koučing majstrov a vedúcich výroby",
     metaDescription:
-      "Projektový rozvojový program pre vedúcich s cieľom a meraním dohodnutým so sponzorom.",
+      "Koučing majstrov a vedúcich tímov vo výrobe, aby zlepšenia vydržali. 5–6 sedení, individuálne alebo skupinovo.",
     lead:
-      "Rozvojový program pre vedúcich môže prebiehať individuálne alebo skupinovo. Cieľ a spôsob merania sa dohodnú so sponzorom pred začiatkom; program zahŕňa päť až šesť sedení, spravidla raz až dvakrát mesačne.",
-    whenHeading: "Kedy projekt pomôže",
-    when: [
-      "Vedúci potrebujú podporu pri zavádzaní dohodnutých zmien.",
-      "Sponzor chce vopred určiť cieľ rozvoja a spôsob jeho vyhodnotenia.",
-      "Rozvoj má prebiehať individuálne alebo v skupine.",
-    ],
-    deliverHeading: "Výstup a kritérium prijatia",
-    deliver: [
-      "Dohodnutý cieľ rozvoja a spôsob merania pred začiatkom.",
-      "Program sedení podľa rozsahu dohodnutého so sponzorom.",
-      "Kritérium prijatia sa určí v projektovom pláne.",
-    ],
-    processHeading: "Ako projekt prebieha",
-    processSteps: [
-      "Dohoda cieľa, rozsahu a merania so sponzorom.",
-      "Individuálne alebo skupinové sedenia, spravidla raz až dvakrát mesačne.",
-      "Vyhodnotenie podľa vopred dohodnutého kritéria.",
-    ],
-    modelHeading: "Cena a potrebné podmienky",
-    model: [
-      "Cena je cenová ponuka podľa rozsahu.",
-      "Rozsah programu a účasť vedúcich sa dohodnú so sponzorom pred začiatkom.",
-    ],
-    related: [
-      "procesny-audit-identifikacia-problemu",
-      "projekt-zmeny-eco",
-      "sprava-dokumentacie-a-schvalovanie",
+      "Zlepšenie zavedie konzultant a po troch mesiacoch všetko vyprchá. Aby sa držalo, potrebujú ho niesť majstri a vedúci tímov.",
+    sections: [
+      {
+        heading: "Kedy to dáva zmysel",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Po zavedení zmeny sa pracuje postaru.",
+              "Majstri riešia hasenie namiesto riadenia tímu.",
+              "Medzi vedením a dielňou sa stráca informácia.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Ako prebieha",
+        blocks: [
+          {
+            type: "ordered",
+            items: [
+              "Cieľ so sponzorom — Dohodneme, čo sa má u vedúcich zmeniť a podľa čoho to poznáte.",
+              "Koučovacie sedenia — 5 až 6 sedení, individuálne alebo skupinovo, 1 až 2× mesačne. Rozsah podľa dohody.",
+              "Vyhodnotenie — Spoločné zhodnotenie so sponzorom, čo sa zmenilo.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Koučing",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Vedie certifikovaný business kouč (BCTC). Je to obchodný koučing zameraný na riadenie tímu, nie psychoterapia.",
+          },
+        ],
+      },
+      {
+        heading: "Cena",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Podľa rozsahu v písomnej ponuke.",
+          },
+        ],
+      },
     ],
     faq: [
       {
-        q: "Ako sa určí cieľ programu?",
-        a: "Cieľ a spôsob merania sa dohodnú so sponzorom pred začiatkom projektu.",
+        q: "Pre koho sú sedenia?",
+        a: "Najmä pre majstrov a vedúcich tímov. Pre stredný manažment podľa dohody.",
       },
       {
-        q: "Je program individuálny alebo skupinový?",
-        a: "Možný je individuálny aj skupinový formát; konkrétny rozsah sa dohodne so sponzorom.",
+        q: "Je to psychoterapia?",
+        a: "Nie. Pracujeme s riadením tímu a pracovnými návykmi.",
       },
     ],
     cta: CONTACT_CTA,

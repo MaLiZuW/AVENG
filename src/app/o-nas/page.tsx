@@ -3,15 +3,11 @@ import Header from "@/components/Header";
 import JsonLd from "@/components/JsonLd";
 import About from "@/components/sections/About";
 import Footer from "@/components/sections/Footer";
-import { ABOUT, ABOUT_META } from "@/content/about";
+import { ABOUT } from "@/content/about";
 import { buildBreadcrumbLd, buildFaqPageLd } from "@/lib/jsonld";
-import { buildMetadata } from "@/lib/seo";
+import { buildSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/o-nas/",
-  title: ABOUT_META.title,
-  description: ABOUT_META.description,
-});
+export const metadata: Metadata = buildSeoMetadata("/o-nas/");
 
 export default function AboutPage() {
   const breadcrumb = buildBreadcrumbLd([
