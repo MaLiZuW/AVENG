@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
 import { company } from "@/config/company";
-import { CONTENT_LASTMOD } from "@/content/lastmod";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = company.siteUrl.replace(/\/$/, "");
+  const buildDate = new Date();
   const routes = [
     "",
     "/o-nas/",
@@ -19,14 +19,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kontakt/",
     "/ochrana-osobnych-udajov/",
   ];
-  return routes.map((path) => {
-    const key = path || "/";
-    const lastmod = CONTENT_LASTMOD[key];
-    return {
-      url: `${base}${path || "/"}`,
-      lastModified: lastmod ? new Date(lastmod) : new Date(),
-      changeFrequency: path.includes("self-audit") ? "weekly" : "monthly",
-      priority: path === "" ? 1 : 0.7,
-    };
-  });
+  return routes.map((path) => ({
+    url: `${base}${path || "/"}`,
+    lastModified: buildDate,
+    changeFrequency: path.includes("self-audit") ? "weekly" : "monthly",
+    priority: path === "" ? 1 : 0.7,
+  }));
 }
