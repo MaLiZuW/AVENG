@@ -1,45 +1,42 @@
-import type { FaqItem, PageCta } from "@/content/types";
-import { company } from "@/config/company";
+import type { FaqItem } from "@/content/types";
 
 export const ABOUT_META = {
-  title: "O nás",
+  title: "O nás | AddValueEngineering",
   description:
-    "AddValueEngineering pomáha výrobným MSP riešiť konkrétne problémy projektovo. Realizáciu vykonáva tím klienta.",
+    "Vladimir, inžinier s viac ako 15 rokmi v elektronickej kontraktnej výrobe. Pomáha výrobným firmám riešiť jeden problém projektovo.",
 } as const;
 
 export const ABOUT = {
   eyebrow: "O nás",
-  heading: "Projektové riešenia pre výrobné firmy",
+  heading: "Vladimir. Inžinier z výroby, ktorý rieši problémy projektovo.",
   lead:
-    `${company.brandName} pomáha výrobným MSP nájsť jeden konkrétny problém, navrhnúť riešenia a pripraviť projektový plán. Projekty vedie Vladimir; realizáciu vykonáva tím klienta.`,
-  paragraphs: [
-    "Spolupráca sa začína úvodným rozhovorom a pokračuje projektovým sprintom. Ďalšie vedenie projektu je voliteľné; stretnutia prebiehajú pravidelne podľa dohodnutého rozsahu.",
-    "Pri rozvoji lídrov sa uplatňujú aj skúsenosti s BCTC.",
-    `Právnická osoba: ${company.legalName} (IČO ${company.ico}). Sídlo: ${company.addressDisplay}.`,
+    "Viac ako 15 rokov v elektronickej kontraktnej výrobe. Viedol som tím až 35 inžinierov. Viem, ako vyzerá firma, kde všetci hasia a nikto nemá čas na zlepšovanie.",
+  workHeading: "Ako pracujem",
+  work: [
+    "Nájdem jeden problém a pomenujem ho tak, aby ho pochopil aj majiteľ.",
+    "Navrhnem možné riešenia a postup. Vyberáte vy.",
+    "Zostavím plán a vediem projektové stretnutia.",
+    "Realizujú vaši ľudia. Ja nie som náhradný manažér vo vašej firme.",
   ],
-  experienceHeading: "Vybrané skúsenosti z praxe",
+  experienceHeading: "Skúsenosti",
   experiences: [
-    "Zavedenie procesu zmien a podporného nástroja v globálnej EMS skupine.",
-    "Interný nástrojový lab v EMS – úspora nákladov.",
-    "Správa dokumentácie v EMS – úspora nákladov.",
+    "Zavedenie procesu technických zmien (ECO) s podporným nástrojom v medzinárodnej EMS skupine.",
+    "Interné nástrojové laboratórium v EMS.",
+    "Správa dokumentácie v EMS prostredí.",
     "Automatizácia administratívy: schvaľovacie toky a nahrávanie dokumentácie do ERP robotom.",
+    "Certifikovaný business kouč (BCTC).",
   ],
-  model:
-    "Každá služba má dohodnutý problém, cieľ, rozsah a kritérium prijatia. Cena je cenová ponuka podľa rozsahu.",
+  audienceHeading: "Pre koho",
+  audience:
+    "Výrobné firmy s 20 až 250 zamestnancami v automotive, EMS, strojárstve, plastoch a kovovýrobe, najmä v regiónoch Trenčín, Žilina a Trnava.",
   faq: [
     {
-      q: "Kto realizuje projekt?",
-      a: "Realizáciu vykonáva tím klienta. AddValueEngineering identifikuje problém, navrhne riešenia, pripraví plán a podľa dohody vedie projekt.",
+      q: "Kto za AddValueEngineering stojí?",
+      a: "Vladimir, inžinier s dlhoročnou praxou vo výrobe. Spoločnosť je AV – Agency, s.\u00a0r.\u00a0o.",
     },
     {
-      q: "Čo je potrebné na začatie?",
-      a: "Sponzor s rozhodovacou právomocou, pridelení ľudia s vyhradeným časom a prístup k potrebným dátam.",
+      q: "Ako zistíme, či si sadneme?",
+      a: "Úvodný rozhovor je zadarmo a bez záväzku. Povieme si otvorene, či vám viem pomôcť. Úspory nesľubujem.",
     },
   ] satisfies FaqItem[],
-  cta: {
-    primaryHref: "/kontakt/?predmet=o-nas",
-    primaryLabel: "Popíšte problém",
-    secondaryHref: "/sluzby/",
-    secondaryLabel: "Pozrieť projektové služby",
-  } satisfies PageCta,
 } as const;

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { company } from "@/config/company";
+import SEO_ROUTES from "../../docs/content-v2/seo.json";
 
 const BRAND_SUFFIX = " | AddValueEngineering";
 
@@ -13,7 +14,7 @@ const OG_IMAGE = {
   url: OG_IMAGE_PATH,
   width: 1200,
   height: 630,
-  alt: "AddValueEngineering — procesný audit pre MSP",
+  alt: "AddValueEngineering – projektové riešenie problémov vo výrobe",
 } as const;
 
 type BuildMetadataInput = {
@@ -81,7 +82,19 @@ export function buildMetadata({
       card: "summary_large_image",
       title: document,
       description,
-      images: [OG_IMAGE_PATH],
+      images: [{ url: OG_IMAGE_PATH, alt: OG_IMAGE.alt }],
     },
   };
+}
+
+export function buildSeoMetadata(path: string): Metadata {
+  const page = SEO_ROUTES[path as keyof typeof SEO_ROUTES];
+  if (!page) {
+    throw new Error(`Missing SEO metadata for route: ${path}`);
+  }
+  return buildMetadata({
+    path: page.route,
+    title: page.title,
+    description: page.description,
+  });
 }

@@ -1,12 +1,12 @@
 import Link from "next/link";
-import PageFaq from "@/components/sections/PageFaq";
-import { PILLARS } from "@/config/pillars";
-import { SERVICES_OVERVIEW } from "@/content/services-overview";
+import {
+  HOME_PROJECTS,
+  SERVICES_OVERVIEW,
+  SERVICES_PROJECTS,
+} from "@/content/services-overview";
 
 type ServicesProps = {
-  /** Homepage keeps h2 under Hero h1; /sluzby/ uses h1. */
   headingAs?: "h1" | "h2";
-  /** Full overview copy + FAQ (service index page). */
   full?: boolean;
 };
 
@@ -15,105 +15,78 @@ export default function Services({
   full = false,
 }: ServicesProps) {
   const Heading = headingAs;
-  const copy = SERVICES_OVERVIEW;
+  const projects = full ? SERVICES_PROJECTS : HOME_PROJECTS;
+
   return (
-    <section id="sluzby" className="section-pad" aria-labelledby="services-heading">
+    <section
+      id="sluzby"
+      className="section-pad"
+      aria-labelledby="services-heading"
+    >
       <div className="container-aveng">
-        <p className="eyebrow mb-4">{copy.eyebrow}</p>
+        <p className="eyebrow mb-4">{full ? "Služby" : "Projektové služby"}</p>
         <Heading id="services-heading" className="heading-display max-w-2xl">
-          {copy.heading}
+          {full ? SERVICES_OVERVIEW.heading : "Typy projektov"}
         </Heading>
-        <p className="prose-muted mt-4 max-w-2xl">
-          {full
-            ? copy.lead
-            : "Projektovo riešime jeden problém: navrhneme riešenie a plán, realizuje váš tím."}
-        </p>
-        <ol className="mt-14 grid gap-10 sm:grid-cols-2">
-          {PILLARS.map((p) => (
-            <li key={p.slug} className="group relative">
-              <span
-                className="font-display text-5xl font-semibold text-signal-soft transition group-hover:text-signal-bright motion-reduce:transition-none"
-                aria-hidden
-              >
-                {p.num}
-              </span>
-              <h3 className="-mt-2 font-display text-xl font-semibold text-ink-50">
-                <Link
-                  href={`/sluzby/${p.slug}/`}
-                  className="hover:text-signal-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-                >
-                  {p.title}
-                </Link>
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-200">
-                {p.short}
-              </p>
+        {full ? (
+          <p className="prose-muted mt-4 max-w-2xl">
+            {SERVICES_OVERVIEW.lead}
+          </p>
+        ) : null}
+        <ul className="mt-14 grid gap-10 sm:grid-cols-2">
+          {projects.map((project) => (
+            <li key={project.href} className="group relative">
               <Link
-                href={`/sluzby/${p.slug}/`}
-                className="mt-3 inline-block text-sm text-signal-bright underline-offset-2 hover:underline"
+                href={project.href}
+                className="block border-t border-signal/40 pt-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
               >
-                Viac o pilieri
+                {"label" in project && (
+                  <p className="eyebrow mb-3">{project.label}</p>
+                )}
+                <h3 className="font-display text-xl font-semibold text-ink-50 group-hover:text-signal-bright">
+                  {project.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-200">
+                  {project.text}
+                </p>
+                <span className="mt-3 inline-block text-sm text-signal-bright">
+                  Detail projektu →
+                </span>
               </Link>
             </li>
           ))}
-        </ol>
+        </ul>
 
         {full ? (
           <div className="mt-14 max-w-3xl space-y-10">
             <div>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                {copy.whenHeading}
-              </h2>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-ink-200">
-                {copy.when.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h2 className="font-display text-xl font-semibold text-ink-50">
-                {copy.frameworkHeading}
-              </h2>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-ink-200">
-                {copy.framework.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h2 className="font-display text-xl font-semibold text-ink-50">
-                {copy.processHeading}
+                {SERVICES_OVERVIEW.processHeading}
               </h2>
               <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-ink-200">
-                {copy.processSteps.map((step) => (
+                {SERVICES_OVERVIEW.processSteps.map((step) => (
                   <li key={step}>{step}</li>
                 ))}
               </ol>
             </div>
-            <p className="text-sm leading-relaxed text-ink-200">{copy.model}</p>
-            <ul className="space-y-3">
-              {copy.extras.map((extra) => (
-                <li key={extra.href} className="text-sm text-ink-200">
-                  <Link
-                    href={extra.href}
-                    className="font-semibold text-signal-bright underline-offset-2 hover:underline"
-                  >
-                    {extra.title}
-                  </Link>
-                  {" — "}
-                  {extra.text}
-                </li>
-              ))}
-            </ul>
+            <div>
+              <h2 className="font-display text-xl font-semibold text-ink-50">
+                {SERVICES_OVERVIEW.rulesHeading}
+              </h2>
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-ink-200">
+                {SERVICES_OVERVIEW.rules.map((rule) => (
+                  <li key={rule}>{rule}</li>
+                ))}
+              </ul>
+            </div>
             <div className="flex flex-wrap gap-3">
-              <Link href={copy.cta.primaryHref} className="btn-primary">
-                {copy.cta.primaryLabel}
+              <Link href={SERVICES_OVERVIEW.cta.primaryHref} className="btn-primary">
+                {SERVICES_OVERVIEW.cta.primaryLabel}
               </Link>
-              <Link href={copy.cta.secondaryHref} className="btn-secondary">
-                {copy.cta.secondaryLabel}
+              <Link href={SERVICES_OVERVIEW.cta.secondaryHref} className="btn-secondary">
+                {SERVICES_OVERVIEW.cta.secondaryLabel}
               </Link>
             </div>
-            <PageFaq items={copy.faq} headingId="services-faq-heading" />
           </div>
         ) : null}
       </div>

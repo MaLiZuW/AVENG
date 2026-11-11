@@ -9,40 +9,43 @@ export default function About() {
       className="section-pad border-t border-white/5 bg-ink-900/40"
       aria-labelledby="about-heading"
     >
-      <div className="container-aveng">
+      <div className="container-aveng max-w-3xl">
         <p className="eyebrow mb-4">{ABOUT.eyebrow}</p>
-        <h1 id="about-heading" className="heading-display max-w-2xl">
+        <h1 id="about-heading" className="heading-display">
           {ABOUT.heading}
         </h1>
-        <div className="mt-10 grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="space-y-5 prose-muted">
-            <p>{ABOUT.lead}</p>
-            {ABOUT.paragraphs.map((p) => (
-              <p key={p.slice(0, 40)}>{p}</p>
-            ))}
-            <p className="text-sm text-ink-300">{ABOUT.model}</p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Link href={ABOUT.cta.primaryHref} className="btn-primary">
-                {ABOUT.cta.primaryLabel}
-              </Link>
-              <Link href={ABOUT.cta.secondaryHref} className="btn-secondary">
-                {ABOUT.cta.secondaryLabel}
-              </Link>
-            </div>
-          </div>
-          <div>
-            <h2 className="font-display text-xl font-semibold text-ink-50">
-              {ABOUT.experienceHeading}
-            </h2>
-            <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-relaxed text-ink-200">
-              {ABOUT.experiences.map((experience) => (
-                <li key={experience}>{experience}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="mx-auto mt-4 max-w-3xl">
-          <PageFaq items={ABOUT.faq} headingId="about-faq-heading" />
+        <p className="prose-muted mt-4">{ABOUT.lead}</p>
+
+        <h2 className="mt-12 font-display text-xl font-semibold text-ink-50">
+          {ABOUT.workHeading}
+        </h2>
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-ink-200">
+          {ABOUT.work.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <h2 className="mt-12 font-display text-xl font-semibold text-ink-50">
+          {ABOUT.experienceHeading}
+        </h2>
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-ink-200">
+          {ABOUT.experiences.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <h2 className="mt-12 font-display text-xl font-semibold text-ink-50">
+          {ABOUT.audienceHeading}
+        </h2>
+        <p className="mt-3 text-sm leading-relaxed text-ink-200">
+          {ABOUT.audience}
+        </p>
+
+        <PageFaq items={ABOUT.faq} headingId="about-faq-heading" />
+        <div className="mt-10">
+          <Link href="/kontakt/" className="btn-primary">
+            Popíšte nám problém
+          </Link>
         </div>
       </div>
     </section>

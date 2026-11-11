@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { buildSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/kontakt/",
-  title: "Kontakt",
-  description:
-    "Popíšte problém. Ozveme sa s návrhom ďalšieho kroku, bez povinnosti.",
-});
+export const metadata: Metadata = buildSeoMetadata("/kontakt/");
 
 export default function KontaktLayout({
   children,

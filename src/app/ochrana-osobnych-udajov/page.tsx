@@ -4,7 +4,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
 import { POLICY_UPDATED, getProcessors } from "@/config/processors";
-import { retentionPeriodClaimSk } from "@/config/retention";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -22,6 +21,10 @@ export const metadata: Metadata = buildMetadata({
  * TODO(owner): confirm retention periods for invoice and unlock-code data.
  */
 export default function PrivacyPage() {
+  const optionalProcessors = getProcessors().filter(
+    (processor) => !["WebSupport", "Supabase", "Resend"].includes(processor.name),
+  );
+
   return (
     <>
       <Header />
@@ -41,41 +44,48 @@ export default function PrivacyPage() {
                 1. Prevádzkovateľ
               </h2>
               <p className="mt-2">
-                {company.legalName}, IČO {company.ico}, DIČ {company.dic},{" "}
+                {company.legalName.replace("s. r. o.", "s.\u00a0r.\u00a0o.")},{" "}
+                IČO {company.ico}, DIČ {company.dic},{" "}
                 {company.registeredSeat}.
               </p>
             </section>
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                2. Účel spracovania
+                2. Na aké účely údaje spracúvame
               </h2>
-              <p className="mt-2">
-                Vybavenie dopytu z kontaktného formulára a zaslanie správy z
-                online procesného auditu, vrátane komunikácie potrebnej na
-                tieto činnosti. Ďalšími účelmi sú fakturácia a vydanie a správa
-                odomykacích kódov.
-              </p>
+              <ul className="mt-2 list-disc space-y-3 pl-5">
+                <li>
+                  <strong>Odpoveď na vašu správu.</strong> Ak nám napíšete cez
+                  kontaktný formulár alebo e-mail, použijeme meno, e-mail,
+                  firmu a text správy na odpoveď a prípravu ponuky. Právny
+                  základ: opatrenia pred uzavretím zmluvy na vašu žiadosť,
+                  prípadne náš oprávnený záujem odpovedať na dopyt.
+                </li>
+                <li>
+                  <strong>Self-audit.</strong> Odpovede z auditu spracúvame na
+                  vyhodnotenie auditu. Uchovávame ich len po dobu nevyhnutnú na
+                  vyhodnotenie.
+                </li>
+                <li>
+                  <strong>
+                    Objednávka Level 2 a Level 3, fakturácia a prístupový kód.
+                  </strong>{" "}
+                  Na vystavenie faktúry a zaslanie prístupového kódu
+                  spracúvame fakturačné údaje a e-mail. Právny základ: plnenie
+                  zmluvy a plnenie zákonných povinností (účtovníctvo).
+                </li>
+                <li>
+                  <strong>Ochrana právnych nárokov.</strong> Ak je to potrebné,
+                  údaje použijeme na uplatnenie alebo obranu právnych nárokov
+                  (oprávnený záujem).
+                </li>
+              </ul>
             </section>
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                3. Právny základ
-              </h2>
-              <p className="mt-2">
-                Pri kontaktnom formulári a spracovaní auditu je právnym
-                základom súhlas podľa čl. 6 ods. 1 písm. a) nariadenia (EÚ)
-                2016/679. Súhlas udeľujete zaškrtnutím políčka pred odoslaním
-                formulára a môžete ho odvolať e-mailom. Fakturačné údaje
-                spracúvame na splnenie zákonných povinností podľa čl. 6 ods. 1
-                písm. c); údaje potrebné na vydanie odomykacieho kódu na
-                vybavenie požiadavky podľa čl. 6 ods. 1 písm. b).
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-display text-xl font-semibold text-ink-50">
-                4. Kategórie údajov
+                3. Kategórie údajov
               </h2>
               <p className="mt-2">
                 Kontaktný formulár: meno, e-mail, názov firmy, text správy a
@@ -90,32 +100,43 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                5. Doba uchovávania
+                4. Ako dlho údaje uchovávame
               </h2>
-              <p className="mt-2">
-                {retentionPeriodClaimSk()} Správu z kontaktného formulára
-                doručíme e-mailom a uchovávame ju po dobu vybavenia dopytu.
-                Údaje súvisiace s fakturáciou uchovávame podľa príslušných
-                právnych povinností; údaje o odomykacích kódoch po dobu
-                potrebnú na ich vydanie a správu.
-              </p>
+              <ul className="mt-2 list-disc space-y-2 pl-5">
+                <li>
+                  Údaje z kontaktných správ uchovávame po dobu nevyhnutnú na
+                  vybavenie dopytu a následnej komunikácie.
+                </li>
+                <li>
+                  Doklady uchovávame po dobu stanovenú právnymi predpismi.
+                </li>
+                <li>
+                  Odpovede z auditu uchovávame len po dobu nevyhnutnú na
+                  vyhodnotenie.
+                </li>
+              </ul>
             </section>
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                6. Príjemcovia a sprostredkovatelia
+                5. Komu údaje poskytujeme
               </h2>
               <p className="mt-2">
-                Údaje spracúvajú naši poskytovatelia hostingu, databázy a
-                e-mailového doručenia:
+                Údaje spracúvajú naši poskytovatelia služieb, ktorých
+                potrebujeme na prevádzku webu: poskytovateľ hostingu
+                (WebSupport), poskytovateľ databázy (Supabase) a poskytovateľ
+                odosielania e-mailov (Resend). Údaje neposkytujeme na
+                marketingové účely tretím stranám.
               </p>
-              <ul className="mt-2 list-disc space-y-1 pl-5">
-                {getProcessors().map((p) => (
-                  <li key={p.name}>
-                    {p.name} — {p.purpose} ({p.locationNote}).
-                  </li>
-                ))}
-              </ul>
+              {optionalProcessors.length > 0 ? (
+                <ul className="mt-2 list-disc space-y-1 pl-5">
+                  {optionalProcessors.map((p) => (
+                    <li key={p.name}>
+                      {p.name} — {p.purpose} ({p.locationNote}).
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
               <p className="mt-2">
                 Prenos medzi prehliadačom a týmito službami prebieha cez
                 šifrované spojenie.
@@ -124,19 +145,18 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                7. Prenos údajov mimo EÚ
+                6. Prenos údajov mimo Európskeho hospodárskeho priestoru
               </h2>
               <p className="mt-2">
-                Pri doručovaní e-mailov cez Resend sa údaje prenášajú do USA.
-                Ďalší poskytovatelia môžu údaje spracúvať aj mimo Európskej
-                únie. Podrobnosti o použitých právnych zárukách treba overiť
-                podľa aktuálnych podmienok poskytovateľov.
+                Niektorí poskytovatelia, napríklad služba na odosielanie
+                e-mailov, môžu údaje spracúvať v Spojených štátoch. Prenos
+                zabezpečujeme podľa kapitoly V nariadenia GDPR.
               </p>
             </section>
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                8. Práva dotknutej osoby
+                7. Práva dotknutej osoby
               </h2>
               <p className="mt-2">
                 Máte právo na prístup k údajom, na opravu, na výmaz, na
@@ -148,7 +168,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="font-display text-xl font-semibold text-ink-50">
-                9. Kontakt
+                8. Kontakt
               </h2>
               <p className="mt-2">
                 Žiadosti o uplatnenie práv aj ostatné otázky zasielajte na{" "}

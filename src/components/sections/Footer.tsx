@@ -37,7 +37,11 @@ function CompactFooter() {
       <div className="container-aveng">
         <FooterNav />
         <p className="mt-6 text-xs leading-relaxed text-ink-300">
-          {company.legalName} · IČO {company.ico} · {company.registeredSeat} ·{" "}
+          Pôsobíme najmä v Trenčianskom, Žilinskom a Trnavskom kraji.
+        </p>
+        <p className="mt-6 text-xs leading-relaxed text-ink-300">
+          {company.legalName.replace("s. r. o.", "s.\u00a0r.\u00a0o.")} · IČO{" "}
+          {company.ico} · {company.registeredSeat} ·{" "}
           <GdprLink className="text-signal-bright underline-offset-2 hover:underline" />
         </p>
       </div>
@@ -124,7 +128,7 @@ export default function Footer({
             <dl className="space-y-1.5">
               <div className="flex flex-wrap gap-x-2">
                 <dt className="font-semibold text-ink-100">Názov:</dt>
-                <dd>{company.legalName}</dd>
+                <dd>{company.legalName.replace("s. r. o.", "s.\u00a0r.\u00a0o.")}</dd>
               </div>
               <div className="flex flex-wrap gap-x-2">
                 <dt className="font-semibold text-ink-100">IČO:</dt>
@@ -145,9 +149,12 @@ export default function Footer({
         <div className="mt-10">
           <FooterNav />
         </div>
-        <p className="mt-12 border-t border-white/10 pt-6 text-xs text-ink-300">
-          © {new Date().getFullYear()} {company.brandName} · {company.legalName}{" "}
-          · IČO {company.ico} · Všetky práva vyhradené.
+        <p className="mt-12 text-xs text-ink-300">
+          Pôsobíme najmä v Trenčianskom, Žilinskom a Trnavskom kraji.
+        </p>
+        <p className="mt-6 border-t border-white/10 pt-6 text-xs text-ink-300">
+          {company.legalName.replace("s. r. o.", "s.\u00a0r.\u00a0o.")} · IČO{" "}
+          {company.ico} · {company.registeredSeat}
         </p>
       </div>
     </footer>

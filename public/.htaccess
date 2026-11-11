@@ -1,5 +1,10 @@
 # TODO(owner): verify the hosting honours .htaccess
 
+# AddValueEngineering: legacy service URLs (301)
+RedirectMatch 301 ^/sluzby/fractional-technical-leadership/?$ /sluzby/
+RedirectMatch 301 ^/sluzby/zavadzanie-procesov-plm-pdm/?$ /sluzby/sprava-dokumentacie-a-schvalovanie/
+RedirectMatch 301 ^/sluzby/riadenie-zmien-eco/?$ /sluzby/projekt-zmeny-eco/
+
 RewriteEngine On
 
 # Retired service URLs (301) to their project-based destinations

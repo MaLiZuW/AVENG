@@ -7,7 +7,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/sections/Footer";
 import { company } from "@/config/company";
 import { contactIntentPrefill } from "@/config/levels";
-import TrackBookingLink from "@/components/TrackBookingLink";
 import { track } from "@/lib/analytics";
 import { submitSiteContact } from "@/lib/submitSiteContact";
 
@@ -37,13 +36,18 @@ export default function KontaktPage() {
   const [error, setError] = useState<string | null>(null);
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
 
   useEffect(() => {
     const predmet = new URLSearchParams(window.location.search).get("predmet");
     const prefill = contactIntentPrefill(predmet);
     if (!prefill) return;
-    setSubject(prefill.subject);
+    setSubject(
+      prefill.subject.includes("Level 2") || prefill.subject.includes("Level 3")
+        ? "Chcem Level 2 alebo 3 self-auditu"
+        : predmet === "sluzby"
+          ? "Mám konkrétny problém"
+          : "Iné",
+    );
     setMessage(prefill.message);
   }, []);
 
@@ -106,28 +110,11 @@ export default function KontaktPage() {
         <div className="container-aveng max-w-2xl">
           <p className="eyebrow mb-4">Kontakt</p>
           <h1 className="heading-display">
-            Popíšte problém. Ozveme sa s návrhom ďalšieho kroku.
+            Popíšte jeden problém. Ozveme sa s návrhom ďalšieho kroku.
           </h1>
           <p className="prose-muted mt-4">
-            Bez povinnosti. {company.brandName} · {company.addressDisplay} ·{" "}
-            <a
-              href={`mailto:${company.email}`}
-              className="text-signal-bright underline underline-offset-2"
-            >
-              {company.email}
-            </a>
+            Stačí pár viet. Úvodný rozhovor je zadarmo a bez záväzku.
           </p>
-
-          {bookingUrl ? (
-            <TrackBookingLink
-              href={bookingUrl}
-              className="btn-primary mt-6 inline-flex"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Dohodnúť úvodný rozhovor
-            </TrackBookingLink>
-          ) : null}
 
           {done ? (
             <div className="steel-panel mt-8 p-6" role="status">
@@ -182,17 +169,30 @@ export default function KontaktPage() {
                 />
               </label>
               <label className="block text-sm">
-                <span className="mb-1 block text-ink-200">Predmet</span>
-                <input
+                <span className="mb-1 block text-ink-200">O čo ide</span>
+                <select
                   name="subject"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  maxLength={160}
                   className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
-                />
+                >
+                  <option value="">Vyberte možnosť</option>
+                  <option value="Mám konkrétny problém">
+                    Mám konkrétny problém
+                  </option>
+                  <option value="Nie som si istý, čo je problém">
+                    Nie som si istý, čo je problém
+                  </option>
+                  <option value="Chcem Level 2 alebo 3 self-auditu">
+                    Chcem Level 2 alebo 3 self-auditu
+                  </option>
+                  <option value="Iné">Iné</option>
+                </select>
               </label>
               <label className="block text-sm">
-                <span className="mb-1 block text-ink-200">Správa</span>
+                <span className="mb-1 block text-ink-200">
+                  Aký problém vás stojí najviac?
+                </span>
                 <textarea
                   name="message"
                   rows={5}
@@ -200,6 +200,7 @@ export default function KontaktPage() {
                   maxLength={4000}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Napríklad: zmeny sa strácajú medzi konštrukciou a výrobou."
                   className="w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-ink-50 outline-none focus:border-signal"
                 />
               </label>
@@ -211,7 +212,7 @@ export default function KontaktPage() {
                   required
                 />
                 <span>
-                  Súhlasím so spracovaním osobných údajov.{" "}
+                  Súhlasím so spracovaním osobných údajov na účel odpovede.{" "}
                   <GdprLink className="text-signal-bright underline-offset-2 hover:underline" />
                   .
                 </span>
@@ -226,6 +227,31 @@ export default function KontaktPage() {
               </button>
             </form>
           )}
+
+          <section className="mt-12" aria-labelledby="contact-direct-heading">
+            <h2
+              id="contact-direct-heading"
+              className="font-display text-xl font-semibold text-ink-50"
+            >
+              Priamo
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-ink-200">
+              <a
+                href={`mailto:${company.email}`}
+                className="text-signal-bright underline-offset-2 hover:underline"
+              >
+                {company.email}
+              </a>{" "}
+              <a
+                href={`tel:${company.phoneTel}`}
+                className="text-signal-bright underline-offset-2 hover:underline"
+              >
+                {company.phoneDisplay}
+              </a>{" "}
+              {company.legalName.replace("s. r. o.", "s.\u00a0r.\u00a0o.")},{" "}
+              {company.addressDisplay}
+            </p>
+          </section>
         </div>
       </main>
       <Footer />

@@ -69,7 +69,7 @@ export default function Header() {
 
         <div className="hidden items-center gap-3 xl:flex">
           <Link
-            href="/self-audit/"
+            href="/self-audit/#level-1"
             className="btn-primary !h-9 !px-4 !py-0 !text-xs leading-none"
           >
             Spustiť audit zdarma
@@ -109,7 +109,7 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/self-audit/"
+              href="/self-audit/#level-1"
               className="btn-primary mt-2"
               onClick={() => setOpen(false)}
             >

@@ -9,13 +9,9 @@ import {
   buildFaqPageLd,
   buildServiceLd,
 } from "@/lib/jsonld";
-import { buildMetadata } from "@/lib/seo";
+import { buildSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/optimalizacia-a-ai/",
-  title: OPTIMIZATION_META.title,
-  description: OPTIMIZATION_META.description,
-});
+export const metadata: Metadata = buildSeoMetadata("/optimalizacia-a-ai/");
 
 export default function OptimizationPage() {
   const breadcrumb = buildBreadcrumbLd([
@@ -23,7 +19,7 @@ export default function OptimizationPage() {
     { name: "Optimalizácia a AI", path: "/optimalizacia-a-ai/" },
   ]);
   const serviceLd = buildServiceLd({
-    name: OPTIMIZATION_META.title,
+    name: OPTIMIZATION.heading,
     description: OPTIMIZATION_META.description,
   });
 

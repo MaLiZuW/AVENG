@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, type KeyboardEvent } from "react";
 import { Info } from "lucide-react";
 import Link from "next/link";
 import { domainLabel } from "@/config/audit-display";
-import { AUDIT_LEVELS, levelTitle, SELF_AUDIT_HEADER_SK } from "@/config/levels";
+import { AUDIT_LEVELS, levelTitle } from "@/config/levels";
 import { auditStartNoticeSk } from "@/config/retention";
 import {
   clearAuditProgress,
@@ -40,6 +40,8 @@ import QuestionContextPanel from "./QuestionContextPanel";
 import QuestionGuidance from "./QuestionGuidance";
 import ResultsDashboard from "./ResultsDashboard";
 import ResumeBanner from "./ResumeBanner";
+import PageFaq from "@/components/sections/PageFaq";
+import { SELF_AUDIT_FAQ } from "@/content/self-audit";
 
 type AuditLevel = 1 | 2 | 3;
 type Phase = AuditPhase;
@@ -259,11 +261,12 @@ export default function AuditSection() {
       <div className="container-aveng">
         <p className="eyebrow mb-4">Self-Audit</p>
         <h1 id="audit-heading" className="heading-display max-w-2xl">
-          3-úrovňový procesný audit
+          Zistite za 10 minút, kde vo výrobe strácate najviac
         </h1>
         <p className="prose-muted mt-4 max-w-2xl">
-          {SELF_AUDIT_HEADER_SK}{" "}
-          Hodnotenie procesov je inšpirované princípmi procesného auditu (napr. VDA 6.3, Lean, TPM/OEE).
+          Odpovedáte na otázky o svojej výrobe. Dostanete orientačný rozsah
+          potenciálu a oblasť, ktorú riešiť ako prvú. Číslo je odhad v rozsahu,
+          nie sľub úspory.
         </p>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-3">
@@ -271,31 +274,38 @@ export default function AuditSection() {
             {
               lvl: "Level 1",
               tag: AUDIT_LEVELS[1].priceLabel,
-              desc: `${AUDIT_LEVELS[1].name} · 20 otázok`,
-              href: "#level-1",
+              desc: "20 otázok. Výsledok: kritická oblasť a tri priority.",
+              href: "/self-audit/#level-1",
+              cta: "Spustiť audit",
             },
             {
               lvl: "Level 2",
               tag: AUDIT_LEVELS[2].priceLabel,
-              desc: `${AUDIT_LEVELS[2].name} · 60 otázok`,
-              href: "#level-2",
+              desc: "60 otázok. Rozpis po otázkach a poradie podľa finančného dopadu. Prístupový kód po platbe na faktúru.",
+              href: "/kontakt/?predmet=level-2",
+              cta: "Objednať Level 2",
             },
             {
               lvl: "Level 3",
-              tag: AUDIT_LEVELS[3].priceLabel,
-              desc: `${AUDIT_LEVELS[3].name} · 180 otázok`,
-              href: "#level-3",
+              tag: "Podľa dohody",
+              desc: "180 otázok a simulácia investície pred schválením rozpočtu.",
+              href: "/kontakt/?predmet=level-3",
+              cta: "Dohodnúť Level 3",
             },
           ].map((l) => (
-            <a
+            <div
               key={l.lvl}
-              href={l.href}
-              className="rounded-md border border-white/10 bg-steel-dark/50 px-4 py-3 transition hover:border-signal/40 hover:bg-steel-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-bright"
+              className="rounded-md border border-white/10 bg-steel-dark/50 px-4 py-3"
             >
-              <p className="text-xs text-signal-bright">{l.tag}</p>
               <p className="font-display font-semibold text-ink-50">{l.lvl}</p>
+              <p className="text-xs text-signal-bright">
+                {l.tag.replace(" €", "\u00a0€")}
+              </p>
               <p className="text-xs text-ink-300">{l.desc}</p>
-            </a>
+              <Link href={l.href} className="btn-secondary mt-4">
+                {l.cta}
+              </Link>
+            </div>
           ))}
         </div>
 
@@ -337,13 +347,8 @@ export default function AuditSection() {
                 className="btn-primary"
                 onClick={() => startLevel(1)}
               >
-                Spustiť Level 1 skríning zdarma
+                Spustiť audit
               </button>
-              <p className="text-xs text-ink-300">
-                Odvetvie + tržby · karty A–E (presné čísla preferované) ·
-                výsledok s kritickým procesom. Level 2/3 po dohode (kód e-mailom
-                s údajmi na úhradu).
-              </p>
             </div>
           )}
 
@@ -619,6 +624,9 @@ export default function AuditSection() {
                 )}
               </div>
             )}
+        </div>
+        <div className="mx-auto max-w-3xl">
+          <PageFaq items={SELF_AUDIT_FAQ} headingId="self-audit-faq-heading" />
         </div>
       </div>
     </section>

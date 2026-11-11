@@ -12,7 +12,7 @@ import {
   buildFaqPageLd,
   buildServiceLd,
 } from "@/lib/jsonld";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, buildSeoMetadata } from "@/lib/seo";
 
 type Props = { params: { slug: string } };
 
@@ -30,11 +30,7 @@ export function generateMetadata({ params }: Props): Metadata {
       description: "Požadovaná služba na webe nie je.",
     });
   }
-  return buildMetadata({
-    path: `/sluzby/${pillar.slug}/`,
-    title: pillar.title,
-    description: page.metaDescription,
-  });
+  return buildSeoMetadata(`/sluzby/${pillar.slug}/`);
 }
 
 export default function PillarPage({ params }: Props) {
@@ -42,18 +38,13 @@ export default function PillarPage({ params }: Props) {
   const page = getPillarPage(params.slug);
   if (!pillar || !page) notFound();
 
-  const related = page.related
-    .map((slug) => getPillar(slug))
-    .filter((p): p is NonNullable<typeof p> => Boolean(p));
-
   const breadcrumb = buildBreadcrumbLd([
     { name: "Domov", path: "/" },
     { name: "Služby", path: "/sluzby/" },
-    { name: pillar.title, path: `/sluzby/${pillar.slug}/` },
+    { name: page.title, path: `/sluzby/${pillar.slug}/` },
   ]);
-
   const serviceLd = buildServiceLd({
-    name: pillar.title,
+    name: page.title,
     description: page.metaDescription,
   });
 
@@ -62,65 +53,61 @@ export default function PillarPage({ params }: Props) {
       <Header />
       <main id="main-content" className="site-main section-pad">
         <div className="container-aveng max-w-3xl">
-          <p className="eyebrow mb-4">Pilier {pillar.num}</p>
-          <h1 className="heading-display">{pillar.title}</h1>
+          <p className="eyebrow mb-4">Projekt</p>
+          <h1 className="heading-display">{page.title}</h1>
           <p className="prose-muted mt-4">{page.lead}</p>
 
-          <h2 className="mt-10 font-display text-xl font-semibold text-ink-50">
-            {page.whenHeading}
-          </h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-ink-200">
-            {page.when.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-
-          {page.deliver && page.deliverHeading ? (
-            <>
-              <h2 className="mt-10 font-display text-xl font-semibold text-ink-50">
-                {page.deliverHeading}
-              </h2>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-ink-200">
-                {page.deliver.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-
-          <h2 className="mt-10 font-display text-xl font-semibold text-ink-50">
-            {page.processHeading}
-          </h2>
-          <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-ink-200">
-            {page.processSteps.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-
-          <h2 className="mt-10 font-display text-xl font-semibold text-ink-50">
-            {page.modelHeading}
-          </h2>
-          <div className="mt-3 space-y-3 text-sm leading-relaxed text-ink-200">
-            {page.model.map((para) => (
-              <p key={para.slice(0, 48)}>{para}</p>
-            ))}
+          <div className="mt-8">
+            <Link href={page.cta.primaryHref} className="btn-primary">
+              {page.cta.primaryLabel}
+            </Link>
           </div>
 
-          <h2 className="mt-10 font-display text-xl font-semibold text-ink-50">
-            Súvisiace piliere
-          </h2>
-          <ul className="mt-3 flex flex-wrap gap-3 text-sm">
-            {related.map((p) => (
-              <li key={p.slug}>
-                <Link
-                  href={`/sluzby/${p.slug}/`}
-                  className="text-signal-bright underline-offset-2 hover:underline"
-                >
-                  {p.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {page.sections.map((section) => (
+            <section key={section.heading} className="mt-10">
+              <h2 className="font-display text-xl font-semibold text-ink-50">
+                {section.heading}
+              </h2>
+              <div className="mt-3 space-y-3 text-sm leading-relaxed text-ink-200">
+                {section.blocks.map((block, index) => {
+                  if (block.type === "paragraph") {
+                    return <p key={`${section.heading}-${index}`}>{block.text}</p>;
+                  }
+                  if (block.type === "link-paragraph") {
+                    return (
+                      <p key={`${section.heading}-${index}`}>
+                        {block.before}
+                        <Link
+                          href={block.href}
+                          className="text-signal-bright underline-offset-2 hover:underline"
+                        >
+                          {block.linkText}
+                        </Link>
+                        {block.after}
+                      </p>
+                    );
+                  }
+                  const List = block.type === "ordered" ? "ol" : "ul";
+                  return (
+                    <List
+                      key={`${section.heading}-${index}`}
+                      className={
+                        block.type === "ordered"
+                          ? "list-decimal space-y-2 pl-5"
+                          : "list-disc space-y-2 pl-5"
+                      }
+                    >
+                      {block.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </List>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
+
+          <PageFaq items={page.faq} headingId={`faq-${pillar.slug}`} />
 
           <div className="mt-10 flex flex-wrap gap-3">
             <Link href={page.cta.primaryHref} className="btn-primary">
@@ -129,12 +116,7 @@ export default function PillarPage({ params }: Props) {
             <Link href={page.cta.secondaryHref} className="btn-secondary">
               {page.cta.secondaryLabel}
             </Link>
-            <Link href="/sluzby/" className="btn-secondary">
-              Všetky služby
-            </Link>
           </div>
-
-          <PageFaq items={page.faq} headingId={`faq-${pillar.slug}`} />
         </div>
       </main>
       <Footer />

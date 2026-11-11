@@ -1,78 +1,88 @@
 import type { FaqItem, PageCta } from "@/content/types";
 
 export const SERVICES_META = {
-  title: "Služby",
+  title: "Služby pre výrobné firmy | AddValueEngineering",
   description:
-    "Projektové služby pre výrobné MSP: identifikácia problému, návrh riešení a projektový plán. Realizuje váš tím.",
+    "Päť projektových služieb pre výrobné firmy: procesný audit, riadenie zmien ECO, dokumentácia, koučing vedúcich a AI. Realizuje váš tím.",
 } as const;
 
+export const HOME_PROJECTS = [
+  {
+    label: "Východisko",
+    title: "Procesný audit a identifikácia problému",
+    href: "/sluzby/procesny-audit-identifikacia-problemu/",
+    text: "Nájdeme, čo vás stojí najviac, a navrhneme riešenie.",
+  },
+  {
+    label: "Zmeny",
+    title: "Riadený proces technických zmien (ECO)",
+    href: "/sluzby/projekt-zmeny-eco/",
+    text: "Zmena prejde firmou bez straty a bez zbytočného čakania.",
+  },
+  {
+    label: "Dokumenty",
+    title: "Dokumentácia a schvaľovanie",
+    href: "/sluzby/sprava-dokumentacie-a-schvalovanie/",
+    text: "Menej papiera, kratšie schvaľovacie slučky, plán automatizácie.",
+  },
+  {
+    label: "Ľudia",
+    title: "Rozvoj vedúcich a koučing",
+    href: "/sluzby/rozvoj-liderov-koucing/",
+    text: "Aby zlepšenie prežilo aj bez konzultanta.",
+  },
+] as const;
+
+export const SERVICES_PROJECTS = [
+  {
+    title: "Procesný audit a identifikácia problému",
+    href: "/sluzby/procesny-audit-identifikacia-problemu/",
+    text: "Pre firmy, ktoré cítia, že niečo nefunguje, ale nevedia presne čo. Výstup: pomenovaný problém, varianty riešenia, plán.",
+  },
+  {
+    title: "Riadený proces technických zmien (ECO)",
+    href: "/sluzby/projekt-zmeny-eco/",
+    text: "Pre firmy, kde sa zmeny strácajú alebo trvajú príliš dlho. Výstup: cieľový proces, role, checklist, plán zavedenia.",
+  },
+  {
+    title: "Dokumentácia a schvaľovanie",
+    href: "/sluzby/sprava-dokumentacie-a-schvalovanie/",
+    text: "Pre firmy, kde dokumenty čakajú na podpisy. Výstup: cieľový tok, plán automatizácie.",
+  },
+  {
+    title: "Rozvoj vedúcich a koučing",
+    href: "/sluzby/rozvoj-liderov-koucing/",
+    text: "Pre firmy, kde zlepšenia po čase vyprchajú. Výstup: 5 až 6 koučovacích sedení podľa dohody.",
+  },
+  {
+    title: "Optimalizácia a AI",
+    href: "/optimalizacia-a-ai/",
+    text: "Pre jeden konkrétny problém, kde môže pomôcť automatizácia. Výstup: návrh riešenia. Implementácia samostatne.",
+  },
+] as const;
+
 export const SERVICES_OVERVIEW = {
-  eyebrow: "Projektové služby",
-  heading: "Riešime jeden problém vo vašej firme. Projektovo.",
+  heading: "Každá služba je projekt s jedným cieľom",
   lead:
-    "Pre malé a stredné výrobné podniky s 20 – 250 zamestnancami. Najprv spolu nájdeme problém, ktorý vás stojí najviac. Potom navrhneme možné riešenia, vyberieme jedno a zostavíme projektový plán. Realizujú vaši ľudia, my ich vedieme, kontrolujeme postup a odstraňujeme prekážky na pravidelných stretnutiach.",
-  whenHeading: "Čo od vás potrebujeme",
-  when: [
-    "Sponzora s rozhodovacou právomocou.",
-    "Pridelených ľudí s vyhradeným časom.",
-    "Prístup k potrebným dátam.",
-  ],
-  frameworkHeading: "Čo robíme a čo nie",
-  framework: [
-    "Identifikujeme problém, navrhujeme varianty riešenia a zostavujeme projektový plán.",
-    "Vedieme projektové stretnutia raz až dvakrát týždenne a kontrolujeme postup.",
-    "Nenahrádzame vaše vedenie, nevykonávame realizáciu za vás a nedodávame softvér.",
-  ],
-  processHeading: "Ako to funguje",
+    "Nenájmete si nás na neurčito. Dohodneme jeden problém, výstup, termín a kritérium prijatia. Potom ho spolu dotiahneme.",
+  processHeading: "Každý projekt prebieha rovnako",
   processSteps: [
-    "Úvodný rozhovor bez poplatku, trvá 30 minút a overí, či má zmysel začať.",
-    "Projektový sprint v trvaní dva až tri týždne za pevnú cenu.",
-    "Voliteľné vedenie projektu: jedno až dve stretnutia týždenne, kontrola plnenia a eskalácie.",
+    "Jeden problém — Vyberieme ten, ktorý vás stojí najviac. Dohodneme rozsah a kritérium prijatia.",
+    "Varianty a plán — Navrhneme možné riešenia, vy vyberiete. Zostavíme plán s termínmi a zodpovednými.",
+    "Realizácia vaším tímom — My vedieme stretnutia 1 až 2× týždenne a sledujeme plnenie.",
   ],
-  model:
-    "Projektový sprint a ostatné služby: cenová ponuka podľa rozsahu. Level 2 samoobslužného auditu stojí 290 €.",
-  extras: [
-    {
-      title: "Optimalizácia a AI",
-      href: "/optimalizacia-a-ai/",
-      text: "Projektový návrh riešení; implementácia po samostatnej dohode.",
-    },
-    {
-      title: "Samoobslužný audit",
-      href: "/self-audit/",
-      text: "Level 1 zdarma; Level 2 za 290 €.",
-    },
+  rulesHeading: "Pravidlá hry",
+  rules: [
+    "Sponzor zabezpečí zdroje a súčinnosť ľudí, ktorých určí.",
+    "Rozsah a kritérium prijatia sú písomne pred začiatkom.",
+    "Zmenu rozsahu riešime dodatkom, nie mlčky.",
+    "Cena podľa rozsahu v písomnej ponuke. Úvodný rozhovor je zadarmo.",
   ],
-  faq: [
-    {
-      q: "Robíte aj realizáciu?",
-      a: "Nie. Realizuje váš tím; my plánujeme, vedieme projektové stretnutia a kontrolujeme postup.",
-    },
-    {
-      q: "Čo ak firma nemá voľných ľudí?",
-      a: "Projekt odložíme. Bez vyhradeného času ľudí určených sponzorom nemá zmysel začínať.",
-    },
-    {
-      q: "Koľko to stojí?",
-      a: "Level 2 samoobslužného auditu stojí 290 €. Projekty sú cenová ponuka podľa rozsahu.",
-    },
-    {
-      q: "Aký je záväzok?",
-      a: "Pri cenovej ponuke nemáte žiadny záväzok.",
-    },
-    {
-      q: "Ako sa platí?",
-      a: "Platba prebieha prevodom; údaje dostanete spolu s prístupovým kódom alebo faktúrou.",
-    },
-    {
-      q: "Ako často sa stretávame?",
-      a: "Počas projektu sa stretávame raz až dvakrát týždenne.",
-    },
-  ] satisfies FaqItem[],
+  faq: [] satisfies FaqItem[],
   cta: {
-    primaryHref: "/kontakt/?predmet=sluzby",
-    primaryLabel: "Popíšte problém",
+    primaryHref: "/kontakt/",
+    primaryLabel: "Popíšte nám problém",
     secondaryHref: "/self-audit/",
-    secondaryLabel: "Spustiť self-audit",
+    secondaryLabel: "Self-audit",
   } satisfies PageCta,
 } as const;

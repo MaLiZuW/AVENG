@@ -19,7 +19,7 @@ export type Processor = {
 };
 
 /** Last policy text update shown on /ochrana-osobnych-udajov/. */
-export const POLICY_UPDATED = "10. 11. 2026";
+export const POLICY_UPDATED = "11. 11. 2026";
 
 const BASE_PROCESSORS: readonly Processor[] = [
   {
