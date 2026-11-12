@@ -1,0 +1,315 @@
+<title>Návrh vizuálu AddValueEngineering</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout concept: one 72rem container, left-aligned; consistent cards; sticky "at a glance" aside on project pages.
+   Brand: dark navy, blue accent, Fraunces + Manrope. Colors are approximated from screenshots of the live site. */
+:root{
+  --bg:#060a11; --surface:#0b121d; --surface-2:#0f1826; --line:#1a2638; --fg:#f2f5fa; --muted:#a9b8cf; --accent:#2f6df6; --accent-soft:#12203d; --accent-fg:#ffffff;
+  --head:"Fraunces",Georgia,"Times New Roman",serif; --body:"Manrope",system-ui,"Segoe UI",sans-serif; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:17px/1.65 var(--body);margin:0;padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));scroll-padding-top:72px}
+a{color:var(--accent)}
+.c{max-width:72rem;margin:0 auto}
+h1,h2,h3{font-family:var(--head);font-weight:700;line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.25rem,1.2rem + 3.6vw,3.5rem);max-width:22ch;letter-spacing:-.01em}
+h2{font-size:clamp(1.75rem,1.2rem + 1.8vw,2.5rem);line-height:1.2}
+h3{font-size:1.25rem;line-height:1.3}
+p{margin:0 0 1em;max-width:68ch}
+.lead{font-size:1.25rem;color:var(--muted);max-width:60ch;margin-top:20px}
+.chip{display:inline-block;font:600 .75rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid #1d3566;border-radius:6px;padding:7px 10px;margin-bottom:18px}
+.muted{color:var(--muted)}
+/* preview bar */
+.pv{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#e9eef7;color:#0b1220;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));font-size:.8rem}
+.pv .in{max-width:72rem;margin:0 auto;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pv b{margin-right:6px}
+.pv a{color:#0b1220;text-decoration:none;border:1px solid #9fb0cc;border-radius:5px;padding:3px 9px}
+.pv a.on{background:#0b1220;color:#fff;border-color:#0b1220}
+/* header */
+.hd{display:flex;align-items:center;justify-content:space-between;gap:12px 28px;flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font:700 1.15rem var(--head);color:var(--fg);text-decoration:none}
+.logo i{width:32px;height:32px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+.logo span{color:#6f9bff}
+.nav{display:flex;gap:4px 22px;flex-wrap:wrap}
+.nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:.95rem;padding:10px 0;border-bottom:2px solid transparent}
+.nav a:hover{color:var(--fg)}
+.nav a[aria-current="page"]{color:var(--fg);border-color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border-radius:8px;font:600 .95rem var(--body);text-decoration:none;border:2px solid var(--accent);background:var(--accent);color:var(--accent-fg);cursor:pointer}
+.btn.sec{background:transparent;border-color:#3a4a63;color:var(--fg)}
+.btn:hover{filter:brightness(1.1)}
+.btn:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #8fb2ff;outline-offset:2px}
+.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+/* sections */
+.page{display:none;padding-block:64px 0}
+.page.on{display:block}
+.sec{padding-block:72px 0}
+.sec>h2,.sec>.chip+h2{margin-bottom:28px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 24px;list-style:none;padding:0;margin:28px 0 0;font-size:.95rem;color:var(--muted)}
+.trust li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:1023px){.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:639px){.g3,.g2{grid-template-columns:1fr}}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;min-width:0;transition:border-color .15s,transform .15s}
+.card h3{margin-bottom:10px}
+.card p{color:var(--muted);font-size:1rem;margin-bottom:12px}
+.card .tag{display:inline-block;font:600 .72rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid #1d3566;background:var(--accent-soft);border-radius:5px;padding:5px 8px;margin-bottom:14px;margin-right:6px}
+.card .tag.hot{color:#fff;background:var(--accent);border-color:var(--accent)}
+.card a.stretch{color:var(--fg);text-decoration:none}
+.card a.stretch::after{content:"";position:absolute;inset:0;border-radius:12px}
+.card .go{color:var(--accent);font-weight:600;font-size:.95rem}
+.card:hover{border-color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.card.link:hover{transform:translateY(-2px)}}
+.card:has(a.stretch:focus-visible){outline:3px solid #8fb2ff;outline-offset:2px}
+.card.cta{background:var(--accent-soft);border-color:#27498f;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.card b{font-weight:600;color:var(--fg)}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;list-style:none;padding:0;margin:0;position:relative}
+.steps li{position:relative}
+.steps .n{font:700 3rem/1 var(--head);color:#2a4a8f;display:block;margin-bottom:8px}
+.steps li:not(:last-child)::after{content:"";position:absolute;top:26px;left:56px;right:-12px;height:1px;background:linear-gradient(90deg,#2a4a8f,transparent)}
+.steps strong{display:block;font-size:1.1rem;margin-bottom:4px}
+.steps span.t{color:var(--muted)}
+@media (max-width:767px){.steps{grid-template-columns:1fr}.steps li::after{display:none}}
+/* checks */
+.chk{list-style:none;padding:0;margin:0 0 1em;max-width:68ch}
+.chk li{display:flex;gap:12px;margin-bottom:12px}
+.chk svg{flex:none;width:22px;height:22px;margin-top:3px;color:var(--accent)}
+.chk.no svg{color:#8b97ab}
+/* project layout */
+.crumb{font-size:.9rem;color:var(--muted);margin-bottom:20px}.crumb a{color:var(--muted)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:48px;align-items:start}
+@media (max-width:1023px){.two{grid-template-columns:1fr}}
+.aside{position:sticky;top:76px;background:var(--surface-2);border:1px solid #243452;border-radius:12px;padding:24px}
+@media (max-width:1023px){.aside{position:static;order:-1}}
+.aside h3{margin-bottom:14px}
+.aside dl{margin:0 0 16px;display:grid;grid-template-columns:auto 1fr;gap:10px 16px;font-size:.95rem}
+.aside dt{color:var(--muted)}.aside dd{margin:0;font-weight:600;text-align:right}
+.aside .btn{width:100%}.aside .alt{display:block;text-align:center;margin-top:12px;font-weight:600;font-size:.95rem}
+.proj h2{margin-top:56px;margin-bottom:20px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+details p{margin:12px 0 0;color:var(--muted)}
+/* forms */
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:6px}
+input,select,textarea{width:100%;min-height:44px;background:var(--bg);border:1px solid #2a3a55;border-radius:8px;color:var(--fg);padding:10px 12px;font:inherit}
+textarea{min-height:130px}
+.f{margin-bottom:16px}
+.formcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:28px}
+.ci{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;margin:0}.ci dt{color:var(--muted)}.ci dd{margin:0}
+/* footer */
+.ft{margin-top:96px;border-top:1px solid var(--line);padding:40px 0 48px;display:grid;grid-template-columns:2fr 1fr 1.3fr 1.4fr;gap:32px;font-size:.95rem}
+@media (max-width:899px){.ft{grid-template-columns:1fr 1fr}}
+@media (max-width:539px){.ft{grid-template-columns:1fr}}
+.ft h4{margin:0 0 12px;font:600 .8rem var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ft a{display:block;color:var(--muted);text-decoration:none;padding:5px 0}
+.ft a:hover{color:var(--fg)}
+.ft small{color:var(--muted);font-size:.82rem;display:block;margin-top:10px;max-width:40ch}
+.mcta{display:none}
+@media (max-width:700px){
+  .mcta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--accent);color:#fff;text-align:center;font-weight:700;text-decoration:none;padding:15px 16px calc(15px + env(safe-area-inset-bottom,0px))}
+  body{padding-bottom:64px}.sec{padding-block:56px 0}.page{padding-block:40px 0}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="ck" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="xx" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<div class="pv"><div class="in" id="pv"><b>Návrh vizuálu</b>
+<a href="#uvod">Úvod</a><a href="#sluzby">Služby</a><a href="#projekt">Projektová stránka</a><a href="#kontakt">Kontakt</a>
+<span style="margin-left:auto">Brand podľa súčasného webu, farby sú približné.</span></div></div>
+
+<div class="c">
+<header class="hd">
+  <a class="logo" href="#uvod"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l7 14 4-9 3 5 4-10"/></svg></i>Add<span>Value</span>Engineering</a>
+  <nav class="nav" aria-label="Hlavná navigácia" id="nav">
+    <a href="#uvod">Domov</a><a href="#kontakt" data-n="o">O nás</a><a href="#sluzby" data-n="s">Služby</a><a href="#sluzby" data-n="a">Optimalizácia &amp; AI</a><a href="#uvod" data-n="sa">Self-Audit</a><a href="#kontakt" data-n="k">Kontakt</a>
+  </nav>
+  <a class="btn" href="#kontakt">Popíšte nám problém</a>
+</header>
+
+<main id="main">
+
+<!-- ÚVOD -->
+<section class="page" id="p-uvod">
+  <span class="chip">Projektové riešenie problémov vo výrobe</span>
+  <h1>Jeden problém vo vašej výrobe vás stojí najviac. Nájdeme ho a dáme ho do plánu.</h1>
+  <p class="lead">Pre majiteľov výrobných firiem s 20 až 250 zamestnancami. Identifikujeme problém, navrhneme varianty riešenia a zostavíme projektový plán. Realizujú vaši ľudia, my ich vedieme a kontrolujeme postup.</p>
+  <div class="row"><a class="btn" href="#kontakt">Popíšte nám problém</a><a class="btn sec" href="#uvod">Vyskúšať audit zdarma</a></div>
+  <ul class="trust"><li>Úvodný rozhovor zdarma</li><li>Pevná cena sprintu</li><li>Realizuje váš tím</li><li>15+ rokov v EMS výrobe</li></ul>
+
+  <div class="sec"><h2>Poznáte to?</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))">
+      <div class="card"><h3>Zmeny sa strácajú</h3><p>Technická zmena prejde e-mailom, v dielni sa pracuje podľa starého výkresu.</p></div>
+      <div class="card"><h3>Dokumenty čakajú na podpis</h3><p>Schvaľovanie trvá dni, lebo nikto nevie, kde práve je.</p></div>
+      <div class="card"><h3>Hasíte každý deň</h3><p>Na zlepšovanie nezostáva čas ani kapacita.</p></div>
+      <div class="card"><h3>Dobrý nápad bez dotiahnutia</h3><p>Projekt sa rozbehne, po dvoch mesiacoch ho zastaví bežná prevádzka.</p></div>
+    </div>
+    <p style="margin-top:20px">Ak sa v jednom z nich spoznávate, je to projekt. Nie permanentný konzultant na faktúre.</p>
+  </div>
+
+  <div class="sec"><h2>Ako to funguje</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><strong>Úvodný rozhovor</strong><span class="t">30 minút, zdarma. Povieme si, či projekt dáva zmysel a či máte kapacitu ho uniesť.</span></li>
+      <li><span class="n">2</span><strong>Projektový sprint</strong><span class="t">2 až 3 týždne, pevná cena. Pomenujeme problém, navrhneme 2 až 3 varianty a odporučíme jeden.</span></li>
+      <li><span class="n">3</span><strong>Vedenie projektu</strong><span class="t">Voliteľne. 1 až 2 krátke stretnutia týždenne, kontrola plnenia, riešenie prekážok. Prácu robí váš tím.</span></li>
+    </ol>
+  </div>
+
+  <div class="sec"><span class="chip">Projektové služby</span><h2>Typy projektov</h2>
+    <div class="grid g3" id="cards"></div>
+  </div>
+
+  <div class="sec"><h2>Čo od vás potrebujeme</h2>
+    <p class="muted">Projekt funguje, keď sú splnené tri veci. Bez nich ho radšej nezačneme.</p>
+    <div class="grid g3">
+      <div class="card"><h3>Sponzora</h3><p>Majiteľ alebo konateľ, ktorý rozhoduje a zabezpečí zdroje.</p></div>
+      <div class="card"><h3>Ľudí s vyhradeným časom</h3><p>Vami určených kolegov, ktorí projekt reálne vykonajú.</p></div>
+      <div class="card"><h3>Prístup k údajom</h3><p>Výkresy, zmenové listy, dokumentáciu, čísla z výroby.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLUŽBY -->
+<section class="page" id="p-sluzby">
+  <span class="chip">Služby</span>
+  <h1>Každá služba je projekt s jedným cieľom</h1>
+  <p class="lead">Nenájmete si nás na neurčito. Dohodneme jeden problém, výstup, termín a kritérium prijatia. Potom ho spolu dotiahneme.</p>
+  <div class="sec" style="padding-top:48px"><div class="grid g3" id="cards2"></div></div>
+  <div class="sec"><h2>Každý projekt prebieha rovnako</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><strong>Jeden problém</strong><span class="t">Vyberieme ten, ktorý vás stojí najviac. Dohodneme rozsah a kritérium prijatia.</span></li>
+      <li><span class="n">2</span><strong>Varianty a plán</strong><span class="t">Navrhneme možné riešenia, vy vyberiete. Zostavíme plán s termínmi a zodpovednými.</span></li>
+      <li><span class="n">3</span><strong>Realizácia vaším tímom</strong><span class="t">My vedieme stretnutia 1 až 2× týždenne a sledujeme plnenie.</span></li>
+    </ol></div>
+  <div class="sec"><h2>Pravidlá spolupráce</h2>
+    <div class="grid g2">
+      <div class="card" style="display:flex;gap:14px"><svg width="26" height="26" style="flex:none;color:var(--accent)"><use href="#ck"/></svg><p style="margin:0;color:var(--fg)">Sponzor zabezpečí zdroje a súčinnosť ľudí, ktorých určí.</p></div>
+      <div class="card" style="display:flex;gap:14px"><svg width="26" height="26" style="flex:none;color:var(--accent)"><use href="#ck"/></svg><p style="margin:0;color:var(--fg)">Rozsah a kritérium prijatia sú písomne pred začiatkom.</p></div>
+      <div class="card" style="display:flex;gap:14px"><svg width="26" height="26" style="flex:none;color:var(--accent)"><use href="#ck"/></svg><p style="margin:0;color:var(--fg)">Zmenu rozsahu riešime dodatkom, nie mlčky.</p></div>
+      <div class="card" style="display:flex;gap:14px"><svg width="26" height="26" style="flex:none;color:var(--accent)"><use href="#ck"/></svg><p style="margin:0;color:var(--fg)">Cena podľa rozsahu v písomnej ponuke. Úvodný rozhovor je zadarmo.</p></div>
+    </div>
+    <div class="row"><a class="btn" href="#kontakt">Popíšte nám problém</a><a class="btn sec" href="#uvod">Self-audit</a></div>
+  </div>
+</section>
+
+<!-- PROJEKT -->
+<section class="page" id="p-projekt">
+  <div class="crumb"><a href="#uvod">Domov</a> › <a href="#sluzby">Služby</a> › Riadenie technických zmien (ECO)</div>
+  <div class="two">
+    <div class="proj">
+      <span class="chip">Projekt</span>
+      <h1>Riadenie technických zmien (ECO) vo výrobe</h1>
+      <p class="lead">ECO (zmenové konanie) je formálna technická zmena: úprava výkresu, zloženia výrobku alebo postupu. Keď neprebieha riadene, výroba pracuje podľa starej verzie a zákazník to zistí ako prvý.</p>
+      <div class="row"><a class="btn" href="#kontakt">Popíšte nám problém</a></div>
+
+      <h2>Kedy projekt pomôže</h2>
+      <ul class="chk"><li><svg><use href="#ck"/></svg>Nikto nevie, ktorá verzia dokumentu platí.</li><li><svg><use href="#ck"/></svg>Zmeny sa strácajú medzi konštrukciou, nákupom a výrobou.</li><li><svg><use href="#ck"/></svg>Schválenie zmeny trvá týždne a zmenia sa prioritou.</li></ul>
+
+      <h2>Čo dostanete</h2>
+      <ul class="chk"><li><svg><use href="#ck"/></svg>Popis cieľového procesu zmien od podnetu po zavedenie vo výrobe.</li><li><svg><use href="#ck"/></svg>Role a zodpovednosti: kto zmenu podáva, posudzuje, schvaľuje, zavádza.</li><li><svg><use href="#ck"/></svg>Checklist a vzor zmenového listu podľa vašich potrieb.</li><li><svg><use href="#ck"/></svg>Plán zavedenia s termínmi a zodpovednými osobami.</li></ul>
+      <p class="muted">Kritérium prijatia dohodneme písomne pred začiatkom. Napríklad: proces je odsúhlasený sponzorom a prvé tri zmeny prešli podľa neho.</p>
+
+      <h2>Ako prebieha</h2>
+      <ol class="steps">
+        <li><span class="n">1</span><strong>Vymedzenie</strong><span class="t">Jeden problém, rozsah, kritérium prijatia.</span></li>
+        <li><span class="n">2</span><strong>Návrh</strong><span class="t">Navrhneme proces a varianty spolu s ľuďmi, ktorých sa týka.</span></li>
+        <li><span class="n">3</span><strong>Plán a vedenie</strong><span class="t">Plán zavedenia a stretnutia 1 až 2× týždenne. Zavádza váš tím.</span></li>
+      </ol>
+
+      <h2>Časté otázky</h2>
+      <details><summary>Potrebujeme na to špeciálny softvér?</summary><p>Nie. Najprv navrhneme proces. Nástroj sa vyberá až potom a môže to byť aj to, čo už máte.</p></details>
+      <details><summary>Kto proces zavedie?</summary><p>Váš tím. My navrhneme, vedieme stretnutia a kontrolujeme plán.</p></details>
+
+      <h2>Súvisiace projekty</h2>
+      <p><a href="#projekt">Procesný audit výroby</a> · <a href="#projekt">Výrobná dokumentácia a schvaľovanie</a> · <a href="#projekt">Koučing majstrov a vedúcich výroby</a> · <a href="#projekt">AI a automatizácia vo výrobe</a></p>
+    </div>
+    <aside class="aside" aria-label="Na prvý pohľad">
+      <h3>Na prvý pohľad</h3>
+      <dl><dt>Úvodný rozhovor</dt><dd>zdarma</dd><dt>Cena</dt><dd>podľa rozsahu</dd><dt>Realizuje</dt><dd>váš tím</dd><dt>Vedenie projektu</dt><dd>1 až 2 stretnutia týždenne</dd></dl>
+      <a class="btn" href="#kontakt">Popíšte nám problém</a>
+      <a class="alt" href="#uvod">Spustiť audit zdarma</a>
+    </aside>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="page" id="p-kontakt">
+  <span class="chip">Kontakt</span>
+  <h1>Popíšte jeden problém. Ozveme sa s návrhom ďalšieho kroku.</h1>
+  <p class="lead">Stačí pár viet. Úvodný rozhovor je zadarmo a bez záväzku.</p>
+  <div class="two" style="margin-top:40px;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)">
+    <form class="formcard" id="f">
+      <div class="f"><label for="n">Meno</label><input id="n" autocomplete="name"></div>
+      <div class="f"><label for="e">E-mail</label><input id="e" type="email" autocomplete="email"></div>
+      <div class="f"><label for="c">Firma</label><input id="c" autocomplete="organization"></div>
+      <div class="f"><label for="t">O čo ide</label><select id="t"><option>Mám konkrétny problém</option><option>Nie som si istý, čo je problém</option><option>Chcem Level 2 alebo 3 self-auditu</option><option>Iné</option></select></div>
+      <div class="f"><label for="m">Aký problém vás stojí najviac?</label><textarea id="m" placeholder="Napríklad: zmeny sa strácajú medzi konštrukciou a výrobou."></textarea></div>
+      <p class="muted" style="font-size:.92rem"><label style="display:flex;gap:10px;font-weight:400;margin:0"><input type="checkbox" style="width:22px;min-height:22px;flex:none;margin-top:3px"> Súhlasím so spracovaním osobných údajov na účel odpovede. Zásady spracovania osobných údajov.</label></p>
+      <button class="btn" type="submit">Odoslať správu</button>
+      <p class="muted" id="fm" hidden style="margin-top:12px;font-size:.9rem">V náhľade sa formulár neodosiela.</p>
+    </form>
+    <div>
+      <h2 style="font-size:1.5rem;margin-bottom:20px">Čo sa stane po odoslaní</h2>
+      <ol class="steps" style="grid-template-columns:1fr;gap:18px">
+        <li><span class="n" style="font-size:2rem;display:inline-block;margin-right:10px">1</span><span class="t">Prečítame si váš popis.</span></li>
+        <li><span class="n" style="font-size:2rem;display:inline-block;margin-right:10px">2</span><span class="t">Ozveme sa s návrhom ďalšieho kroku.</span></li>
+        <li><span class="n" style="font-size:2rem;display:inline-block;margin-right:10px">3</span><span class="t">Ak to dáva zmysel, dohodneme úvodný rozhovor (30 minút, zdarma).</span></li>
+      </ol>
+      <h2 style="font-size:1.5rem;margin:36px 0 16px">Priamo</h2>
+      <dl class="ci"><dt>E-mail</dt><dd>vladimir@addvalueengineering.sk</dd><dt>Telefón</dt><dd>+421 948 007 304</dd><dt>Sídlo</dt><dd>AV – Agency, s. r. o.<br>Zliechovská ulica 1117/110<br>018 64 Košeca</dd></dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="ft">
+  <div><a class="logo" href="#uvod" style="padding:0"><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l7 14 4-9 3 5 4-10"/></svg></i>Add<span>Value</span>Engineering</a><small>Pôsobíme najmä v Trenčianskom, Žilinskom a Trnavskom kraji.</small></div>
+  <div><h4>Navigácia</h4><a href="#uvod">Domov</a><a href="#kontakt">O nás</a><a href="#sluzby">Služby</a><a href="#sluzby">Optimalizácia &amp; AI</a><a href="#uvod">Self-Audit</a><a href="#kontakt">Kontakt</a></div>
+  <div><h4>Projekty</h4><a href="#projekt">Procesný audit výroby</a><a href="#projekt">Riadenie technických zmien (ECO)</a><a href="#projekt">Výrobná dokumentácia a schvaľovanie</a><a href="#projekt">Koučing majstrov a vedúcich výroby</a><a href="#projekt">AI a automatizácia vo výrobe</a></div>
+  <div><h4>Kontakt a právne</h4><a href="#kontakt">vladimir@addvalueengineering.sk</a><a href="#kontakt">+421 948 007 304</a><a href="#kontakt">Zásady ochrany osobných údajov</a><small>AV – Agency, s. r. o. · IČO 47054328<br>Zliechovská ulica 1117/110, 018 64 Košeca</small></div>
+</footer>
+</div>
+<a class="mcta" href="#kontakt">Popíšte nám problém</a>
+
+<script>
+(function(){
+  var P=[
+    ["Východisko","Procesný audit výroby","Pre firmy, ktoré cítia, že niečo nefunguje, ale nevedia presne čo.","Výstup: pomenovaný problém, varianty riešenia, plán.","Začnite tu"],
+    ["Zmeny","Riadenie technických zmien (ECO)","Pre firmy, kde sa zmeny strácajú alebo trvajú príliš dlho.","Výstup: cieľový proces, role, checklist, plán zavedenia."],
+    ["Dokumenty","Výrobná dokumentácia a schvaľovanie","Pre firmy, kde dokumenty čakajú na podpisy.","Výstup: cieľový tok, plán automatizácie."],
+    ["Ľudia","Koučing majstrov a vedúcich výroby","Pre firmy, kde zlepšenia po čase vyprchajú.","Výstup: 5 až 6 koučovacích sedení podľa dohody."],
+    ["AI","AI a automatizácia vo výrobe","Pre jeden konkrétny problém, kde môže pomôcť automatizácia.","Výstup: návrh riešenia. Implementácia samostatne."]
+  ];
+  function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+  function cards(){
+    var h=P.map(function(p){
+      return '<div class="card link"><span class="tag">'+esc(p[0])+'</span>'+(p[4]?'<span class="tag hot">'+esc(p[4])+'</span>':'')+
+      '<h3><a class="stretch" href="#projekt">'+esc(p[1])+'</a></h3><p>'+esc(p[2])+'<br><b>'+esc(p[3].split(":")[0])+':</b>'+esc(p[3].slice(p[3].indexOf(":")+1))+'</p><span class="go">Detail projektu →</span></div>';
+    }).join("");
+    h+='<div class="card cta"><h3>Neviete, kde začať?</h3><p>Popíšte nám problém a povieme vám, ktorý projekt dáva zmysel.</p><a class="btn" href="#kontakt">Popíšte nám problém</a></div>';
+    return h;
+  }
+  document.getElementById("cards").innerHTML=cards();
+  document.getElementById("cards2").innerHTML=cards();
+  var ids=["uvod","sluzby","projekt","kontakt"];
+  var map={uvod:"",sluzby:"s",projekt:"s",kontakt:"k"};
+  function show(){
+    var h=(location.hash||"#uvod").slice(1); if(ids.indexOf(h)<0)h="uvod";
+    ids.forEach(function(i){document.getElementById("p-"+i).classList.toggle("on",i===h)});
+    document.querySelectorAll("#nav a").forEach(function(a){
+      var k=a.getAttribute("data-n"); var cur=(h==="uvod"&&!k)||(k&&map[h]===k);
+      if(cur)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");
+    });
+    document.querySelectorAll("#pv a").forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+h)});
+    document.querySelector(".mcta").style.display=(h==="kontakt")?"none":"";
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange",show);show();
+  document.getElementById("f").addEventListener("submit",function(e){e.preventDefault();document.getElementById("fm").hidden=false});
+})();
+</script>

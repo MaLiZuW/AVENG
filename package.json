@@ -18,7 +18,8 @@
     "check:meta": "npx --yes tsx scripts/check-meta.ts",
     "check:copy": "npx --yes tsx scripts/check-public-copy.ts",
     "check:content": "node scripts/check-content.mjs",
-    "indexnow": "npx --yes tsx scripts/indexnow.ts"
+    "indexnow": "npx --yes tsx scripts/indexnow.ts",
+    "check:design": "node scripts/check-design.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
